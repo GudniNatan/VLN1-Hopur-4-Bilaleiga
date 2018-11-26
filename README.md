@@ -10,7 +10,11 @@ Allar skrárnar tengdar forritinu munu verða geymdar hér.
 
 ## Credits
 Smári Gunnarsson
+
 Hermann Guðmundsson
+
 Vytautas Sipavicius
+
 Guðni Nathan Gunnarsson
+
 Hildur Kolfinna Sigurjónsdóttir
