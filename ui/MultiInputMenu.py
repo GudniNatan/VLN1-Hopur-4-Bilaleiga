@@ -5,11 +5,11 @@ import sys
 
 
 class InputMenu(Menu):
-    def __init__(self, prompt, header_message='', footer_message='', pre_input=''):
-        self.prompt = prompt
+    def __init__(self, promts=list(), header_message='', footer_message='', pre_input=list()):
+        self.prompts = prompts
         self._header_message = header_message
         self._footer_message = footer_message
-        self.__input_line = pre_input
+        self.__input_lines = [pre_input[i] if i < len(pre_input) else "" for i in range(len(promts))]
         self.cursor = 0
 
     def getInput(self):
@@ -28,25 +28,25 @@ class InputMenu(Menu):
                 self.cursor %= 3
             elif key == 27:
                 return -1
-            elif self.cursor == 0:
-                self.updateInputLine(the_input)
-        cursor = self.cursor
-        self.cursor = -1
-        return cursor, self.__input_line
+            else:
+                self.updateInputLine(the_input, self.cursor)
+        return self.cursor, self.__input_line
 
-    def updateInputLine(self, key):
+    def updateInputLine(self, key, line_number):
         char = key.decode('utf-8', errors='replace')
-        if char == "\x08":
-            self.__input_line = self.__input_line[0:-1]
-        elif char not in ["�", "\r"]:
-            self.__input_line += char
+        try:
+            if char == "\x08":
+                self.__input_lines[line_number] = self.__input_lines[line_number][0:-1]
+            elif char == "\r":
+                self.__input_lines[line_number] += "\n"
+            elif char != "�":
+                self.__input_lines[line_number] += char
+        except IndexError:
+            pass
 
     def __str__(self):
         the_string = "{}\n".format(self._header_message)
-        textCursorBox = "█" if self.cursor == 0 else "" 
-        promt_line = "{} {}{}\n".format(self.prompt, self.__input_line, textCursorBox)
-        if self.cursor == -1:
-            return the_string + promt_line
+        promt_line = "{} {}█\n".format(self.prompt, self.__input_line)
         back_line = "Back"
         quit_line = "Quit"
         line_list = [promt_line, back_line, quit_line]
@@ -67,5 +67,4 @@ if __name__ == "__main__":
     else:
         print("I QUIT")
     menu2 = InputMenu("What is your age", menu, "Bílaleiga Björgvins ©")
-    cursor, name = menu2.getInput()
     input()
