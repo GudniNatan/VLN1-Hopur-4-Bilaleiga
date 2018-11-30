@@ -7,13 +7,13 @@ class Menu(ABC):
     _footer_message = ''
 
     @abstractmethod
-    def getInput(self):
+    def get_input(self):
         return 0
 
     def display(self):
         print(self)
 
-    def clearScreen(self):
+    def clear_screen(self):
         if os.name == 'nt':
             os.system('cls')
         else:

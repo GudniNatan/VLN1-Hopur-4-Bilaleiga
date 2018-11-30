@@ -1,4 +1,5 @@
-
+from repositories.CarRepository import CarRepository
+from models.Car import Car
 
 def main():
     print("__________ __ __          __          __                    ")
@@ -15,3 +16,11 @@ def main():
     print("        \/\______|           /_____/              \/     \/ ")
 
 main()
+
+a = CarRepository()
+print(a.get_all())
+for car in a.get_all():
+    print(vars(car))
+b = Car("BT-T54", "Honda Odyssey 2014", 4, True)
+print(b.csv_repr())
+a.add(b)

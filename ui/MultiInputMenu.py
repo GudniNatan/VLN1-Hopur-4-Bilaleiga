@@ -1,11 +1,12 @@
 from Menu import Menu
+from InputLine import InputLine
 from msvcrt import getch
 import os
 import sys
 
 
 class InputMenu(Menu):
-    def __init__(self, promts=list(), header_message='', footer_message='', pre_input=list()):
+    def __init__(self, prompts=list(), header_message='', footer_message='', pre_input=list()):
         self.prompts = prompts
         self._header_message = header_message
         self._footer_message = footer_message
