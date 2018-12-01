@@ -6,7 +6,8 @@ import sys
 
 
 class InputMenu(Menu):
-    def __init__(self, prompt, header_message='', footer_message='', pre_input='', back_message='Back', quit_message='Quit'):
+    def __init__(self, prompt, header_message='', footer_message='',
+                 pre_input='', back_message='Back', quit_message='Quit'):
         self.prompt = prompt
         self._header_message = header_message
         self._footer_message = footer_message
@@ -45,12 +46,12 @@ class InputMenu(Menu):
 
     def __str__(self):
         the_string = "{}\n".format(self._header_message)
-        self.__input_line.setActive(self.cursor == 0)
+        self.__input_line.set_active(self.cursor == 0)
         if self.cursor == -1:
             return the_string + str(self.__input_line)
         back_line = "Back"
         quit_line = "Quit"
-        line_list = [str(self.__input_line), back_line, quit_line]
+        line_list = [self.__input_line.get_display_str(), back_line, quit_line]
         for i, line in enumerate(line_list):
             the_string += "->" if self.cursor == i else "  "
             the_string += line + '\n'

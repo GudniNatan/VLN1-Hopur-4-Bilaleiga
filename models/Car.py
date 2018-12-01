@@ -15,5 +15,8 @@ class Car(Model):
                 "model": self.model, "seat_count": self.seat_count,
                 "automatic_shift": self.automatic_shift}
 
+    def get_dict(self):
+        return self.csv_repr()
+
     def __eq__(self, other):
         return self.licence_plate_number == other.licence_plate_number

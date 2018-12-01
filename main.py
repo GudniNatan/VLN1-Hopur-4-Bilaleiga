@@ -1,5 +1,6 @@
-from repositories.CarRepository import CarRepository
-from models.Car import Car
+
+from ui.CarRentalUI import CarRentalUI
+
 
 def main():
     print("__________ __ __          __          __                    ")
@@ -14,13 +15,11 @@ def main():
     print(" |    |   \   |  (  <_> )  | \/ /_/  >   /|  |   |  \\\___ \ ")
     print(" |______  /\__|  |\____/|__|  \___  / \_/ |__|___|  /____  >")
     print("        \/\______|           /_____/              \/     \/ ")
+    [i for i in range(10000000)]
+    ui = CarRentalUI()
+    selection = ""
+    while selection != "Q":
+        selection = ui.welcome_menu()
+
 
 main()
-
-a = CarRepository()
-print(a.get_all())
-for car in a.get_all():
-    print(vars(car))
-b = Car("BT-T54", "Honda Odyssey 2014", 4, True)
-print(b.csv_repr())
-a.add(b)

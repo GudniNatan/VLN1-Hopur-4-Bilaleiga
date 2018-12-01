@@ -3,12 +3,13 @@ import os
 
 
 class InputLine(object):
-    def __init__(self, prompt="", default_text=""):
-        self.left_side = default_text
-        self.right_side = ""
-        self.cursor = "█"
-        self.__active = True
-        self.prompt = prompt
+    def __init__(self, prompt="", default_text="", type_=""):
+        self.__left_side = default_text
+        self.__right_side = ""
+        self.__cursor = "█"
+        self.__active = False
+        self.__prompt = prompt
+        self.__is_password = str(type_).lower() == "password"
 
     def keypress(self, char, special=False):
         if not self.__active:
@@ -18,27 +19,27 @@ class InputLine(object):
                 self.move_cursor_left()
             elif char == 77:  # right arrow key
                 self.move_cursor_right()
-            elif char == 83:
-                self.right_side = self.right_side[1:]
+            elif char == 83:  # delete key
+                self.__right_side = self.__right_side[1:]
         else:
             if char == "\x08":
-                self.left_side = self.left_side[0:-1]
+                self.__left_side = self.__left_side[0:-1]
             elif char not in ["�", "\r"]:
-                self.left_side += char
+                self.__left_side += char
 
     def move_cursor_left(self):
         try:
-            char = self.left_side[-1]
-            self.left_side = self.left_side[:-1]
-            self.right_side = char + self.right_side
+            char = self.__left_side[-1]
+            self.__left_side = self.__left_side[:-1]
+            self.__right_side = char + self.__right_side
         except IndexError:  # there are no more characters on the left
             pass
 
     def move_cursor_right(self):
         try:
-            char = self.right_side[0]
-            self.right_side = self.right_side[1:]
-            self.left_side += char
+            char = self.__right_side[0]
+            self.__right_side = self.__right_side[1:]
+            self.__left_side += char
         except IndexError:  # there are no more characters on the right
             pass
 
@@ -46,12 +47,21 @@ class InputLine(object):
         self.__active = boolean
 
     def __str__(self):
-        if self.__active:
-            return "{} {}{}{}\n".format(self.prompt, self.left_side,
-                                        self.cursor, self.right_side)
-        else:
-            return "{} {}{}\n".format(self.prompt, self.left_side,
-                                      self.right_side)
+        cursor = self.__cursor
+        prompt = self.__prompt
+        left_side = self.__left_side
+        right_side = self.__right_side
+        if prompt:
+            prompt = prompt.strip() + " "
+        if not self.__active:
+            cursor = ""
+        if self.__is_password:
+            left_side = "*" * len(left_side)
+            right_side = "*" * len(right_side)
+        return "{}{}{}{}\n".format(prompt, left_side, cursor, right_side)
+
+    def get_input(self):
+        return self.__left_side + self.__right_side
 
 
 if __name__ == "__main__":
@@ -64,6 +74,9 @@ if __name__ == "__main__":
             key = ord(getwch())
             inputLine.keypress(key, True)
         else:
+            if key == 13:
+                break
             inputLine.keypress(chr(key))
-        os.system("cls")        
+        os.system("cls")
         print(inputLine)
+    print(inputLine.get_input())

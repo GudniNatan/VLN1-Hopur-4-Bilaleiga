@@ -1,13 +1,13 @@
 from repositories.Repository import Repository
-from models.Car import Car
+from models.Branch import Branch
 import typing
 
 
 class CarRepository(Repository):
-    _FILENAME = "./data/Cars.csv"
-    _TYPE = Car
+    _FILENAME = "./data/Branches.csv"
+    _TYPE = Branch
     _PRIMARY_KEY = "licence_plate_number"  # name of primary key
-    _CSV_ROW_NAMES = ["licence_plate_number", "model", "seat_count",
+    _CSV_ROW_NAMES = ["", "model", "seat_count",
                       "automatic_shift"]
 
     def dict_to_model_object(self, car_dict):
