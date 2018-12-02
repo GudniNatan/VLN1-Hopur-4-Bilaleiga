@@ -61,7 +61,7 @@ class InputLine(object):
         return "{}{}{}{}\n".format(prompt, left_side, cursor, right_side)
 
     def get_input(self):
-        return self.__left_side + self.__right_side
+        return (self.__left_side + self.__right_side).strip()
 
 
 if __name__ == "__main__":

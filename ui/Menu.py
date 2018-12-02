@@ -46,7 +46,8 @@ class Menu(object):
                 if self.__cursor_position == i:
                     cursor = self.__CURSOR
                 display_string += cursor + str(line)
-        display_string += "\n\n{}".format(self.__footer)
+        display_string += "\n{}".format(self.__footer)
+        self.clear_screen()
         print(display_string.strip())
 
     def __get_display_lines(self):
@@ -98,11 +99,9 @@ class Menu(object):
 
     def get_input(self):
         menu_completed = False
-        self.clear_screen()
         while not menu_completed:
             self.display()
             key = ord(getwch())
-            self.clear_screen()
             menu_completed = self.__process_input(key)
             if menu_completed in [self.QUIT, self.BACK, self.SUBMIT]:
                 return menu_completed, self.__input_lines

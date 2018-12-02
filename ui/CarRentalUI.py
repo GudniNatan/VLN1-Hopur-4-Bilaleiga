@@ -1,6 +1,10 @@
 from services.CarRentalService import CarRentalService
 from ui.Menu import Menu
 
+QUIT = Menu.QUIT
+BACK = Menu.BACK
+SUBMIT = Menu.SUBMIT
+
 
 class CarRentalUI(object):
     def __init__(self):
@@ -10,16 +14,18 @@ class CarRentalUI(object):
 
     def welcome_menu(self):
         header = "Welcome to Bílaleiga Björgvins!"
-        footer = "----------------------------------\nMove the pointer using the arrow keys!"
+        footer = "{}\n{}".format(
+            "----------------------------------",
+            "Move the pointer using the arrow keys!")
         options = ["Help", "Price chart", "Book a car", "", "Staff login"]
         welcome_menu_obj = Menu(header=header, footer=footer, options=options)
         selection = ""
         while selection != "Q":
             selection, values = welcome_menu_obj.get_input()
             if selection == 0:
-                selection = self.help_menu()
+                self.help_menu()
             if selection == 2:
-                selection = self.rental_pickup_time_menu()
+                self.rental_pickup_time_menu()
     
     def help_menu(self):
         header = """Velkominn í bókunarkerfi Bílaleigu Björgvins. Kerfið er ætluð starfsmönnum fyrirtækisins og fólki sem vill bóka bíla 
@@ -51,15 +57,59 @@ Allur réttur áskilinn af Glaumbæjargengið
         time_input = {"prompt": "Enter time [HH:MM]: ", "type": "time"}
         inputs = [date_input, time_input]
         rent_time_menu = Menu(inputs=inputs, header=header)
-        while selection != "Q":
+        callback = ""
+        while callback != "Q":
             pickup_datetime = None
             while pickup_datetime is None:
                 selection, values = rent_time_menu.get_input()
                 if selection == "Q":
                     return selection
-                pickup_datetime = self.car_rental_service.validate_datetime(values)
-            selection = self.rental_return_time_menu(pickup_datetime)
-        return selection
+                elif selection == "B":
+                    return
+                pickup_datetime = self.car_rental_service.validate_datetime(
+                    values)
+            callback = self.rental_return_time_menu(pickup_datetime)
+        return callback
 
     def rental_return_time_menu(self, pickup_datetime):
+        header = "Rent a car\n{}{}\nEnter return date & time:".format(
+            str(pickup_datetime), "-" * 30)
+        date_input = {"prompt": "Enter return date [YYYY-MM-DD]: ", "type": "date"}
+        time_input = {"prompt": "Enter return time [HH:MM]: ", "type": "time"}
+        inputs = [date_input, time_input]
+        rent_time_menu = Menu(inputs=inputs, header=header)
+        callback = ""
+        while callback != QUIT:
+            return_datetime = None
+            while return_datetime is None:
+                selection, values = rent_time_menu.get_input()
+                if selection == QUIT:
+                    return selection
+                elif selection == BACK:
+                    return
+                validate = self.car_rental_service.validate_return_datetime
+                return_datetime = validate(pickup_datetime, values)
+            callback = self.rental_car_category_menu(pickup_datetime,
+                                                     return_datetime)
+        return callback
+
+    def rental_car_category_menu(self, pickup_datetime, return_datetime):
+        header = "{}\n{} {}\n{} {}\n{}".format(
+            "Rent a car", "Pickup time:", str(pickup_datetime), "Return time:",
+            str(return_datetime), "-" * 30,)
+        category_options = ["Small car", "Crossover",
+                            "SUV", "Minivan", "Sport"]
+        category_menu = Menu(header=header, options=category_options)
+        callback = ""
+        while callback != QUIT:
+            selection, values = category_menu.get_input()
+            if selection == QUIT:
+                return selection
+            elif selection == BACK:
+                return
+            callback = self.choose_car_menu(
+                pickup_datetime, return_datetime, selection)
+        return callback
+
+    def choose_car_menu(self, pickup_datetime, return_datetime, car_type):
         return "Q"

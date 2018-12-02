@@ -17,9 +17,7 @@ def main():
     print("        \/\______|           /_____/              \/     \/ ")
     [i for i in range(10000000)]
     ui = CarRentalUI()
-    selection = ""
-    while selection != "Q":
-        selection = ui.welcome_menu()
+    ui.welcome_menu()
 
 
 main()
