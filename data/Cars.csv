@@ -1,4 +1,4 @@
-licence_plate_number,model,seat_count,automatic_shift,category    (small car=fólksbíll, crossover=jepplingur, SUV=jeppi, minivan=smárúta lol, sport=sportbíll)
+licence_plate_number,model,seat_count,automatic_shift,category
 AZ-553,Toyota Aygo 2015,4,False,Small car
 TR-990,Nissan Leaf 2017,5,True,Small car
 BT-T54,Honda Odyssey 2014,4,True,Minivan
