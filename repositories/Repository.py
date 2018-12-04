@@ -26,12 +26,15 @@ class Repository(ABC):
             csv_dict_writer.writeheader()
             csv_dict_writer.writerows(reps)
 
-    def update(self, model_object: _TYPE):
+    def update(self, model_object: _TYPE, key=None):
         '''Update the csv files representation of model_object. Raises
         ValueError if the object to update is not found.'''
         model_object_list = self.get_all()
-        index = model_object_list.index(model_object)
-        model_object_list[index] = model_object
+        if primary_key is None:
+            index = model_object_list.index(model_object)
+            model_object_list[index] = model_object
+        else:
+            raise NotImplementedError()
         self.write(model_object_list)
 
     def remove(self, model_object: _TYPE):

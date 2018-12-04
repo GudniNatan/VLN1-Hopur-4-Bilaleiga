@@ -1,4 +1,4 @@
-from ui.InputLine import InputLine
+from ui.input_line import InputLine
 from msvcrt import getwch
 import os
 import sys
