@@ -1,15 +1,16 @@
-from services.controller import Controller
 from services.main_menu_controller import MainMenuController
+from services.controller import Controller
 
 
-class CarRentalservice(object):
+class CarRentalService(object):
     def __init__(self):
         self.__controller_stack = list()
-        self.__user_type = 0
+        self.__current_user = None
 
     def start(self):
         controller_stack = self.__controller_stack
-        controller_stack.append(MainMenuController)
+        main_menu_controller = MainMenuController(self)
+        controller_stack.append(main_menu_controller)
         self.run()
 
     def run(self):
@@ -35,8 +36,8 @@ class CarRentalservice(object):
             controller = controller_stack.pop()
         return controller
 
-    def get_user_type(self):
-        return self.__user_type
+    def get_current_user(self):
+        return self.__current_user
 
-    def set_user_type(self, user_type: int):
-        self.__user_type = user_type
+    def set_current_user(self, user):
+        self.__current_user = user

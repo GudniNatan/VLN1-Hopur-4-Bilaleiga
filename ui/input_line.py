@@ -14,18 +14,16 @@ class InputLine(object):
     def keypress(self, char, special=False):
         if not self.__active:
             return
-        if special:
-            if char == 75:  # left arrow key
-                self.move_cursor_left()
-            elif char == 77:  # right arrow key
-                self.move_cursor_right()
-            elif char == 83:  # delete key
-                self.__right_side = self.__right_side[1:]
-        else:
-            if char == "\x08":
-                self.__left_side = self.__left_side[0:-1]
-            elif char not in ["�", "\r"]:
-                self.__left_side += char
+        elif char == chr(10075):  # left arrow key
+            self.move_cursor_left()
+        elif char == chr(10077):  # right arrow key
+            self.move_cursor_right()
+        elif char == chr(10083):  # delete key
+            self.__right_side = self.__right_side[1:]
+        elif char == "\x08":
+            self.__left_side = self.__left_side[0:-1]
+        elif char not in ["�", "\r"]:
+            self.__left_side += char
 
     def move_cursor_left(self):
         try:

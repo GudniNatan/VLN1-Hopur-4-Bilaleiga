@@ -1,5 +1,5 @@
 from ui.input_line import InputLine
-from msvcrt import getwch
+from ui.readkey import readkey
 import os
 import sys
 
@@ -101,7 +101,7 @@ class Menu(object):
         menu_completed = False
         while not menu_completed:
             self.display()
-            key = ord(getwch())
+            key = readkey()
             menu_completed = self.__process_input(key)
             if menu_completed in [self.QUIT, self.BACK, self.SUBMIT]:
                 return menu_completed, self.__input_lines
@@ -117,23 +117,19 @@ class Menu(object):
                 cursor -= len(self.__input_lines) + 1
             cursor = cursor + self.__page_number * self.__page_count
         return cursor, [input_line.get_input() for input_line
-                        in self.__input_lines] 
+                        in self.__input_lines]
 
-    def __process_input(self, key, ):
-        if key == 224:  # special char
-            key = ord(getwch())
-            if key == 80:  # arrow down
-                self.move_cursor(1)
-            elif key == 72:  # arrow up
-                self.move_cursor(-1)
-            elif self.__selected_input is not None:
-                self.__selected_input.keypress(key, True)
-        elif key == 27:  # esc
+    def __process_input(self, key):
+        if key == 10080:  # arrow down
+            self.move_cursor(1)
+        elif key == 10072:  # arrow up
+            self.move_cursor(-1)
+        elif key == 27:
             if self.__selected_input is None:
                 return self.QUIT
             else:
                 self.move_cursor()
-        elif key == 9:
+        elif key == 9:  # tab
             self.move_cursor(1)
             self.__select_input_by_cursor()
         elif key == 13:  # return
@@ -169,7 +165,7 @@ class Menu(object):
             self.__selected_input = None
 
     def __change_page(self, page_number):
-        if 0 <= page_number <= page_count:
+        if 0 <= page_number <= self.__page_count:
             self.__page_number = page_number
         self.__display_lines = self.__get_display_lines()
         self.__cursor_position = 0

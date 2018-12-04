@@ -9,11 +9,11 @@ YR-I98,Kia Picanto L 2018,4,True,Small car
 HF-K73,Kia Picanto X 2017,5,True,Small car
 KL-894,Kia Rio X 2015,5,True,Small car
 GS-432,Kia Ceed EX 2015,5,True,Small car
-TJ-529, Volvo V40 2012,5,True,Small car
+TJ-529,Volvo V40 2012,5,True,Small car
 OP-P38,Kia Ceed LX 1.4 2017,5,True,Small car
 TY-P31,Volkswagen Golf Variant 2016,5,False,Small car
 EU-P98,Kia Soul Ex 2017,5,True,Crossover
-NUV-I51,Kia Sorento Ex Classic 2013,False,Crossover
+NUV-I51,Kia Sorento Ex Classic 2013,4,False,Crossover
 OX-T31,Mercedes Benz A 180 2017,5,True,Small car
 GH-U56,Mercedes Benz A 180 D 2018,4,True,Small car
 TK-J18,Mercedes Benz GLK 220 CDI 4Matic 2015,5,True,SUV
@@ -73,7 +73,7 @@ KB-D24,Chevrolet Suburban 2017,5,True,SUV
 YJ-I39,Land Rover Discovery 2018,5,True,SUV
 OO-L75,BMW X5 XDrive40E 2016,5,True,Crossover
 HM-A88,Lexus RX 450H F-Sport 2017,5,True,Crossover
-DO-I46,Porche Cayenne S E-Hybrid 2016,5,Crossover
+DO-I46,Porche Cayenne S E-Hybrid 2016,5,False,Crossover
 RA-Q99,Lexus GS 450H F-Sport Hybrid 2017,5,True,Small car
 XF-N97,Mercedes Benz V Klasse 2017,8,True,Minivan
 SC-A35,Toyota Land Cruiser 150 Series 2018,5,True,SUV
@@ -85,7 +85,7 @@ IZ-W24,Chrysler Pacifica Platinum Plug In Hybrid 2017,8,True,Minivan
 UD-E26,Kia Stinger 2017,5,True,Small car
 UY-D91,Mercedes Benz Viano 4Matic 2014,8,True,Minivan
 NR-D43,Volvo S60 2016,5,True,Small car
-QU-W59,Volkswagen Golf R 2017,True,Small car
+QU-W59,Volkswagen Golf R 2017,5,True,Small car
 RM-V83,Jaguar XF Prestige 2017,5,True,Small car
 TQ-E32,Toyota Proace Verso Active Plus 2017,8,True,Minivan
 HG-Z99,Ford CNG Technik Focus RS 2016,5,False,Small car

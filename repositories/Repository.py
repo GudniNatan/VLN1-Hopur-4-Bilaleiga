@@ -29,13 +29,14 @@ class Repository(ABC):
     def update(self, model_object: _TYPE, key=None):
         '''Update the csv files representation of model_object. Raises
         ValueError if the object to update is not found.'''
-        model_object_list = self.get_all()
-        if primary_key is None:
+        if key is None:
+            model_object_list = self.get_all()
             index = model_object_list.index(model_object)
             model_object_list[index] = model_object
+            self.write(model_object_list)
         else:
-            raise NotImplementedError()
-        self.write(model_object_list)
+            self.remove_by_key(key)
+            self.add(model_object)
 
     def remove(self, model_object: _TYPE):
         '''Remove the model_object from the csv file. Raises
