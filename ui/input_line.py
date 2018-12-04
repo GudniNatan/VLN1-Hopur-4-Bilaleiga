@@ -1,4 +1,3 @@
-from msvcrt import getwch
 import os
 
 
@@ -63,18 +62,13 @@ class InputLine(object):
 
 
 if __name__ == "__main__":
+    from readkey import readkey
     inputLine = InputLine()
     os.system("cls")
     print(inputLine)
     while True:
-        key = ord(getwch())
-        if key == 224:
-            key = ord(getwch())
-            inputLine.keypress(key, True)
-        else:
-            if key == 13:
-                break
-            inputLine.keypress(chr(key))
+        key = readkey()
+        inputLine.keypress(chr(key))
         os.system("cls")
         print(inputLine)
     print(inputLine.get_input())

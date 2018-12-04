@@ -1,6 +1,16 @@
 import os
 import sys
 
+# This exists because msvcrt.getwch does not exist
+# on operating systems other than windows.
+# We need to keep compatability with macos as one of our
+# team members has a macbook, and we dont know what our
+# beloved instructor has.
+# This file is somewhat ugly, but the readkey_unix
+# function is from:
+# https://docs.python.org/2/faq/library.html#how-do-i-get-a-single-keypress-at-a-time
+
+# Translate key codes in unix to windows
 KEYMAP = {
     10: 13,
     127: 8,
@@ -40,7 +50,7 @@ def readkey_unix():
                     sys.stdin.read(1)
                     c = ord(sys.stdin.read(1)) + 10000
                 break
-            except IOError:
+            except (IOError, TypeError):
                 pass
     finally:
         termios.tcsetattr(fd, termios.TCSAFLUSH, oldterm)
