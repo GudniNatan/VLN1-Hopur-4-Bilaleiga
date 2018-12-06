@@ -1,212 +1,246 @@
-from ui.input_line import InputLine
-from ui.readkey import readkey
 import os
-import sys
+from ui.input_line import InputLine
+from ui.option import MenuOption
+from ui.readkey import readkey
+
+BACK = "B"
+QUIT = "Q"
+SUBMIT = "S"
+NEXT_PAGE = ">"
+LAST_PAGE = "<"
 
 
 class Menu(object):
-    __CURSOR = "->"
-    QUIT = "Q"
-    BACK = "B"
-    SUBMIT = "S"
+    __CURSOR = "→"
 
     def __init__(self, header="", errors=list(), inputs=list(), options=list(),
-                 footer="", cursor_position=0, page=0, max_options_per_page=7):
+                 footer="", page=0, max_options_per_page=9, can_go_back=True):
         self.__header = header
-        self.__errors = errors
-        self.__options = options
         self.__footer = footer
-        self.__cursor_position = cursor_position
-        self.__page_number = page
+        self.__current_page_number = page
+        self.__cursor_position = 0
+        self.__inputs = list()
+        self.__options = list()
+        self.__pages = list()
+        self.__can_go_back = can_go_back
         self.__max_options_per_page = max_options_per_page
-        self.__page_count = len(self.__options) // self.__max_options_per_page
-        self.__input_lines = list()
-        for input_info in inputs:
-            prompt = input_info.get("prompt", "")
-            default = input_info.get("default", "")
-            type_ = input_info.get("type", "text")
-            input_line = InputLine(prompt, default, type_)
-            self.__input_lines.append(input_line)
-        self.__display_lines = self.__get_display_lines()
         self.__selected_input = None
-        if self.__display_lines[cursor_position] in ["", "\n"]:
-            self.move_cursor(1)
-        self.__select_input_by_cursor()
+        self.__selection = None
+        self.__errors = errors
+        self.process_inputs(inputs)
+        self.process_options(options)
+        self.process_pages()
+        self.move_cursor()
+
+    def process_inputs(self, inputs):
+        for an_input in reversed(inputs):
+            prompt = an_input["prompt"]
+            default_text = an_input.get("value", "")
+            input_type = an_input.get("type", "text")
+            input_line = InputLine(prompt, default_text, input_type)
+            self.__inputs.append(input_line)
+
+    def process_options(self, options):
+        counter = 1
+        for primitive_option in options:
+            if type(primitive_option) == tuple:
+                option = MenuOption(*primitive_option)
+            else:
+                option = MenuOption(counter, primitive_option)
+                counter += 1
+            self.__options.append(option)
+        self.__options.reverse()
+
+    def get_foot_options(self):
+        quit_option = MenuOption(QUIT, "Hætta")
+        back_option = MenuOption(BACK, "Til baka")
+        submit_option = MenuOption(SUBMIT, "Staðfesta")
+        foot_options = [quit_option]
+        if self.__can_go_back:
+            foot_options.insert(0, back_option)
+        if self.__inputs:
+            foot_options.insert(0, submit_option)
+        return foot_options
+
+    def process_pages(self):
+        foot_options = self.get_foot_options()
+        last_page_option = MenuOption(LAST_PAGE, "Fletta til baka")
+        next_page_option = MenuOption(NEXT_PAGE, "Fletta áfram")
+        seperator = list()
+        if self.__inputs and self.__options:
+            seperator.append("")
+        lines = self.__inputs + seperator + self.__options
+        self.add_page(lines, last_page_option, next_page_option, foot_options)
+        while lines:
+            self.add_page(lines, last_page_option,
+                          next_page_option, foot_options)
+
+    def add_page(self, lines, last_page_option,
+                 next_page_option, foot_options):
+        page = list()
+        for i in range(self.__max_options_per_page):
+            try:
+                line = lines.pop()
+            except IndexError:
+                break
+            page.append(line)
+        page.append("")
+        if lines:
+            page.append(next_page_option)
+        if self.__pages:
+            page.append(last_page_option)
+        for option in foot_options:
+            page.append(option)
+        self.__pages.append(page)
 
     def display(self):
         display_string = "{}\n\n".format(self.__header)
         if self.__errors:
-            display_string += "ERROR(S):\n"
+            display_string += "Villa:\n"
         for error in self.__errors:
             display_string += "{}\n".format(error)
-
-        for i, line in enumerate(self.__display_lines):
-            if line:
-                cursor = " " * len(self.__CURSOR)
-                if self.__cursor_position == i:
-                    cursor = self.__CURSOR
-                display_string += cursor + str(line)
-        display_string += "\n{}".format(self.__footer)
+        display_string += self.__page_string()
+        display_string += self.__page_number_string()
+        display_string += self.__footer
         self.clear_screen()
         print(display_string.strip())
 
-    def __get_display_lines(self):
-        display_lines = list()
-        option_lines = self.__get_options_page_strings()
-        nav_lines = self.__get_nav_strings()
-        if self.__input_lines:
-            display_lines.extend(self.__input_lines + ["\n"])
-        display_lines.extend(option_lines)
-        display_lines.extend(nav_lines)
-        return display_lines
+    def __page_string(self):
+        cursor_filler = " " * (len(self.__CURSOR) + 1)
+        page = self.__pages[self.__current_page_number]
+        page_string = ""
+        for i, line in enumerate(page):
+            start = cursor_filler
+            if self.__cursor_position == i:
+                start = self.__CURSOR
+            elif not line:
+                start = ""
+            page_string += "{}{}\n".format(start, str(line))
+        return page_string.strip("\n\r")
 
-    def __get_page_start_end(self):
-        page_start = self.__page_number * self.__max_options_per_page
-        page_end = page_start + self.__max_options_per_page
-        page_end = min(page_end, len(self.__options))
-        return page_start, page_end
-
-    def __get_options_page_strings(self):
-        page_option_strings = list()
-        page_start, page_end = self.__get_page_start_end()
-        for i in range(page_start, page_end):
-            option_string = "[{}] {}\n".format(i + 1, self.__options[i])
-            if not self.__options[i]:
-                option_string = "\n"
-            page_option_strings.append(option_string)
-        if page_option_strings:
-            page_option_strings[-1] += "\n"
-        return page_option_strings
-
-    def __get_nav_strings(self):
-        page_start, page_end = self.__get_page_start_end()
-        last_page_string = ""
-        next_page_string = ""
-        submit_string = ""
-        if len(self.__input_lines) > 0:
-            submit_string = "Submit\n"
-        if page_start > 0:
-            last_page_string = "Previous page: ({}/{})\n".format(
-                self.__page_number, self.__page_count)
-        if page_end < len(self.__options):
-            next_page_string = "Next page: ({}/{})\n".format(
-                self.__page_number+2, self.__page_count)
-        back_string = "[{}] Back\n".format(self.BACK)
-        quit_string = "[ESC] Quit to main menu\n".format(self.QUIT)
-
-        return [submit_string, last_page_string, next_page_string,
-                back_string, quit_string]
+    def __page_number_string(self):
+        if len(self.__pages) > 1:
+            return "\nSíða {} af {}\n".format(
+                self.__current_page_number + 1,
+                len(self.__pages)
+            )
+        else:
+            return ""
 
     def get_input(self):
-        menu_completed = False
-        while not menu_completed:
+        self.__select_input_by_cursor()
+        self.__selection = None
+        while self.__selection is None:
             self.display()
             key = readkey()
-            menu_completed = self.__process_input(key)
-            if menu_completed in [self.QUIT, self.BACK, self.SUBMIT]:
-                return menu_completed, self.__input_lines
-        cursor = self.__cursor_position
-        if cursor == len(self.__display_lines) - 1:
-            cursor = "Q"
-        elif cursor == len(self.__display_lines) - 2:
-            cursor = self.BACK
-        elif cursor == len(self.__display_lines) - 5:
-            cursor = self.SUBMIT
-        else:
-            if self.__input_lines:
-                cursor -= len(self.__input_lines) + 1
-            cursor = cursor + self.__page_number * self.__page_count
-        return cursor, [input_line.get_input() for input_line
-                        in self.__input_lines]
+            self.process_input(key)
+        # return the selection and any input lines values
+        return self.__selection, self.get_input_values()
 
-    def __process_input(self, key):
+    def get_cursor_selection(self):
+        page = self.__current_page_number
+        cursor_pos = self.__cursor_position
+        selection = self.__pages[page][cursor_pos]
+
+    def get_input_values(self):
+        values = list()
+        for input_line in reversed(self.__inputs):
+            values.append(input_line.get_input())
+        return values
+
+    def process_input(self, key):
         if key == 10080:  # arrow down
             self.move_cursor(1)
         elif key == 10072:  # arrow up
             self.move_cursor(-1)
-        elif key == 27:
+        elif key == 27:  # escape
             if self.__selected_input is None:
-                return self.QUIT
+                self.__selection = BACK
             else:
                 self.move_cursor()
         elif key == 9:  # tab
             self.move_cursor(1)
             self.__select_input_by_cursor()
         elif key == 13:  # return
-            # if cursor is by a input check if its selected
-            # if the input is selected move cursor down and select the next
-            # input if there is an input there
-            # if the input is not selected, select it
-            # if the cursor is not by an input, submit the selection.
-            # unless the cursor by page controls, then flip the page.
-            selected_input = self.__display_lines[self.__cursor_position]
-            if type(selected_input) == InputLine:
-                if selected_input == self.__selected_input:
-                    self.move_cursor(1)
-                self.__select_input_by_cursor()
-            else:
-                return True
+            self.handle_return()
         elif self.__selected_input is not None:
             self.__selected_input.keypress(chr(key))
-        return False
+        else:
+            self.__handle_hotkey(key)
+
+    def handle_return(self):
+        page = self.__pages[self.__current_page_number]
+        cursor_input = page[self.__cursor_position]
+        if type(cursor_input) == InputLine:
+            if cursor_input == self.__selected_input:
+                self.move_cursor(1)
+            self.__select_input_by_cursor()
+        else:
+            selection = cursor_input.get_value()
+            if selection == NEXT_PAGE:
+                self.__next_page()
+            elif selection == LAST_PAGE:
+                self.__previous_page()
+            else:
+                self.__selection = cursor_input.get_value()
+
+    def __handle_hotkey(self, key):
+        hotkey = chr(key)
+        if hotkey == NEXT_PAGE:
+            self.__next_page()
+            return
+        elif hotkey == LAST_PAGE:
+            self.__previous_page()
+            return
+        page = self.__pages[self.__current_page_number]
+        for item in page:
+            if type(item) == MenuOption:
+                if item.get_hotkey().upper() == hotkey.upper():
+                    self.__selection = hotkey.upper()
+                    break
+
+    def __next_page(self):
+        self.__change_page(self.__current_page_number + 1)
+
+    def __previous_page(self):
+        self.__change_page(self.__current_page_number - 1)
+
+    def __change_page(self, page_number):
+        self.__current_page_number = page_number
+        self.__current_page_number %= len(self.__pages)
+        self.__cursor_position = 0
+        self.move_cursor()
+
+    def __select_input_by_cursor(self):
+        page = self.__pages[self.__current_page_number]
+        cursor_input = page[self.__cursor_position]
+        if type(cursor_input) == InputLine:
+            self.__selected_input = cursor_input
+            cursor_input.set_active(True)
 
     def move_cursor(self, distance=0):
         direction = distance >= 0    # True if down, False if up
         distance = abs(distance)
         cursor = self.__cursor_position
+        page = self.__pages[self.__current_page_number]
+        if page[cursor] in ["", "\n"]:
+            cursor += 1
+            cursor %= len(page)
         while distance != 0:
             cursor += 1 if direction else -1
-            cursor %= len(self.__display_lines)
-            if self.__display_lines[cursor] not in ["", "\n"]:
+            cursor %= len(page)
+            if page[cursor] not in ["", "\n"]:
                 distance -= 1
         self.__cursor_position = cursor
         if self.__selected_input is not None:
             self.__selected_input.set_active(False)
             self.__selected_input = None
 
-    def __change_page(self, page_number):
-        if 0 <= page_number <= self.__page_count:
-            self.__page_number = page_number
-        self.__display_lines = self.__get_display_lines()
-        self.__cursor_position = 0
-        self.move_cursor(-3)
-
-    def __select_input_by_cursor(self):
-        input_line = self.__display_lines[self.__cursor_position]
-        if type(input_line) == InputLine:
-            self.__selected_input = input_line
-            self.__selected_input.set_active(True)
-
-    def __str__(self):
-        inputs = [str(line) for line in self.__input_lines]
-        return "".join(inputs).strip()
+    def set_errors(self, errors: list):
+        self.__errors = errors
 
     def clear_screen(self):
         if os.name == 'nt':
             os.system('cls')
         else:
             os.system('clear')
-
-    def set_errors(self, errors: list):
-        self.__errors = errors
-
-
-if __name__ == "__main__":
-    my_inputs = [{"prompt": "Input name:"}, {"prompt": "Input age:"}]
-    my_options = ["wow", "i", "am", "so", "algebraic"]
-    menu = InputMenu(header="My menu", inputs=my_inputs, options=my_options,
-                     footer="Bílaleiga Björgvins ©")
-    cursor, name = menu.get_input()
-    print(cursor)
-    if cursor == "S":
-        print("Your name is", name)
-    elif cursor == "B":
-        print("Go back!")
-    elif cursor == "Q":
-        print("I QUIT")
-    menu = InputMenu((cursor, name), list(), [{"prompt": "Is this program awsome or what:", "default": "yes it is"}])
-    cursor, name = menu.get_input()
-    many_options = ["option #{}".format(i) for i in range(30)]
-    menu = InputMenu(header="My pagified menu", options=many_options)
-    print(menu.get_input())
-    input()

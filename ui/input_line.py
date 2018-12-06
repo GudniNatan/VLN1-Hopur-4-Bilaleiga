@@ -55,10 +55,13 @@ class InputLine(object):
         if self.__is_password:
             left_side = "*" * len(left_side)
             right_side = "*" * len(right_side)
-        return "{}{}{}{}\n".format(prompt, left_side, cursor, right_side)
+        return "{}{}{}{}".format(prompt, left_side, cursor, right_side)
 
     def get_input(self):
         return (self.__left_side + self.__right_side).strip()
+
+    def get_value(self):
+        return self.get_input()
 
 
 if __name__ == "__main__":

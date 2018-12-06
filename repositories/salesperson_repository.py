@@ -1,9 +1,7 @@
 from repositories.staff_repository import StaffRepository
+from models.salesperson import Salesperson
 
 
 class SalespersonRepository(StaffRepository):
-    def __init__(self, *args, **kwargs):
-        return super().__init__(*args, **kwargs)
-
-    def dict_to_model_object(self, staff_dict):
-        pass
+    _FILENAME = "./data/Salespeople.csv"
+    _TYPE = Salesperson

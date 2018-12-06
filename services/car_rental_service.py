@@ -31,8 +31,11 @@ class CarRentalService(object):
 
     def pop_to_limit(self):
         controller_stack = self.__controller_stack
-        controller = controller_stack.pop()
-        while controller.is_pop_limit() is False and controller_stack:
+        self.pop()
+        if not self.__controller_stack:
+            return
+        controller = controller_stack[-1]
+        while controller.get_pop_limit() is False and controller_stack:
             controller = controller_stack.pop()
         return controller
 

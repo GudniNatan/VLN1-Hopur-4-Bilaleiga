@@ -1,6 +1,7 @@
 from repositories.staff_repository import StaffRepository
+from models.admin import Admin
 
 
 class AdminRepository(StaffRepository):
-    def __init__(self, *args, **kwargs):
-        return super().__init__(*args, **kwargs)
+    _FILENAME = "./data/Admins.csv"
+    _TYPE = Admin
