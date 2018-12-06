@@ -3,10 +3,11 @@ from models.admin import Admin
 from models.salesperson import Salesperson
 from ui.menu import Menu
 from services.help_menu_controller import HelpMenuController
+from services.manage_salespeople_controller import ManageSalespeopleController
 
 
 class MainMenuController(Controller):
-    def __init__(self, service, priority_controller=False):
+    def __init__(self, service, priority_controller=True):
         super().__init__(service, priority_controller)
         self._menu_stack.append((self.main_menu, None))
 
@@ -49,6 +50,10 @@ class MainMenuController(Controller):
         self.handle_return_selection(selection)
         if selection == "X":
             self._service.set_current_user(None)
+        elif selection == 8:
+            salespeople_controller = ManageSalespeopleController(self._service)
+            self._service.add(salespeople_controller)
+            self._active = False
 
     def make_login_menu(self):
         header = "Innskráning starfsmanna:"

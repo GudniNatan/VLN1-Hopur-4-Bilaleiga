@@ -8,7 +8,7 @@ class MenuOption(object):
             self.__hotkey = hotkey
 
     def __str__(self):
-        return "[{}] {}".format(self.__value, self.__descriptor)
+        return "[{}] {}".format(self.__hotkey, self.__descriptor)
 
     def get_hotkey(self):
         return self.__hotkey

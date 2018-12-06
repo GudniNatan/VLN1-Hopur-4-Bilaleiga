@@ -69,7 +69,7 @@ class Menu(object):
         seperator = list()
         if self.__inputs and self.__options:
             seperator.append("")
-        lines = self.__inputs + seperator + self.__options
+        lines = self.__options + seperator + self.__inputs
         self.add_page(lines, last_page_option, next_page_option, foot_options)
         while lines:
             self.add_page(lines, last_page_option,
@@ -101,7 +101,7 @@ class Menu(object):
             display_string += "{}\n".format(error)
         display_string += self.__page_string()
         display_string += self.__page_number_string()
-        display_string += self.__footer
+        display_string += "\n" + self.__footer
         self.clear_screen()
         print(display_string.strip())
 
