@@ -16,7 +16,7 @@ class ManageSalespeopleController(Controller):
         if selection == 1 or selection == 2:
             if selection == 2:
                 for i in range(len(values)):
-                    values[i] == ""
+                    values[i] = ""
             results = self.__search_salespeople(*values)
             search_menu = self.__make_search_result_menu(results)
             self._menu_stack.append((self.search_result_menu, search_menu))
@@ -59,18 +59,8 @@ class ManageSalespeopleController(Controller):
             # go to deletion feedback screen
             delete_feedback_menu = self.__make_delete_feedback_menu()
             self.__selected_salesperson = None
-            self._menu_stack.append((self.deletion_feedback_screen,
+            self._menu_stack.append((self.feedback_screen,
                                      delete_feedback_menu))
-
-    def deletion_feedback_screen(self, menu):
-        selection, values = menu.get_input()
-        self.handle_return_selection(selection)
-        if selection == 1:
-            # back to salespeople main menu
-            self._service.pop()
-            salespeople_controller = ManageSalespeopleController(self._service)
-            self._service.add(salespeople_controller)
-            self._active = False
 
     def edit_salesperson_menu(self, menu):
         selection, values = menu.get_input()
@@ -85,8 +75,22 @@ class ManageSalespeopleController(Controller):
             salesperson.set_email(values[3])
             salesperson.set_phone(values[4])
             SalespersonRepository().update(salesperson, key)
+            update_feedback_menu = self.__make_update_feedback_menu()
+            self._menu_stack.append((self.feedback_screen,
+                                     update_feedback_menu))
+
+    def feedback_screen(self, menu):
+        selection, values = menu.get_input()
+        self.handle_return_selection(selection)
+        if selection == 1:
+            # back to salespeople main menu
+            self._service.pop()
+            salespeople_controller = ManageSalespeopleController(self._service)
+            self._service.add(salespeople_controller)
+            self._active = False
 
     # Menu makers
+    # Maybe move these to the UI layer?
     def __make_main_menu(self):
         header = "Starfsmannaskrá\n\nLeita af starfsmanni"
         inputs = [
@@ -141,6 +145,17 @@ class ManageSalespeopleController(Controller):
                                     can_go_back=False)
         return delete_feedback_menu
 
+    def __make_update_feedback_menu(self):
+        salesperson = self.__selected_salesperson
+        username = salesperson.get_username()
+        header = "{} hefur verið uppfærð/ur".format(username)
+        header += "\nNýju gildin eru:"
+        for key, value in salesperson.get_dict().items():
+            header += "\n\t{}: {}".format(key, value)
+        options = [{"description": "Aftur í starfsmannaskrá"}]
+        feedback_menu = Menu(header=header, options=options)
+        return feedback_menu
+
     def __make_edit_menu(self):
         salesperson = self.__selected_salesperson
         inputs = list()
@@ -157,6 +172,7 @@ class ManageSalespeopleController(Controller):
         return edit_menu
 
     # Other
+    # These should definitely be moved somewhere else
     def __search_salespeople(self, username="", name="", email="", phone=""):
         salespeople = SalespersonRepository().get_all()
         username = username.strip()
