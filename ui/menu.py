@@ -197,7 +197,7 @@ class Menu(object):
         for item in page:
             if type(item) == MenuOption:
                 if item.get_hotkey().upper() == hotkey.upper():
-                    self.__selection = hotkey.upper()
+                    self.__selection = item.get_value()
                     break
 
     def __next_page(self):

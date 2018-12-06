@@ -47,6 +47,8 @@ class Controller(ABC):
             self.controller_back()
         elif selection == "Q":
             self.controller_quit()
+        else:
+            return selection
 
     def pop(self):
         self._menu_stack.pop()

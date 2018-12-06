@@ -23,13 +23,14 @@ class ManageSalespeopleController(Controller):
 
     def search_result_menu(self, menu):
         selection, values = menu.get_input()
-        self.handle_return_selection(selection)
+        selection = self.handle_return_selection(selection)
         # take the selected person stored in selection,
         # make a salesperson menu,
         # add it to the menu stack
-        salesperson_menu = self.__make_salesperson_menu(selection)
-        self.__selected_salesperson = selection
-        self._menu_stack.append((self.salesperson_menu, salesperson_menu))
+        if selection:
+            salesperson_menu = self.__make_salesperson_menu(selection)
+            self.__selected_salesperson = selection
+            self._menu_stack.append((self.salesperson_menu, salesperson_menu))
 
     def salesperson_menu(self, menu):
         selection, values = menu.get_input()
@@ -81,20 +82,22 @@ class ManageSalespeopleController(Controller):
         return menu
 
     def __make_search_result_menu(self, results):
-        header = "Starfsmannaskrá -> Leit -> Niðurstöður"
+        header = "Starfsmannaskrá -> Leit"
+        header += "\nFann {} niðurstöður:".format(len(results))
         option_list = list()
         for person in results:
             person_option = {"description": person, "value": person}
             option_list.append(person_option)
-        result_menu = Menu(header=header, options=results)
+        result_menu = Menu(header=header, options=option_list)
         return result_menu
 
     def __make_salesperson_menu(self, salesperson):
         name = salesperson.get_name()
-        header = "Þú valdir: {}".format(name)
+        header = "Starfsmannaskrá -> Leit -> Valinn starfsmaður"
+        header += "\nÞú valdir: {}".format(name)
         options = [
-            {"description": "Breyta:".format(name)},
-            {"description": "Eyða: ".format(name)},
+            {"description": "Breyta: {}".format(name)},
+            {"description": "Eyða: {}".format(name)},
             ]
         return Menu(header=header, options=options)
 

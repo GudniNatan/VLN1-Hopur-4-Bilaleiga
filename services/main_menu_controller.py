@@ -51,7 +51,7 @@ class MainMenuController(Controller):
             {"hotkey": 'X', "description": "Skrá út"}
             ]
         if type(user) == Admin:
-            staff_options.insert(-2, {"description": "Starfsmannaskrá"})
+            staff_options.insert(-1, {"description": "Starfsmannaskrá"})
         menu = Menu(header=header, options=staff_options)
         selection, values = menu.get_input()
         self.handle_return_selection(selection)

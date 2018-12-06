@@ -5,7 +5,7 @@ class MenuOption(object):
         if hotkey is None:
             self.__hotkey = str(value)[0]
         else:
-            self.__hotkey = hotkey
+            self.__hotkey = str(hotkey)
 
     def __str__(self):
         return "[{}] {}".format(self.__hotkey, self.__descriptor)

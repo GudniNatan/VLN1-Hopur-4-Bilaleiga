@@ -19,7 +19,10 @@ class Staff(Model):
         return self.csv_repr()
 
     def __eq__(self, other):
-        return self._username == other._username
+        if isinstance(other, Staff):
+            return self._username == other._username
+        else:
+            return self._username == str(other)
 
     # Get
     def get_username(self):
