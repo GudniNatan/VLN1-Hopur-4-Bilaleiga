@@ -26,7 +26,7 @@ class MainMenuController(Controller):
             {"description": "Bóka bílaleigubíl"},
             {"description": "Innskráning starfsmanna"},
             ]
-        menu = Menu(header=header, options=customer_options)
+        menu = Menu(header=header, options=customer_options, can_go_back=False)
         selection, values = menu.get_input()
         self.handle_return_selection(selection)
         if selection == "H":
@@ -52,7 +52,7 @@ class MainMenuController(Controller):
             ]
         if type(user) == Admin:
             staff_options.insert(-1, {"description": "Starfsmannaskrá"})
-        menu = Menu(header=header, options=staff_options)
+        menu = Menu(header=header, options=staff_options, can_go_back=False)
         selection, values = menu.get_input()
         self.handle_return_selection(selection)
         if selection == "X":

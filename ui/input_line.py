@@ -7,8 +7,10 @@ class InputLine(object):
         self.__right_side = ""
         self.__cursor = "█"
         self.__active = False
-        self.__prompt = prompt
+        self.__prompt = str(prompt).strip().capitalize()
         self.__is_password = str(type_).lower() == "password"
+        if self.__prompt[-1] != ":":
+            self.__prompt += ":"
 
     def keypress(self, char, special=False):
         if not self.__active:

@@ -1,20 +1,9 @@
 from services.car_rental_service import CarRentalService
+from ui.splash_screen import splash_screen
 
 
 def main():
-    print("__________ __ __          __          __                     ")
-    print("\______   \__|  | _____  |  |   ____ |__| _________          ")
-    print(" |    |  _/  |  | \__  \ |  | _/ __ \|  |/ ___\__  \         ")
-    print(" |    |   \  |  |__/ __ \|  |_\  ___/|  / /_/  > __ \_       ")
-    print(" |______  /__|____(____  /____/\___  >__\___  (____  /       ")
-    print("        \/             \/          \/  /_____/     \/        ")
-    print("__________     __  _   _                    __               ")
-    print("\______   \   |__||_|_|_|_____  _______  _|__| ____   ______ ")
-    print(" |    |  _/   |  |/  _ \_  __ \/ ___\  \/ /  |/    \ /  ___/ ")
-    print(" |    |   \   |  (  <_> )  | \/ /_/  >   /|  |   |  \\\___ \ ")
-    print(" |______  /\__|  |\____/|__|  \___  / \_/ |__|___|  /____  > ")
-    print("        \/\______|           /_____/              \/     \/  ")
-    [i for i in range(10000000)]
+    splash_screen()
     service = CarRentalService()
     service.start()
 
