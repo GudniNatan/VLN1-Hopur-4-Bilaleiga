@@ -43,12 +43,13 @@ class Menu(object):
     def process_options(self, options):
         counter = 1
         for primitive_option in options:
-            if type(primitive_option) == tuple:
-                option = MenuOption(*primitive_option)
-            else:
-                option = MenuOption(counter, primitive_option)
-                counter += 1
+            description = primitive_option["description"]
+            hotkey = primitive_option.get("hotkey", counter)
+            value = primitive_option.get("value", hotkey)
+            option = MenuOption(value, description, hotkey)
             self.__options.append(option)
+            if hotkey == counter:
+                counter += 1
         self.__options.reverse()
 
     def get_foot_options(self):

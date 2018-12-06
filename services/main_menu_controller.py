@@ -21,8 +21,10 @@ class MainMenuController(Controller):
     def customer_menu(self):
         header = "Velkominn í Bílaleigu Björgvins!"
         customer_options = [
-            ("H", "Hjálp"), "Verðskrá", "Bóka bílaleigubíl",
-            "Innskráning starfsmanna",
+            {"hotkey": "H", "description": "Hjálp"},
+            {"description": "Verðskrá"},
+            {"description": "Bóka bílaleigubíl"},
+            {"description": "Innskráning starfsmanna"},
             ]
         menu = Menu(header=header, options=customer_options)
         selection, values = menu.get_input()
@@ -39,12 +41,17 @@ class MainMenuController(Controller):
         header = "Skráður inn sem {}\n".format(type(user))
         header += "Velkomin/n aftur, {}!".format(user.get_name())
         staff_options = [
-            "Leigja bíl", "Skila bíl", "Birta verðlista", "Skoða pantanir",
-            "Skrá viðskiptavin", "Fletta upp viðskiptavini", "Bílaskrá"
+            {"description": "Leigja bíl"},
+            {"description": "Skila bíl"},
+            {"description": "Birta verðlista"},
+            {"description": "Skoða pantanir"},
+            {"description": "Skrá viðskiptavin"},
+            {"description": "Fletta upp viðskiptavini"},
+            {"description": "Bílaskrá"},
+            {"hotkey": 'X', "description": "Skrá út"}
             ]
         if type(user) == Admin:
-            staff_options.append("Starfsmannaskrá")
-        staff_options.append(('X', "Skrá út"))
+            staff_options.insert(-2, {"description": "Starfsmannaskrá"})
         menu = Menu(header=header, options=staff_options)
         selection, values = menu.get_input()
         self.handle_return_selection(selection)
