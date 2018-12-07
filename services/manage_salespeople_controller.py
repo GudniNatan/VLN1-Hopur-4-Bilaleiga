@@ -10,9 +10,7 @@ class ManageSalespeopleController(Controller):
         self.__selected_salesperson = None
 
     # Menus
-    def main_menu(self, menu):
-        selection, values = menu.get_input()
-        self.handle_return_selection(selection)
+    def main_menu(self, menu, selection, values):
         if selection == 1 or selection == 2:
             if selection == 2:
                 for i in range(len(values)):
@@ -20,21 +18,20 @@ class ManageSalespeopleController(Controller):
             results = self.__search_salespeople(*values)
             search_menu = self.__make_search_result_menu(results)
             self._menu_stack.append((self.search_result_menu, search_menu))
+        elif selection == 3:
+            new_salesperson_menu = self.__make_new_salesperson_menu()
+            self._menu_stack.append((self.create_salesperson,
+                                     new_salesperson_menu))
 
-    def search_result_menu(self, menu):
-        selection, values = menu.get_input()
-        selection = self.handle_return_selection(selection)
+    def search_result_menu(self, menu, selection, values):
         # take the selected person stored in selection,
         # make a salesperson menu,
         # add it to the menu stack
-        if selection:
-            salesperson_menu = self.__make_salesperson_menu(selection)
-            self.__selected_salesperson = selection
-            self._menu_stack.append((self.salesperson_menu, salesperson_menu))
+        salesperson_menu = self.__make_salesperson_menu(selection)
+        self.__selected_salesperson = selection
+        self._menu_stack.append((self.salesperson_menu, salesperson_menu))
 
-    def salesperson_menu(self, menu):
-        selection, values = menu.get_input()
-        self.handle_return_selection(selection)
+    def salesperson_menu(self, menu, selection, values):
         if selection == 1:  # update salesperson
             # go to salesperson edit menu
             edit_menu = self.__make_edit_menu()
@@ -48,9 +45,7 @@ class ManageSalespeopleController(Controller):
                                      deletion_menu))
             pass
 
-    def delete_salesperson_menu(self, menu):
-        selection, values = menu.get_input()
-        self.handle_return_selection(selection)
+    def delete_salesperson_menu(self, menu, selection, values):
         if selection == 0:
             # delete the salesperson
             SalespersonRepository().remove(self.__selected_salesperson)
@@ -62,40 +57,45 @@ class ManageSalespeopleController(Controller):
             self._menu_stack.append((self.feedback_screen,
                                      delete_feedback_menu))
 
-    def edit_salesperson_menu(self, menu):
-        selection, values = menu.get_input()
-        self.handle_return_selection(selection)
+    def edit_salesperson_menu(self, menu, selection, values):
         if selection == "S":
             # Update the salesperson
-            salesperson = self.__selected_salesperson
-            key = salesperson.get_username()
-            salesperson.set_username(values[0])
-            salesperson.set_password(values[1])
-            salesperson.set_name(values[2])
-            salesperson.set_email(values[3])
-            salesperson.set_phone(values[4])
-            SalespersonRepository().update(salesperson, key)
-            update_feedback_menu = self.__make_update_feedback_menu()
+            old_salesperson = self.__selected_salesperson
+            old_key = old_salesperson.get_username()
+            try:
+                salesperson = self._validation.validate_salesperson(*values)
+            except ValueError as error:
+                menu.set_errors(error)
+                return
+            SalespersonRepository().update(salesperson, old_key)
+            # Move to feedback screen
+            update_report_menu = self.__make_update_report_menu()
             self._menu_stack.append((self.feedback_screen,
-                                     update_feedback_menu))
+                                     update_report_menu))
 
-    def feedback_screen(self, menu):
-        selection, values = menu.get_input()
-        self.handle_return_selection(selection)
-        if selection == 1:
-            # back to salespeople main menu
-            self._service.pop()
-            salespeople_controller = ManageSalespeopleController(self._service)
-            self._service.add(salespeople_controller)
-            self._active = False
+    def feedback_screen(self, menu, selection, values):
+        # back to salespeople main menu
+        self.controller_restart()
+
+    def create_salesperson(self, menu, selection, values):
+        if selection == "S":
+            try:
+                salesperson = self._validation.validate_salesperson(*values)
+            except ValueError as error:
+                menu.set_errors(error)
+                return
+            SalespersonRepository().add(salesperson)
+            new_report_menu = self.__make_new_report_menu(salesperson)
+            self._menu_stack.append((self.feedback_screen,
+                                     new_report_menu))
 
     # Menu makers
     # Maybe move these to the UI layer?
     def __make_main_menu(self):
         header = "Starfsmannaskrá\n\nLeita af starfsmanni"
         inputs = [
-            {"prompt": "Notendanafn:"}, {"prompt": "Nafn:"},
-            {"prompt": "Netfang:"}, {"prompt": "Símanúmer:"},
+            {"prompt": "Username:"}, {"prompt": "Name:"},
+            {"prompt": "Email:"}, {"prompt": "Phone:"},
             ]
         options = [
             {"description": "Leita"}, {"description": "Sjá alla starfsmenn"},
@@ -145,16 +145,26 @@ class ManageSalespeopleController(Controller):
                                     can_go_back=False)
         return delete_feedback_menu
 
-    def __make_update_feedback_menu(self):
+    def __make_update_report_menu(self):
         salesperson = self.__selected_salesperson
         username = salesperson.get_username()
         header = "{} hefur verið uppfærð/ur".format(username)
-        header += "\nNýju gildin eru:"
-        for key, value in salesperson.get_dict().items():
-            header += "\n\t{}: {}".format(key, value)
-        options = [{"description": "Aftur í starfsmannaskrá"}]
-        feedback_menu = Menu(header=header, options=options)
-        return feedback_menu
+        return_location = "Starfsmannaskrá"
+        return self.__report_menu(salesperson, header, return_location)
+
+    def __make_new_report_menu(self, salesperson):
+        username = salesperson.get_username()
+        header = "{} hefur verið bætt við".format(username)
+        return_location = "Starfsmannaskrá"
+        return self.__report_menu(salesperson, header, return_location)
+
+    def __report_menu(self, model_object, message, return_location):
+        message += "\nNýju gildin eru:"
+        for key, value in model_object.get_dict().items():
+            message += "\n\t{}: {}".format(key, value)
+        options = [{"description": "Aftur í {}".format(return_location)}]
+        report_menu = Menu(header=message, options=options)
+        return report_menu
 
     def __make_edit_menu(self):
         salesperson = self.__selected_salesperson
@@ -170,6 +180,19 @@ class ManageSalespeopleController(Controller):
             inputs.append(input_dict)
         edit_menu = Menu(header=header, inputs=inputs)
         return edit_menu
+
+    def __make_new_salesperson_menu(self):
+        header = "Starfsmannaskrá -> Nýr starfsmaður"
+        header += "\nSláðu inn upplýsingarnar fyrir nýja starfsmanninn:"
+        inputs = [
+            {"prompt": "username"},
+            {"prompt": "password", "type": "password"},
+            {"prompt": "name"},
+            {"prompt": "email"},
+            {"prompt": "phone"},
+        ]
+        new_salesperson_menu = Menu(header=header, inputs=inputs)
+        return new_salesperson_menu
 
     # Other
     # These should definitely be moved somewhere else

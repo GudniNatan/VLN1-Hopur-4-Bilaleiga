@@ -10,20 +10,18 @@ class MainMenuController(Controller):
     def __init__(self, service, priority_controller=True):
         super().__init__(service, priority_controller)
         # always append the first active menu function in the constructor
-        # Usually, this should also call a make menu function. 
-        self._menu_stack.append((self.main_menu, None))
+        # Usually, this should also call a make menu function.
+        self._menu_stack.append((self.main_menu, self.__make_customer_menu()))
 
     # Menus
-    def main_menu(self, values):
+    def main_menu(self, menu, selection, values):
         user = self._service.get_current_user()
         if user is None:
-            self.customer_menu(self.__make_customer_menu())
+            self.customer_menu(menu, selection, values)
         else:
-            self.staff_menu(self.__make_staff_menu())
+            self.staff_menu(menu, selection, values)
 
-    def customer_menu(self, menu):
-        selection, values = menu.get_input()
-        self.handle_return_selection(selection)
+    def customer_menu(self, menu, selection, values):
         if selection == "H":
             # create help controller, transfer control
             help_controller = HelpMenuController(self._service)
@@ -31,28 +29,27 @@ class MainMenuController(Controller):
             self._active = False  # This will stop the menu from looping
         if selection == 3:
             # To move to another menu function, just add it to the stack!
-            self._menu_stack.append((self.login, self.make_login_menu()))
+            self._menu_stack.append((self.login, self.__make_login_menu()))
 
-    def staff_menu(self, menu):
-        selection, values = menu.get_input()
-        self.handle_return_selection(selection)
+    def staff_menu(self, menu, selection, values):
         if selection == "X":
             self._service.set_current_user(None)
+            self.controller_restart()
         elif selection == 8:
             salespeople_controller = ManageSalespeopleController(self._service)
             self._service.add(salespeople_controller)
             self._active = False
 
-    def login(self, login_menu=None):
-        selection, values = login_menu.get_input()
-        self.handle_return_selection(selection)
+    def login(self, menu, selection, values):
         if selection == "S":
             user = self._validation.validate_login(*values)
             self._service.set_current_user(user)
             if user is None:
-                login_menu.set_errors(("Rangt notendanafn eða lykilorð.",))
+                menu.set_errors(("Rangt notendanafn eða lykilorð.",))
             else:
-                self._menu_stack.pop()
+                menu_tuple = (self.main_menu, self.__make_staff_menu())
+                self._menu_stack[0] = menu_tuple
+                self.menu_back()
 
     # Menu makers
     # Maybe move these to the UI layer?

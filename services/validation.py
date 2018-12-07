@@ -1,5 +1,6 @@
 from repositories.admin_repository import AdminRepository
 from repositories.salesperson_repository import SalespersonRepository
+from models.salesperson import Salesperson
 
 
 class Validation(object):
@@ -16,3 +17,17 @@ class Validation(object):
                 if person.get_password() == password:
                     return person
         return None
+
+    def validate_salesperson(self, username, password,
+                             name, email, phone):
+        if not (username and password and name and email and phone):
+            raise ValueError("Það er nauðsynlegt að fylla út öll gildin.")
+        if email.count('@') != 1:
+            raise ValueError("Ekki gilt netfang")
+        phone = phone.replace("-", "")
+        phone = phone.replace(" ", "")
+        if len(phone) != 7 and len(phone) != 10:
+            raise ValueError("Ekki gilt símanúmer")
+        name = name.capitalize()
+        salesperson = Salesperson(username, password, name, email, phone)
+        return salesperson
