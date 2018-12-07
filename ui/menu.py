@@ -13,8 +13,10 @@ LAST_PAGE = "<"
 class Menu(object):
     __CURSOR = "→"
 
-    def __init__(self, header="", errors=list(), inputs=list(), options=list(),
-                 footer="", page=0, max_options_per_page=9, can_go_back=True):
+    def __init__(self, header="", errors=list(), inputs=list(),
+                 options=list(), footer="", page=0, max_options_per_page=9,
+                 can_go_back=True, stop_function=None, back_function=None,
+                 submit_function=None, can_submit=True):
         self.__header = header
         self.__footer = footer
         self.__current_page_number = page
@@ -23,10 +25,14 @@ class Menu(object):
         self.__options = list()
         self.__pages = list()
         self.__can_go_back = can_go_back
+        self.__can_submit = can_submit
         self.__max_options_per_page = max_options_per_page
         self.__selected_input = None
         self.__selection = None
         self.__errors = errors
+        self.__stop_function = stop_function
+        self.__back_function = back_function
+        self.__submit_function = submit_function
         self.process_inputs(inputs)
         self.process_options(options)
         self.process_pages()
@@ -53,13 +59,13 @@ class Menu(object):
         self.__options.reverse()
 
     def get_foot_options(self):
-        quit_option = MenuOption(QUIT, "Hætta")
-        back_option = MenuOption(BACK, "Til baka")
-        submit_option = MenuOption(SUBMIT, "Staðfesta")
+        quit_option = MenuOption(self.__stop_function, "Hætta", QUIT)
+        back_option = MenuOption(self.__back_function, "Til baka", BACK)
+        submit_option = MenuOption(self.__submit_function, "Staðfesta", SUBMIT)
         foot_options = [quit_option]
         if self.__can_go_back:
             foot_options.insert(0, back_option)
-        if self.__inputs:
+        if self.__inputs and self.__can_submit:
             foot_options.insert(0, submit_option)
         return foot_options
 
@@ -136,7 +142,10 @@ class Menu(object):
             key = readkey()
             self.process_input(key)
         # return the selection and any input lines values
-        return self.__selection, self.get_input_values()
+        values = self.get_input_values()
+        if not values:
+            values = self.__selection.get_description()
+        return self.__selection.get_value(), values
 
     def get_cursor_selection(self):
         page = self.__current_page_number
@@ -183,7 +192,7 @@ class Menu(object):
             elif selection == LAST_PAGE:
                 self.__previous_page()
             else:
-                self.__selection = cursor_input.get_value()
+                self.__selection = cursor_input
 
     def __handle_hotkey(self, key):
         hotkey = chr(key)
@@ -197,7 +206,7 @@ class Menu(object):
         for item in page:
             if type(item) == MenuOption:
                 if item.get_hotkey().upper() == hotkey.upper():
-                    self.__selection = item.get_value()
+                    self.__selection = item
                     break
 
     def __next_page(self):

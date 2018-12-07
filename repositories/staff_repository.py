@@ -9,10 +9,5 @@ class StaffRepository(Repository):
     _CSV_ROW_NAMES = ["username", "password", "name",
                       "email", "phone"]
 
-    def dict_to_model_object(self, car_dict):
-        username = car_dict['username']
-        password = car_dict['password']
-        name = car_dict['name']
-        email = car_dict['email']
-        phone = car_dict['phone']
-        return self._TYPE(username, password, name, email, phone)
+    def dict_to_model_object(self, staff_dict):
+        return self._TYPE(**staff_dict)

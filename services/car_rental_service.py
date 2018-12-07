@@ -22,6 +22,9 @@ class CarRentalService(object):
 
     def add(self, controller):
         if isinstance(controller, Controller):
+            if self.__controller_stack:
+                top_controller = self.__controller_stack[-1]
+                top_controller.deactivate()
             self.__controller_stack.append(controller)
         else:
             raise ValueError("{} should be a controller.".format(controller))

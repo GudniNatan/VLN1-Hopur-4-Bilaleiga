@@ -6,8 +6,8 @@ class Customer(Model):
     def __init__(
             self, driver_licence_id: str, personal_id: str, first_name: str,
             last_name: str, birthdate: date, phone_number: str,
-            cc_holder_first_name: str, cc_holder_last_name: str, ccn: str,
-            cc_exp_date: str, email: str
+            email: str, cc_holder_first_name: str, cc_holder_last_name: str,
+            ccn: str, cc_exp_date: date,
             ):
         self.__driver_licence_id = driver_licence_id
         self.__personal_id = personal_id
@@ -15,23 +15,32 @@ class Customer(Model):
         self.__last_name = last_name
         self.__birthdate = birthdate
         self.__phone_number = phone_number
+        self.__email = email
         self.__cc_holder_first_name = cc_holder_first_name
         self.__cc_holder_last_name = cc_holder_last_name
         self.__ccn = ccn
         self.__cc_exp_date = cc_exp_date
-        self.__email = email
 
     def csv_repr(self):
-        return {"username": self._username, "password": self._password,
-                "name": self._name, "email": self._email,
-                "phone": self._phone}
+        customer_dict = self.get_dict()
+        customer_dict['birthdate'] = self.__birthdate.isoformat()
+        customer_dict['cnn_exp_date'] = self.__cc_exp_date.isoformat()
+        return customer_dict
 
     def get_dict(self):
-        return self.csv_repr()
+        return {
+            "driver_licence_id": self.__driver_licence_id,
+            "first_name": self.__first_name, "last_name": self.__last_name,
+            "birthdate": self.__birthdate, "phone_number": self.__phone_number,
+            "phone_number": self.__phone_number,
+            "cc_holder_first_name": self.__cc_holder_first_name,
+            "cc_holder_last_name": self.__cc_holder_last_name,
+            "ccn": self.__ccn, "cc_exp_date": self.__cc_exp_date
+            }
 
     def __eq__(self, other):
-        if isinstance(other, Staff):
-            return self._username == other._username
+        if isinstance(other, Customer):
+            return self.__driver_licence_id == other.__driver_licence_id
         else:
             return self._username == str(other)
 

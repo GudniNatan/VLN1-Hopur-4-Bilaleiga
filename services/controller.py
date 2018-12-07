@@ -18,11 +18,9 @@ class Controller(ABC):
         self._active = True
         menu_stack = self._menu_stack
         while menu_stack and self._active:
-            fun, menu = menu_stack[-1]
-            selection, values = menu.get_input()
-            self.handle_return_selection(selection)
-            if selection is not None:
-                fun(menu, selection, values)
+            menu = menu_stack[-1]
+            a_function, values = menu.get_input()
+            a_function(values, menu)
         if not menu_stack:
             self._service.pop()
 
@@ -38,32 +36,27 @@ class Controller(ABC):
             if staff.get_user() == username:
                 return staff
 
-    def menu_back(self):
+    def back(self, values=None, menu=None):
         self._menu_stack.pop()
 
-    def controller_quit(self):
-        self._active = False
+    def stop(self, values=None, menu=None):
+        self.deactivate()
         self._service.pop_to_limit()
 
-    def controller_back(self):
-        self._active = False
+    def controller_back(self, values=None, menu=None):
+        self.deactivate()
         self._service.pop()
 
-    def controller_restart(self):
+    def restart(self, values=None, menu=None):
         self.controller_back()
         controller = type(self)(self._service)
         self._service.add(controller)
-
-    def handle_return_selection(self, selection):
-        if selection == "B":
-            self.menu_back()
-        elif selection == "Q":
-            self.controller_quit()
-        else:
-            return selection
 
     def pop(self):
         self._menu_stack.pop()
 
     def append(self, menu_function):
         self._menu_stack.append(menu_function)
+
+    def deactivate(self):
+        self._active = False

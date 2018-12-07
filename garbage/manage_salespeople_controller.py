@@ -9,6 +9,85 @@ class ManageSalespeopleController(Controller):
         self._menu_stack.append(self.__make_main_menu())
         self.__selected_salesperson = None
 
+    # Menus DEPRECATED
+    def main_menu(self, menu, selection, values):
+        if selection == 1 or selection == 2:
+            if selection == 2:
+                for i in range(len(values)):
+                    values[i] = ""
+            results = self.__search_salespeople(*values)
+            search_menu = self.__make_search_result_menu(results)
+            self._menu_stack.append((self.search_result_menu, search_menu))
+        elif selection == 3:
+            new_salesperson_menu = self.__make_new_salesperson_menu()
+            self._menu_stack.append((self.create_salesperson,
+                                     new_salesperson_menu))
+
+    def search_result_menu(self, menu, selection, values):
+        # take the selected person stored in selection,
+        # make a salesperson menu,
+        # add it to the menu stack
+        salesperson_menu = self.__make_salesperson_menu(selection)
+        self.__selected_salesperson = selection
+        self._menu_stack.append((self.salesperson_menu, salesperson_menu))
+
+    def salesperson_menu(self, menu, selection, values):
+        if selection == 1:  # update salesperson
+            # go to salesperson edit menu
+            edit_menu = self.__make_edit_menu()
+            self._menu_stack.append((self.edit_salesperson_menu,
+                                     edit_menu))
+            pass
+        elif selection == 2:  # delete salesperson
+            # go to deletion confirmation menu
+            deletion_menu = self.__make_deletion_menu()
+            self._menu_stack.append((self.delete_salesperson_menu,
+                                     deletion_menu))
+            pass
+
+    def delete_salesperson_menu(self, menu, selection, values):
+        if selection == 0:
+            # delete the salesperson
+            SalespersonRepository().remove(self.__selected_salesperson)
+            # create deletion feedback menu
+            # the menu should be a special no-back menu
+            # go to deletion feedback screen
+            delete_feedback_menu = self.__make_delete_feedback_menu()
+            self.__selected_salesperson = None
+            self._menu_stack.append((self.feedback_screen,
+                                     delete_feedback_menu))
+
+    def edit_salesperson_menu(self, menu, selection, values):
+        if selection == "S":
+            # Update the salesperson
+            old_salesperson = self.__selected_salesperson
+            old_key = old_salesperson.get_username()
+            try:
+                salesperson = self._validation.validate_salesperson(*values)
+            except ValueError as error:
+                menu.set_errors(error)
+                return
+            SalespersonRepository().update(salesperson, old_key)
+            # Move to feedback screen
+            update_report_menu = self.__make_update_report_menu()
+            self._menu_stack.append((self.feedback_screen,
+                                     update_report_menu))
+
+    def feedback_screen(self, menu, selection, values):
+        # back to salespeople main menu
+        self.controller_restart()
+
+    def create_salesperson(self, menu, selection, values):
+        if selection == "S":
+            try:
+                salesperson = self._validation.validate_salesperson(*values)
+            except ValueError as error:
+                menu.set_errors(error)
+                return
+            SalespersonRepository().add(salesperson)
+            new_report_menu = self.__make_new_report_menu(salesperson)
+            self._menu_stack.append(new_report_menu)
+
     # Operations
     def go_to_search(self, values, menu):
         results = self.__search_salespeople(*values)
@@ -71,7 +150,7 @@ class ManageSalespeopleController(Controller):
         delete_feedback_menu = self.__make_delete_feedback_menu()
         self._menu_stack.append(delete_feedback_menu)
 
-    # Menu makers
+    # Menu makers 
     def __make_main_menu(self):
         header = "Starfsmannaskrá\n\nLeita af starfsmanni"
         inputs = [

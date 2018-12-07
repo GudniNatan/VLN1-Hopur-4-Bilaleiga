@@ -5,16 +5,15 @@ from ui.menu import Menu
 class HelpMenuController(Controller):
     def __init__(self, service, priority_controller=False):
         super().__init__(service, priority_controller)
-        self._menu_stack.append((self.help_menu, None))
+        self._menu_stack.append(self.__make_help_menu())
 
-    def help_menu(self, menu):
-        if menu is None:
-            header = self.create_help_header()
-            menu = Menu(header=header)
-        selection, values = menu.get_input()
-        self.pop()
+    def __make_help_menu(self):
+        header = self.__create_help_header()
+        menu = Menu(header=header, stop_function=self.stop,
+                    back_function=self.back)
+        return menu
 
-    def create_help_header(self):
+    def __create_help_header(self):
         dashline = "-" * 120 + "\n"
         header = "".join((
             "Velkominn í bókunarkerfi Bílaleigu Björgvins. ",
