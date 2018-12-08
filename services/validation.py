@@ -3,23 +3,9 @@ from repositories.salesperson_repository import SalespersonRepository
 from models.salesperson import Salesperson
 from datetime import date
 from math import inf
-
-# Validation functions:
-# + validate_datetime()
-# + validate_rent_time()
-# + validate_int()
-# + validate_ccn()
-# + validate_string(minlen: int, maxlen:int)
-# + validate_password()
-# + validate_login()
-# + validate_salesperson()
-# + validate_car()
-# + validate_car_availability()
-# + validate_order()
-# + validate_odometer()
-# + validate_payment()
-# + validate_phone()
-
+from models.branch import Branch
+from repositories.branch_repository import BranchRepository
+from models.car import Car
 
 class Validation(object):
     def __init__(self):
@@ -71,16 +57,64 @@ class Validation(object):
     
     def validate_set(self, some_set):
         valid_set = set()
+        valid_str_list = []
         set_list = some_set.split(", ")
         for i in set_list:
-            valid_str = validate_str(i)     #af hverju get ég ekki kallað í validate_str??
+            valid_str_list.append(validate_str(i))
             valid_set.add(valid_str)
         return valid_set
-        
 
-    #def validate_car(self, license_plate:str, model:str, price_per_day:int, extra_insurance_per_day:int, category:str, 
-    #               wheel_count=4, drive_train:str, automatic_shift:bool, seat_count:int, door_count:int, weight:int, 
-    #               fuel_type:str, fuel_efficiency:float, emission:float, extra_properties:set, kilometer_count:int, 
-    #               horsepower:int, current_branch:Branch)
+    def validate_float(self, some_float, name):
+        try:
+            valid_float = float(some_float)
+        except ValueError:
+            error_str = "{} þarf að vera tugabrot. {} er ekki tugabrot."
+            error_str_format = error_str.format(name, some_float)
+            raise ValueError(error_str_format)
+        return valid_float
 
-    
+    def validate_car(
+            self, license_plate, model, price_per_day,
+            extra_insurance_per_day, category, wheel_count,
+            drive_train, automatic_shift, seat_count, door_count,
+            weight, fuel_type, fuel_efficiency, extra_properties,
+            kilometer_count, horsepower, current_branch=None
+            ):
+
+        valid_license_plate = self.validate_str(license_plate)
+        valid_model = self.validate_str(model)
+        valid_price_per_day = self.validate_int(price_per_day)
+        valid_extra_insurance_per_day = self.validate_str(
+            extra_insurance_per_day
+        )
+        valid_category = self.validate_str(category)
+        valid_wheel_count = self.validate_int(wheel_count)
+        valid_drive_train = self.validate_str(drive_train)
+        automatic_shift_upper = self.validate_str(automatic_shift) == "J"
+        valid_automatic_shift = automatic_shift_upper
+        valid_seat_count = self.validate_int(seat_count)
+        valid_door_count = self.validate_int(door_count)
+        valid_weight = self.validate_int(weight)
+        valid_fuel_type = self.validate_str
+        valid_fuel_efficiency = self.validate_float(fuel_efficiency) 
+        valid_extra_properties = self.validate_set
+        valid_kilometer_count = self.validate_int
+        valid_horsepower = self.validate_int(horsepower)
+
+        if current_branch is None:
+            branch_repo = BranchRepository()
+            valid_current_branch = branch_repo.get_all()[0]
+        else:
+            if type(current_branch) == Branch:
+                valid_current_branch = current_branch
+            else:
+                raise ValueError("Útibú er ekki gilt.")
+
+        return Car(
+            valid_license_plate, valid_model, valid_price_per_day,
+            valid_extra_insurance_per_day, valid_category, valid_wheel_count,
+            valid_drive_train, valid_automatic_shift, valid_seat_count,
+            valid_door_count, valid_weight, valid_fuel_type,
+            valid_fuel_efficiency, valid_extra_properties,
+            valid_kilometer_count, valid_horsepower
+        )
