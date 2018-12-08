@@ -1,6 +1,7 @@
 from repositories.admin_repository import AdminRepository
 from repositories.salesperson_repository import SalespersonRepository
 from models.salesperson import Salesperson
+from datetime import date
 
 
 class Validation(object):
@@ -38,3 +39,13 @@ class Validation(object):
         except ValueError:
             raise ValueError("{} þarf að vera tala".format(name))
         return definitely_int
+
+    def validate_date(self, maybe_date, name):
+        try:
+            definitely_date = date.fromisoformat(maybe_date)
+        except ValueError:
+            raise ValueError("{} þarf að vera dagsetning. {} er ekki gild dagsetning.".format(name, maybe_date))
+        return definitely_date
+        
+
+
