@@ -3,6 +3,22 @@ from repositories.salesperson_repository import SalespersonRepository
 from models.salesperson import Salesperson
 from datetime import date
 
+# Validation functions:
+# + validate_datetime()
+# + validate_rent_time()
+# + validate_int()
+# + validate_ccn()
+# + validate_string(minlen: int, maxlen:int)
+# + validate_password()
+# + validate_login()
+# + validate_salesperson()
+# + validate_car()
+# + validate_car_availability()
+# + validate_order()
+# + validate_odometer()
+# + validate_payment()
+# + validate_phone()
+
 
 class Validation(object):
     def __init__(self):
