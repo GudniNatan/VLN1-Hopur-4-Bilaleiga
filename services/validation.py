@@ -2,6 +2,7 @@ from repositories.admin_repository import AdminRepository
 from repositories.salesperson_repository import SalespersonRepository
 from models.salesperson import Salesperson
 from datetime import date
+from math import inf
 
 
 class Validation(object):
@@ -46,6 +47,24 @@ class Validation(object):
         except ValueError:
             raise ValueError("{} þarf að vera dagsetning. {} er ekki gild dagsetning.".format(name, maybe_date))
         return definitely_date
+
+    def validate_str(self, some_str, name):
+        if not some_str.strip():
+            raise ValueError("Reiturinn fyrir {} má ekki vera tómur.".format(name))
+        return some_str.strip()
+    
+    def validate_set(self, some_set):
+        valid_set = set()
+        set_list = some_set.split(", ")
+        for i in set_list:
+            valid_str = validate_str(i)     #af hverju get ég ekki kallað í validate_str??
+            valid_set.add(valid_str)
+        return valid_set
         
 
+    #def validate_car(self, license_plate:str, model:str, price_per_day:int, extra_insurance_per_day:int, category:str, 
+    #               wheel_count=4, drive_train:str, automatic_shift:bool, seat_count:int, door_count:int, weight:int, 
+    #               fuel_type:str, fuel_efficiency:float, emission:float, extra_properties:set, kilometer_count:int, 
+    #               horsepower:int, current_branch:Branch)
 
+    
