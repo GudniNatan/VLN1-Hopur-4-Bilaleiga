@@ -8,6 +8,7 @@ class InputLine(object):
         self.__cursor = "█"
         self.__active = False
         self.__prompt = str(prompt).strip().capitalize()
+        self.__prompt = self.__prompt.replace("_", " ")
         self.__is_password = str(type_).lower() == "password"
         if self.__prompt[-1] != ":":
             self.__prompt += ":"

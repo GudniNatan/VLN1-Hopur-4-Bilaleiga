@@ -9,7 +9,7 @@ class Controller(ABC):
     def __init__(self, service, priority_controller=False):
         self._service = service
         self._menu_stack = list()
-        self._ui = CarRentalUI()
+        self._ui = CarRentalUI(self.back, self.stop)
         self._priority_controller = priority_controller
         self._active = False
         self._validation = Validation()

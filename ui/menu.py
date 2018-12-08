@@ -51,7 +51,7 @@ class Menu(object):
         for primitive_option in options:
             description = primitive_option["description"]
             hotkey = primitive_option.get("hotkey", counter)
-            value = primitive_option.get("value", hotkey)
+            value = primitive_option.get("value", None)
             option = MenuOption(value, description, hotkey)
             self.__options.append(option)
             if hotkey == counter:

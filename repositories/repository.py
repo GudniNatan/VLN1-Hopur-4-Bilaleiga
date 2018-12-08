@@ -77,6 +77,9 @@ class Repository(ABC):
         self.remove(model_object)
         pass
 
+    def get_row_names(self):
+        return self._CSV_ROW_NAMES
+
     @abstractmethod
     def dict_to_model_object(self, a_dict):
         return self._TYPE(**a_dict)

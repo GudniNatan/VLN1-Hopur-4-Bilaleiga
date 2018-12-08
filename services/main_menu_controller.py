@@ -4,6 +4,7 @@ from models.salesperson import Salesperson
 from ui.menu import Menu
 from services.help_menu_controller import HelpMenuController
 from services.manage_salespeople_controller import ManageSalespeopleController
+from services.manage_customers_controller import ManageCustomersController
 
 
 class MainMenuController(Controller):
@@ -28,6 +29,16 @@ class MainMenuController(Controller):
     def go_to_salespeople_controller(self, values, menu):
         salespeople_controller = ManageSalespeopleController(self._service)
         self._service.add(salespeople_controller)
+
+    def go_to_customer_controller(self, values, menu):
+        customer_controller = ManageCustomersController(self._service)
+        self._service.add(customer_controller)
+
+    def go_to_add_customer(self, values, menu):
+        customer_controller = ManageCustomersController(
+            self._service, shortcut_to_register=True
+        )
+        self._service.add(customer_controller)
 
     def handle_login(self, values, menu):
         user = self._validation.validate_login(*values)
@@ -63,10 +74,12 @@ class MainMenuController(Controller):
         staff_options = [
             {"description": "Leigja bíl"},
             {"description": "Skila bíl"},
-            {"description": "Birta verðlista"},
-            {"description": "Skoða pantanir"},
-            {"description": "Skrá viðskiptavin"},
-            {"description": "Fletta upp viðskiptavini"},
+            {"description": "Verðskrá"},
+            {"description": "Skrá viðskiptavin",
+                "value": self.go_to_add_customer},
+            {"description": "Fletta upp viðskiptavini",
+                "value": self.go_to_customer_controller},
+            {"description": "Pantanaskrá"},
             {"description": "Bílaskrá"},
             {"hotkey": 'X', "description": "Skrá út", "value": self.log_out}
             ]
@@ -75,7 +88,7 @@ class MainMenuController(Controller):
                         "value": self.go_to_salespeople_controller}
             staff_options.insert(-1, staff_op)
         menu = Menu(header=header, options=staff_options, can_go_back=False,
-                    stop_function=self.stop)
+                    stop_function=self.stop, max_options_per_page=12)
         return menu
 
     def __make_login_menu(self):
