@@ -31,3 +31,10 @@ class Validation(object):
         name = name.capitalize()
         salesperson = Salesperson(username, password, name, email, phone)
         return salesperson
+
+    def validate_int(self, maybe_int, name):
+        try:
+            definitely_int = int(maybe_int)
+        except ValueError:
+            raise ValueError("{} þarf að vera tala".format(name))
+        return definitely_int
