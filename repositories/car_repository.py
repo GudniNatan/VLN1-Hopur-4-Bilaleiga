@@ -1,6 +1,5 @@
-from repositories.Repository import Repository
-from models.Car import Car
-import typing
+from repositories.repository import Repository
+from models.car import Car
 
 
 class CarRepository(Repository):

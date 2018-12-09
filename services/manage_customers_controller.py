@@ -37,7 +37,7 @@ class ManageCustomersController(Controller):
         )
         self._menu_stack.append(new_customer_menu)
 
-    def select_person(self, customer, menu):
+    def select_customer(self, customer, menu):
         customer_menu = self._ui.get_model_object_options_menu(
             customer, customer.get_name(), self.__controller_header,
             self.go_to_edit, self.go_to_delete
@@ -49,7 +49,8 @@ class ManageCustomersController(Controller):
         customer = self.__selected_customer
         name = customer.get_name()
         edit_menu = self._ui.get_edit_menu(
-            customer, name, self.__controller_header, self.edit_customer
+            customer, name, self.__controller_header,
+            self.edit_selected_customer
         )
         self._menu_stack.append(edit_menu)
 
@@ -106,7 +107,8 @@ class ManageCustomersController(Controller):
     def __make_main_menu(self):
         header = self.__controller_header
         header += "\n\nLeita að vidskiptavini"
-        inputs = [{"prompt": "Ökuskírteinisnúmer:"}, {"prompt": "Kennitala:"},
+        inputs = [{"prompt": "Ökuskírteinisnúmer:"},
+                  {"prompt": "Kennitala:"},
                   {"prompt": "Nafn:"}]
         search = self.go_to_search
         search_all = self.go_to_search_all

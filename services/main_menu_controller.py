@@ -5,6 +5,7 @@ from ui.menu import Menu
 from services.help_menu_controller import HelpMenuController
 from services.manage_salespeople_controller import ManageSalespeopleController
 from services.manage_customers_controller import ManageCustomersController
+from services.manage_cars_controller import ManageCarsController
 
 
 class MainMenuController(Controller):
@@ -33,6 +34,10 @@ class MainMenuController(Controller):
     def go_to_customer_controller(self, values, menu):
         customer_controller = ManageCustomersController(self._service)
         self._service.add(customer_controller)
+
+    def go_to_car_controller(self, values, menu):
+        car_controller = ManageCarsController(self._service)
+        self._service.add(car_controller)
 
     def go_to_add_customer(self, values, menu):
         customer_controller = ManageCustomersController(
@@ -80,7 +85,8 @@ class MainMenuController(Controller):
             {"description": "Fletta upp viðskiptavini",
                 "value": self.go_to_customer_controller},
             {"description": "Pantanaskrá"},
-            {"description": "Bílaskrá"},
+            {"description": "Bílaskrá",
+                "value": self.go_to_car_controller},
             {"hotkey": 'X', "description": "Skrá út", "value": self.log_out}
             ]
         if type(user) == Admin:
