@@ -73,9 +73,9 @@ class ManageCarsController(Controller):
         inputs = [{"prompt": "Númeraplata:"},
                   {"prompt": "Flokkur:"},
                   {"prompt": "Fjöldi sæta:"},
-                  {"prompt": "Fjöldi dyra:"},
-                  {"prompt": "Birta lausa (J/N):"},
-                  {"prompt": "Í útleigu (J/N):"}]
+                  {"prompt": "Sjálfskiptur (J/N):"},
+                  {"prompt": "Fela lausa bíla (J/N):"},
+                  {"prompt": "Fela leigða bíla (J/N):"}]
         search = self.go_to_search
         search_all = self.go_to_search_all
         create = self.go_to_create
