@@ -3,13 +3,28 @@ import typing
 
 
 class Car(Model):
-    def __init__(self, licence_plate_number: str, model: str, seat_count: int,
-                 automatic_shift: bool, category: str):
+    def __init__(
+        self, licence_plate_number: str, model: str,
+        category: str, wheel_count: int = 4, drivetrain: str,
+        transmission: str, seat_count: int, door_count: int, weight: int,
+        fuel_type: str, fuel_efficiency: float, extra_properties: set,
+        kilometer_count: int, horsepower: int, current_branch: Branch,
+            ):
         self.__licence_plate_number = licence_plate_number
         self.__model = model
-        self.__seat_count = seat_count
-        self.__automatic_shift = automatic_shift
         self.__category = category
+        self.__wheel_count = wheel_count
+        self.__drivetrain = drivetrain
+        self.__transmission = transmission
+        self.__seat_count = seat_count
+        self.__door_count = door_count
+        self.__weight = weight
+        self.__fuel_type = fuel_type
+        self.__fuel_efficiency = fuel_efficiency
+        self.__extra_properties = extra_properties
+        self.__kilometer_count = kilometer_count
+        self.__horsepower = horsepower
+        self.__current_branch = current_branch
 
     def csv_repr(self):
         return {"licence_plate_number": self.__licence_plate_number,

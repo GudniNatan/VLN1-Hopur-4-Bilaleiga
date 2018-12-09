@@ -16,7 +16,6 @@ class ManageCustomersController(Controller):
             self._menu_stack.append(self.__make_main_menu())
 
     # Operations
-    # THIS IS NOT IMPLEMENDTED YET
     def go_to_search(self, values, menu):
         results = self.__search_customers(*values)
         search_menu = self._ui.get_search_result_menu(
