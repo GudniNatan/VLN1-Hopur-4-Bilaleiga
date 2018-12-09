@@ -1,7 +1,7 @@
 from services.controller import Controller
 from repositories.car_repository import CarRepository
 from ui.menu import Menu
-from model.admin import Admin
+from models.admin import Admin
 
 
 class ManageCarsController(Controller):

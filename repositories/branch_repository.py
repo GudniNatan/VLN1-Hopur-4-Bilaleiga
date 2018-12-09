@@ -1,9 +1,9 @@
-from repositories.Repository import Repository
-from models.Branch import Branch
+from repositories.repository import Repository
+from models.branch import Branch
 import typing
 
 
-class CarRepository(Repository):
+class BranchRepository(Repository):
     _FILENAME = "./data/Branches.csv"
     _TYPE = Branch
     _PRIMARY_KEY = "licence_plate_number"  # name of primary key
