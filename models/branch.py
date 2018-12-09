@@ -3,11 +3,21 @@ import typing
 
 
 class Branch(Model):
-    def __init__(self, branch_name: str, address: str, cars: list()):
-        self.branch_name = branch_name
+    def __init__(self, name: str, address: str):
+        self.__name = name
+        self.__address = address
 
     def csv_repr(self):
-        return dict()
+        return self.get_dict()
 
     def get_dict(self):
-        return dict()
+        return {
+            "branch_name": self.__name,
+            "address": self.__address
+        }
+
+    def __eq__(self, other):
+        return self.__name == other.__name
+
+    def get_name(self):
+        return self.__name

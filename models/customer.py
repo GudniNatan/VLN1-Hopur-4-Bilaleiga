@@ -78,6 +78,9 @@ class Customer(Model):
     def get_email(self):
         return self.__email
 
+    def get_name(self):
+        return "{} {}".format(self.__first_name, self.__last_name)
+
     # Set
     def set_driver_licence_id(self, driver_licence_id):
         self.__driver_licence_id = driver_licence_id
