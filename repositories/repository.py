@@ -11,6 +11,10 @@ class Repository(ABC):
 
     def add(self, model_object: _TYPE):
         '''Adds the model object to the csv file'''
+        for item in self.get_all():
+            if item == model_object:
+                self.update(model_object)
+                return
         with open(self._FILENAME, "a+", newline='') as file_pointer:
             csv_dict_writer = csv.DictWriter(file_pointer,
                                              fieldnames=self._CSV_ROW_NAMES)

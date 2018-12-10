@@ -1,0 +1,100 @@
+licence_plate_number,model,seat_count,automatic_shift,category
+AZ-553,Toyota Aygo 2015,4,False,Small car
+TR-990,Nissan Leaf 2017,5,True,Small car
+BT-T54,Honda Odyssey 2014,4,True,Minivan
+SY-K64,Landrover Freelander 2016,5,True,Crossover
+OT-183,Toyota Yaris 2016,5,True,Small car
+BK-U58,Toyota Auris Terra 2012,5,False,Small car
+YR-I98,Kia Picanto L 2018,4,True,Small car
+HF-K73,Kia Picanto X 2017,5,True,Small car
+KL-894,Kia Rio X 2015,5,True,Small car
+GS-432,Kia Ceed EX 2015,5,True,Small car
+TJ-529,Volvo V40 2012,5,True,Small car
+OP-P38,Kia Ceed LX 1.4 2017,5,True,Small car
+TY-P31,Volkswagen Golf Variant 2016,5,False,Small car
+EU-P98,Kia Soul Ex 2017,5,True,Crossover
+NUV-I51,Kia Sorento Ex Classic 2013,4,False,Crossover
+OX-T31,Mercedes Benz A 180 2017,5,True,Small car
+GH-U56,Mercedes Benz A 180 D 2018,4,True,Small car
+TK-J18,Mercedes Benz GLK 220 CDI 4Matic 2015,5,True,SUV
+BU-P28,Mercedes Benz ML 350 Bluetec 4Matic 2013,5,True,SUV
+EX-137,Mercedes Benz CLA 220 D 2017,4,True,Small car
+HO-Y78,Mercedes Benz GLE 250 D 4Matic 2017,5,True,Crossover
+SU-C88,Mercedes Benz GLE 500 E 4Matic Plug-in Hybrid 2016,5,True,Crossover
+GP-K15,Mercedes Benz GL 350 Bluetec 4Matic 2016,5,True,SUV
+BG-J64,Dodge Grand Caravan SE 2001,7,True,Minivan
+VM-E41,Mercedes Benz GLS 63 AMG 2017,5,True,SUV
+FV-Y25,Land Rover Range Rover Vouge SDV6 2017,5,True,SUV
+AJ-G53,Aston Martin DB9 2010,4,False,Sport
+RK-V53,Land Rover Range Rover Vouge 2017,5,True,SUV
+UJ-S19,Porche 911 Carrera 2015,2,False,Sport
+BB-G93,Land Rover Range Rover Vouge 2018,5,True,SUV
+VT-D39,Toyota Land Cruiser 200 2016,5,True,SUV
+OO-K22,Toyota Land Cruiser 200 VX Navi 2016,5,True,SUV
+JS-M71,Toyota Land Cruiser 200 2015,5,True,SUV
+GX-O99,Porche 911 Turbo Techart 2008,4,False,Sport
+PT-G48,Land Rover Discovery 5 HSE Luxury 2018,5,True,SUV
+AL-O84,Ford Mustang GT Stage 3 723PS 2016,2,False,Sport
+GS-E67,Ford Expedition Limited 2018,5,True,SUV
+PU-H79,Audi RS5 Quattro Supercharged 2012,5,True,Small car
+UZ-Y99,Maserati Levante 2017,5,True,Crossover
+GW-X13,Land Rover Discovery 5HSE Dynamic 2018,5,False,Crossover
+UC-Z22,Tesla Modex X 90 D 2016,5,True,Small car
+JH-O38,Toyota Land Cruiser 150 GX 2016,5,True,SUV
+BU-O91,Toyota Land Cruiser 150 Luxury 2016,5,True,SUV
+FA-A91,Mercedes Benz GLS 350 D 4Matic 2017,5,True,Crossover
+TD-E37,BMW I8 2017,4,True,Sport
+BB-W78,Chevrolet Suburban LT Premier 2017,5,Crossover
+WW-A96,Land Rover Range Rover Sport HSE Dynamic SDV6,5,True,Crossover
+MQ-M59,Toyota Land Cruiser 200 VX,5,True,SUV
+SM-B76,Toyota Land Cruiser 150 GX 2016,5,True,SUV
+ES-J98,Toyota Land Cruiser 150 VX 2018,5,True,SUV
+GN-M62,Jeep Grand Cherokee SRT8 2017,5,True,Crossover
+ZP-K77,Jeep Grand Cherokee Summit Signature 2018,5,True,SUV
+MH-F73,Land Rover Discovery HSE Luxury,5,True,SUV
+HW-R75,Jeep Grand Cherokee Summit Signature 2018,5,True,SUV
+DR-V96,Chevrolet Camaro SS Convertible 2017,4,True,Sport
+TP-C75,BMW I8 2016,4,True,Sport
+AG-X31,Nissan Titan XD Pro 4X,5,True,SUV
+BN-W68,Ford F150 LOBO Edition 2018,5,True,SUV
+FF-Z82,Tesla Model S P85D 2015,5,True,Small car
+AD-Y77,Ford E350 Econoline Van 2007,7,True,SUV
+LN-X96,Ford E350 Econoline 2002,7,True,SUV
+LM-Q16,Jeep Grand Cherokee Trailhawk 2018,5,True,SUV
+AU-X86,Mercedes Benz C AMG 63 S 2016,5,True,Small car
+YD-H96,Volvo XC90 Inscription T8 Hybrid 2019,5,True,SUV
+SZ-V63,BMW X6 XDrive30D 2017,5,True,Crossover
+FH-J12,BMW X6 XDrive30D 2017,5,True,Crossover
+UW-Z59,Lexus RX 450H Executive 2018,5,True,Crossover
+MW-M24,Lexus RX 450 H Luxury 2017,5,True,Crossover
+AY-Z15,Mercedes Benz S 500 Plug In Hybrid 2015,5,True,Small car
+AQ-L19,Porche Cayenne S E-Hybrid 2017,5,True,Crossover
+KB-D24,Chevrolet Suburban 2017,5,True,SUV
+YJ-I39,Land Rover Discovery 2018,5,True,SUV
+OO-L75,BMW X5 XDrive40E 2016,5,True,Crossover
+HM-A88,Lexus RX 450H F-Sport 2017,5,True,Crossover
+DO-I46,Porche Cayenne S E-Hybrid 2016,5,False,Crossover
+RA-Q99,Lexus GS 450H F-Sport Hybrid 2017,5,True,Small car
+XF-N97,Mercedes Benz V Klasse 2017,8,True,Minivan
+SC-A35,Toyota Land Cruiser 150 Series 2018,5,True,SUV
+XU-Z15,Volvo V90 Cross Country D4 AWD Pro 2018,6,True,Crossover
+JT-A73,BMW 530E MTech 2018,5,True,Small car
+PZ-A54,Mercedes Benz E 350 Plugin Hybrid 2017,5,True,Small car
+NQ-W65,Mercedes Benz SL 55 AMG 2005,2,False,Sport
+IZ-W24,Chrysler Pacifica Platinum Plug In Hybrid 2017,8,True,Minivan
+UD-E26,Kia Stinger 2017,5,True,Small car
+UY-D91,Mercedes Benz Viano 4Matic 2014,8,True,Minivan
+NR-D43,Volvo S60 2016,5,True,Small car
+QU-W59,Volkswagen Golf R 2017,5,True,Small car
+RM-V83,Jaguar XF Prestige 2017,5,True,Small car
+TQ-E32,Toyota Proace Verso Active Plus 2017,8,True,Minivan
+HG-Z99,Ford CNG Technik Focus RS 2016,5,False,Small car
+PO-P38,Honda Civic Type-R 2018,5,False,Small car
+RD-O76,Volkswagen Golf GTI 2016,5,True,Small car
+JD-N56,Toyota Yaris GRMN 2018,5,False,Small car
+UJ-V69,Volvo XC70 2015,5,True,Small car
+QN-J63,Volkswagen Passat Variant Alltrack TDI 2017,5,True,Small car
+HU-L86,Volvo S80 D4 Summum 2014,5,False,Small car
+OX-L36,Ford Galaxy 2016,5,True,Small car
+GG-S35,Volvo S60 2017,5,True,Small car
+TT-C24,Mitsubishi Outlander 2015,5,True,Small car

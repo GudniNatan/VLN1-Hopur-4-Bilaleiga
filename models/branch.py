@@ -12,7 +12,7 @@ class Branch(Model):
 
     def get_dict(self):
         return {
-            "branch_name": self.__name,
+            "name": self.__name,
             "address": self.__address
         }
 

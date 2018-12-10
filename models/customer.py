@@ -24,12 +24,13 @@ class Customer(Model):
     def csv_repr(self):
         customer_dict = self.get_dict()
         customer_dict['birthdate'] = self.__birthdate.isoformat()
-        customer_dict['cnn_exp_date'] = self.__cc_exp_date.isoformat()
+        customer_dict['cc_exp_date'] = self.__cc_exp_date.isoformat()
         return customer_dict
 
     def get_dict(self):
         return {
             "driver_license_id": self.__driver_license_id,
+            "personal_id": self.__personal_id, "email": self.__email,
             "first_name": self.__first_name, "last_name": self.__last_name,
             "birthdate": self.__birthdate, "phone_number": self.__phone_number,
             "phone_number": self.__phone_number,

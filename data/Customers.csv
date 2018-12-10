@@ -1,1 +1,2 @@
-driver_licence_id,personal_id,first_name,last_name,birthdate,phone_number,email,cc_holder_first_name,cc_holder_last_name,ccn,cc_exp_date
+driver_license_id,personal_id,first_name,last_name,birthdate,phone_number,email,cc_holder_first_name,cc_holder_last_name,ccn,cc_exp_date
+55lstfbs,201101-2190,Guðni,Guðni,2001-11-20,5556969,gu@temala.is,Guðni,Gunnarsson,345908736842616,2020-12-01

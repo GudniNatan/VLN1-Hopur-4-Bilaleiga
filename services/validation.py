@@ -6,6 +6,7 @@ from math import inf
 from models.branch import Branch
 from repositories.branch_repository import BranchRepository
 from models.car import Car
+from models.customer import Customer
 
 # This is a class in which the methods take in some user inputted strings and
 # the names of whatever the input field is. The methods will return objects of
@@ -32,12 +33,8 @@ class Validation(object):
                              name, email, phone):
         if not (username and password and name and email and phone):
             raise ValueError("Það er nauðsynlegt að fylla út öll gildin.")
-        if email.count('@') != 1:
-            raise ValueError("Ekki gilt netfang")
-        phone = phone.replace("-", "")
-        phone = phone.replace(" ", "")
-        if len(phone) != 7 and len(phone) != 10:
-            raise ValueError("Ekki gilt símanúmer")
+        email = self.validate_email(email)
+        phone = self.validate_phone_number(phone)
         name = name.capitalize()
         salesperson = Salesperson(username, password, name, email, phone)
         return salesperson
@@ -50,13 +47,19 @@ class Validation(object):
         return definitely_int
 
     def validate_date(self, maybe_date, name):
-        try:
-            definitely_date = date.fromisoformat(maybe_date)
-        except ValueError:
+        date_formats = ["%Y-%m-%d", "%m/%y", "%d/%m/%Y", "%d-%m-%y"]
+        definitely_date = None
+        for date_format in date_formats:
+            try:
+                definitely_date = datetime.strptime(maybe_date, date_format)
+            except ValueError:
+                continue
+            break
+        if definitely_date is None:
             error_str = "{} þarf að vera dagsetning á forminu ÁÁÁÁ-MM-DD. "
             error_str += "{} er ekki gilt."
             raise ValueError(error_str.format(name, maybe_date))
-        return definitely_date
+        return definitely_date.date()
 
     def validate_time(self, maybe_time):
         try:
@@ -72,15 +75,22 @@ class Validation(object):
         a_datetime = datetime.combine(a_date, a_time)
         return a_datetime
 
-    def validate_datetime(self, datetime_str, name):
-
-        pass
+    def validate_datetime(self, datetime_str):
+        try:
+            a_datetime = datetime.fromisoformat(datetime_str)
+        except ValueError:
+            try:
+                a_datetime = datetime.strptime(datetime_str, "%d/%m/%Y")
+            except ValueError:
+                raise ValueError(
+                    "Dagsetning þarf að vera á forminu ÁÁÁÁ-MM-DD"
+                )
 
     def validate_str(self, some_str, name):
         some_str = some_str.strip()
         if not some_str:
             raise ValueError(
-                "Reiturinn fyrir {} má ekki vera tómur.".format(name)
+                "Þarf að fylla út: {}.".format(name)
             )
         return some_str
 
@@ -99,6 +109,44 @@ class Validation(object):
             error_str_format = error_str.format(name, some_float)
             raise ValueError(error_str_format)
         return valid_float
+
+    def validate_phone_number(self, phone_number):
+        phone_number = phone_number.strip()
+        phone_number = phone_number.replace("-", "")
+        phone_number = phone_number.replace(" ", "")
+        if len(phone_number) != 7 and len(phone_number) != 10:
+            raise ValueError("Ekki gilt símanúmer")
+        return phone_number
+
+    def validate_personal_id(self, personal_id_number):
+        personal_id_number = personal_id_number.strip()
+        personal_id_number = personal_id_number.replace("-", "")
+        personal_id_number = personal_id_number.replace(" ", "")
+        if not (9 <= len(personal_id_number) <= 10):
+            raise ValueError("Ekki gild Kennitala/SSN")
+        return personal_id_number
+
+    def validate_email(self, email):
+        if email.count('@') != 1:
+            raise ValueError("Ekki gilt netfang")
+        elif email.split("@")[1].count(".") != 1:
+            raise ValueError("Ekki gilt netfang")
+        return email
+
+    def validate_ccn(self, ccn):
+        ccn = ccn.strip().replace("-", "").replace(" ", "")
+        # Uses modified https://en.wikipedia.org/wiki/Luhn_algorithm
+        # to check credit card validity
+        LUHN_ODD_LOOKUP = (0, 2, 4, 6, 8,
+                           1, 3, 5, 7, 9)  # sum_of_digits (index * 2)
+        try:
+            evens = sum(int(p) for p in ccn[-1::-2])
+            odds = sum(LUHN_ODD_LOOKUP[int(p)] for p in ccn[-2::-2])
+            if (evens + odds) % 10 == 0:
+                return ccn
+        except ValueError:  # Raised if an int conversion fails
+            pass
+        raise ValueError("Ekki gilt kreditkortanúmer")
 
     def validate_car(
             self, license_plate, model, price_per_day,
@@ -144,4 +192,35 @@ class Validation(object):
             valid_door_count, valid_weight, valid_fuel_type,
             valid_fuel_efficiency, valid_extra_properties,
             valid_kilometer_count, valid_horsepower
+        )
+
+    def validate_customer(
+            self, driver_license_id: str, personal_id: str, first_name: str,
+            last_name: str, birthdate: str, phone_number: str,
+            email: str, cc_holder_first_name: str, cc_holder_last_name: str,
+            ccn: str, cc_exp_date: str
+            ):
+        driver_license_id = self.validate_str(
+            driver_license_id, "Ökuskírteinisnúmer"
+        )
+        personal_id = self.validate_str(personal_id, "Kennitala/SSN")
+        first_name = self.validate_str(first_name, "Fornafn")
+        last_name = self.validate_str(first_name, "Eftirnafn")
+        birthdate = self.validate_date(birthdate, "Fæðingardagur")
+        phone_number = self.validate_phone_number(phone_number)
+        email = self.validate_email(email)
+        cc_holder_first_name = self.validate_str(
+            cc_holder_first_name, "Fornafn kreditkortahandhafa"
+        )
+        cc_holder_last_name = self.validate_str(
+            cc_holder_last_name, "Eftirnafn kreditkortahandhafa"
+        )
+        ccn = self.validate_ccn(ccn)
+        cc_exp_date = self.validate_date(
+            cc_exp_date, "Fyrningardagsetning (MM/YY)"
+        )
+        return Customer(
+            driver_license_id, personal_id, first_name, last_name, birthdate,
+            phone_number, email, cc_holder_first_name, cc_holder_last_name,
+            ccn, cc_exp_date
         )

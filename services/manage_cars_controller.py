@@ -2,6 +2,7 @@ from services.controller import Controller
 from repositories.car_repository import CarRepository
 from ui.menu import Menu
 from models.admin import Admin
+from services.search import Search
 
 
 class ManageCarsController(Controller):
@@ -15,7 +16,7 @@ class ManageCarsController(Controller):
 
     # Operations
     def go_to_search(self, values, menu):
-        results = self.__search_cars(*values)
+        results = Search().search_cars(*values)
         search_menu = self._ui.get_search_result_menu(
             results, self.__controller_header, self.select_customer
         )
