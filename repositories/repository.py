@@ -50,7 +50,7 @@ class Repository(ABC):
         if an object with the given key is not found.'''
         file = self.read_file()
         for line in file:
-            if line[self._PRIMARY_KEY] == key:
+            if line[self._PRIMARY_KEY] == str(key):
                 return self.dict_to_model_object(line)
         raise ValueError
 

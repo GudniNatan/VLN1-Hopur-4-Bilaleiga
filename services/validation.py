@@ -1,11 +1,17 @@
 from repositories.admin_repository import AdminRepository
 from repositories.salesperson_repository import SalespersonRepository
 from models.salesperson import Salesperson
-from datetime import date
+from datetime import date, time, datetime
 from math import inf
 from models.branch import Branch
 from repositories.branch_repository import BranchRepository
 from models.car import Car
+
+# This is a class in which the methods take in some user inputted strings and
+# the names of whatever the input field is. The methods will return objects of
+# specified types. If there is some error in the input the class will raise a
+# ValueError with a human-readable, Icelandic error message.
+
 
 class Validation(object):
     def __init__(self):
@@ -47,28 +53,49 @@ class Validation(object):
         try:
             definitely_date = date.fromisoformat(maybe_date)
         except ValueError:
-            raise ValueError("{} þarf að vera dagsetning. {} er ekki gild dagsetning.".format(name, maybe_date))
+            error_str = "{} þarf að vera dagsetning á forminu ÁÁÁÁ-MM-DD. "
+            error_str += "{} er ekki gilt."
+            raise ValueError(error_str.format(name, maybe_date))
         return definitely_date
 
+    def validate_time(self, maybe_time):
+        try:
+            definitely_time = time.fromisoformat(maybe_time)
+        except ValueError:
+            error_str = "Tími: {} er ekki gildur tími".format(maybe_time)
+            raise ValueError(error_str)
+        return definitely_time
+
+    def validate_datetime_by_parts(self, date_str, time_str, name):
+        a_date = self.validate_date(date_str, name)
+        a_time = self.validate_time(time_str, name)
+        a_datetime = datetime.combine(a_date, a_time)
+        return a_datetime
+
+    def validate_datetime(self, datetime_str, name):
+
+        pass
+
     def validate_str(self, some_str, name):
-        if not some_str.strip():
-            raise ValueError("Reiturinn fyrir {} má ekki vera tómur.".format(name))
-        return some_str.strip()
-    
-    def validate_set(self, some_set):
+        some_str = some_str.strip()
+        if not some_str:
+            raise ValueError(
+                "Reiturinn fyrir {} má ekki vera tómur.".format(name)
+            )
+        return some_str
+
+    def validate_set(self, some_set, delimiter=", "):
         valid_set = set()
-        valid_str_list = []
-        set_list = some_set.split(", ")
-        for i in set_list:
-            valid_str_list.append(validate_str(i))
-            valid_set.add(valid_str)
+        set_list = some_set.split(delimiter)
+        for a_string in set_list:
+            valid_set.add(a_string)
         return valid_set
 
     def validate_float(self, some_float, name):
         try:
             valid_float = float(some_float)
         except ValueError:
-            error_str = "{} þarf að vera tugabrot. {} er ekki tugabrot."
+            error_str = "{} þarf að vera rauntala. {} er ekki rauntala."
             error_str_format = error_str.format(name, some_float)
             raise ValueError(error_str_format)
         return valid_float

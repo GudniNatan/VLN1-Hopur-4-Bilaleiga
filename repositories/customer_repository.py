@@ -11,7 +11,7 @@ class CustomerRepository(Repository):
         "driver_licence_id", "personal_id", "first_name", "last_name",
         "birthdate", "phone_number", "email", "cc_holder_first_name",
         "cc_holder_last_name", "ccn", "cc_exp_date"
-        ]
+    ]
 
     def dict_to_model_object(self, customer_dict):
         birthdate = date.fromisoformat(customer_dict["birthdate"])

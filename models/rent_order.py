@@ -6,20 +6,12 @@ from datetime import datetime
 
 class RentOrder(Model):
     def __init__(
-            self,
-            order_number: int,
-            car: Car,
-            customer: Customer,
-            pickup_time: datetime,
-            estimated_return_time: datetime,
-            pickup_branch_name: str,
-            return_branch_name: str,
-            insurance_total: int,
-            extra_insurance_total: int,
-            kilometer_allowance_per_day: int = 100,
-            total_cost: int = 0,
-            remaining_debt: int = 0,
-            kilometers_driven: int = 0,
+            self, order_number: int, car: Car, customer: Customer,
+            pickup_time: datetime, estimated_return_time: datetime,
+            pickup_branch_name: str, return_branch_name: str,
+            insurance_total: int, extra_insurance_total: int,
+            kilometer_allowance_per_day: int = 100, total_cost: int = 0,
+            remaining_debt: int = 0, kilometers_driven: int = 0,
             return_time: datetime = datetime(1, 1, 1),
             ):
         self.__order_number = order_number

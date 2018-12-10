@@ -4,11 +4,11 @@ from models.branch import Branch
 
 class Car(Model):
     def __init__(
-        self, license_plate_number: str, model: str,
-        category: str, wheel_count: int, drivetrain: str,
-        automatic_transmission: bool, seat_count: int, door_count: int,
-        weight: int, fuel_type: str, extra_properties: set,
-        kilometer_count: int, horsepower: int, current_branch: Branch,
+            self, license_plate_number: str, model: str,
+            category: str, wheel_count: int, drivetrain: str,
+            automatic_transmission: bool, seat_count: int,
+            extra_properties: set, kilometer_count: int,
+            current_branch: Branch,
             ):
         self.__license_plate_number = license_plate_number
         self.__model = model
@@ -17,12 +17,8 @@ class Car(Model):
         self.__drivetrain = drivetrain
         self.__automatic_transmission = automatic_transmission
         self.__seat_count = seat_count
-        self.__door_count = door_count
-        self.__weight = weight
-        self.__fuel_type = fuel_type
         self.__extra_properties = extra_properties
         self.__kilometer_count = kilometer_count
-        self.__horsepower = horsepower
         self.__current_branch = current_branch
 
     def csv_repr(self):
@@ -42,12 +38,8 @@ class Car(Model):
             "drivetrain": self.__drivetrain,
             "automatic_transmission": self.__automatic_transmission,
             "seat_count": self.__seat_count,
-            "door_count": self.__door_count,
-            "weight": self.__weight,
-            "fuel_type": self.__fuel_type,
             "extra_properties": self.__extra_properties,
             "kilometer_count": self.__kilometer_count,
-            "horsepower": self.__horsepower,
             "current_branch": self.__current_branch,
         }
 
