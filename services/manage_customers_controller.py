@@ -128,7 +128,7 @@ class ManageCustomersController(Controller):
         header = self.__controller_header + " -> Nýr viðskiptavinur"
         header += "\nSláðu inn upplýsingarnar fyrir nýja viðskiptavininn:"
         inputs = [
-            {"prompt": "driver licence id"},
+            {"prompt": "driver license id"},
             {"prompt": "personal id"},
             {"prompt": "first name"},
             {"prompt": "last_name"},

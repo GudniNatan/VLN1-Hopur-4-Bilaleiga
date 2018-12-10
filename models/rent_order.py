@@ -40,7 +40,7 @@ class RentOrder(Model):
     def csv_repr(self):
         rent_order_dict = self.get_dict()
         return_time_str = self.__estimated_return_time.isoformat()
-        rent_order_dict["car"] = self.__car.get_licence_plate_number()
+        rent_order_dict["car"] = self.__car.get_license_plate_number()
         rent_order_dict["customer"] = self.__customer.get_name()
         rent_order_dict["pickup_time"] = self.__pickup_time.isoformat()
         rent_order_dict["estimated_return_time"] = return_time_str
@@ -63,6 +63,15 @@ class RentOrder(Model):
             "kilometers_driven": self.__kilometers_driven,
             "return_time": self.__return_time,
         }
+
+    def __str__(self):
+        order_string = "Pöntun #{},\n\tViðskiptavinur: {},\n\tÖkuskírteini {},"
+        order_string += "\n\tBíltegund {},\n\tBílnúmer {},\n\tKostnaður {}"
+        return order_string.format(
+            str(self.__order_number), self.get_customer.get_name(),
+            self.__customer.get_driver_license_id(), self.__car.get_model(),
+            self.__car.get_license_plate_number(), str(self.__total_cost)
+        )
 
     # Gets
     def get_order_number(self):

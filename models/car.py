@@ -4,13 +4,13 @@ from models.branch import Branch
 
 class Car(Model):
     def __init__(
-        self, licence_plate_number: str, model: str,
+        self, license_plate_number: str, model: str,
         category: str, wheel_count: int, drivetrain: str,
         automatic_transmission: bool, seat_count: int, door_count: int,
         weight: int, fuel_type: str, extra_properties: set,
         kilometer_count: int, horsepower: int, current_branch: Branch,
             ):
-        self.__licence_plate_number = licence_plate_number
+        self.__license_plate_number = license_plate_number
         self.__model = model
         self.__category = category
         self.__wheel_count = wheel_count
@@ -35,7 +35,7 @@ class Car(Model):
 
     def get_dict(self):
         return {
-            "licence_plate_number": self.__licence_plate_number,
+            "license_plate_number": self.__license_plate_number,
             "model": self.__model,
             "category": self.__category,
             "wheel_count": self.__wheel_count,
@@ -53,13 +53,13 @@ class Car(Model):
 
     def __eq__(self, other):
         if isinstance(other, Car):
-            return self.__licence_plate_number == other.__licence_plate_number
+            return self.__license_plate_number == other.__license_plate_number
         else:
-            return self.__licence_plate_number == str(other)
+            return self.__license_plate_number == str(other)
 
     # Get
-    def get_licence_plate_number(self):
-        return self.__licence_plate_number
+    def get_license_plate_number(self):
+        return self.__license_plate_number
 
     def get_model(self):
         return self.__model
@@ -74,8 +74,8 @@ class Car(Model):
         return self.__category
 
     # Set
-    def set_licence_plate_number(self, licence_plate_number):
-        self.__licence_plate_number = licence_plate_number
+    def set_license_plate_number(self, license_plate_number):
+        self.__license_plate_number = license_plate_number
 
     def set_model(self, model):
         self.__model = model
