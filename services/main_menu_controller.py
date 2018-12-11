@@ -7,6 +7,7 @@ from services.manage_salespeople_controller import ManageSalespeopleController
 from services.manage_customers_controller import ManageCustomersController
 from services.manage_cars_controller import ManageCarsController
 from services.manage_orders_controller import ManageOrdersController
+from services.price_list_controller import PriceListController
 
 
 class MainMenuController(Controller):
@@ -20,6 +21,10 @@ class MainMenuController(Controller):
     def go_to_help_controller(self, values, menu):
         help_controller = HelpMenuController(self._service)
         self._service.add(help_controller)
+
+    def go_to_price_list_controller(self, values, menu):
+        price_list_controller = PriceListController(self._service)
+        self._service.add(price_list_controller)
 
     def go_to_login(self, values, menu):
         self._menu_stack.append(self.__make_login_menu())
@@ -67,11 +72,12 @@ class MainMenuController(Controller):
     # Maybe move these to the UI layer?
     def __make_customer_menu(self):
         header = "Velkominn í Bílaleigu Björgvins!"
-        help_function = self.go_to_help_controller
+        go_to_help = self.go_to_help_controller
+        go_to_price_list = self.go_to_price_list_controller
         go_to_login = self.go_to_login
         customer_options = [
-            {"hotkey": "H", "description": "Hjálp", "value": help_function},
-            {"description": "Verðskrá"},
+            {"hotkey": "H", "description": "Hjálp", "value": go_to_help},
+            {"description": "Verðskrá", "value": go_to_price_list},
             {"description": "Bóka bílaleigubíl"},
             {"description": "Innskráning starfsmanna", "value": go_to_login},
         ]
@@ -88,7 +94,8 @@ class MainMenuController(Controller):
         staff_options = [
             {"description": "Leigja bíl"},
             {"description": "Skila bíl"},
-            {"description": "Verðskrá"},
+            {"description": "Verðskrá", 
+                "value": self.go_to_price_list_controller},
             {"description": "Skrá viðskiptavin",
                 "value": self.go_to_add_customer},
             {"description": "Fletta upp viðskiptavini",
