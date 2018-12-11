@@ -13,3 +13,7 @@ class Model(ABC):
     @abstractmethod
     def __eq__(self, other):
         pass
+
+    @abstractmethod
+    def get_key(self):
+        return None

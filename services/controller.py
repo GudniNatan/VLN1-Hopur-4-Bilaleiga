@@ -3,6 +3,7 @@ from ui.car_rental_ui import CarRentalUI
 from repositories.salesperson_repository import SalespersonRepository
 from repositories.admin_repository import AdminRepository
 from services.validation import Validation
+from services.search import Search
 
 
 class Controller(ABC):
@@ -13,6 +14,7 @@ class Controller(ABC):
         self._priority_controller = priority_controller
         self._active = False
         self._validation = Validation()
+        self._search = Search()
 
     def main(self):
         self._active = True

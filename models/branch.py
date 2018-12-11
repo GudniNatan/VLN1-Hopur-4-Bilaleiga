@@ -21,3 +21,6 @@ class Branch(Model):
 
     def get_name(self):
         return self.__name
+
+    def get_key(self):
+        return self.__name

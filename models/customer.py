@@ -85,6 +85,9 @@ class Customer(Model):
     def get_name(self):
         return "{} {}".format(self.__first_name, self.__last_name)
 
+    def get_key(self):
+        return self.__driver_license_id
+
     # Set
     def set_driver_license_id(self, driver_license_id):
         self.__driver_license_id = driver_license_id

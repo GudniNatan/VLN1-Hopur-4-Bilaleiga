@@ -1,12 +1,14 @@
 from repositories.admin_repository import AdminRepository
 from repositories.salesperson_repository import SalespersonRepository
+from repositories.branch_repository import BranchRepository
+from repositories.rent_order_repository import RentOrderRepository
 from models.salesperson import Salesperson
 from datetime import date, time, datetime
 from math import inf
 from models.branch import Branch
-from repositories.branch_repository import BranchRepository
 from models.car import Car
 from models.customer import Customer
+from models.rent_order import RentOrder
 
 # This is a class in which the methods take in some user inputted strings and
 # the names of whatever the input field is. The methods will return objects of
@@ -47,7 +49,7 @@ class Validation(object):
         return definitely_int
 
     def validate_date(self, maybe_date, name):
-        date_formats = ["%Y-%m-%d", "%m/%y", "%d/%m/%Y", "%d-%m-%y"]
+        date_formats = ["%Y-%m-%d", "%m/%y", "%d/%m/%Y", "%d-%m-%Y"]
         definitely_date = None
         for date_format in date_formats:
             try:
@@ -55,7 +57,7 @@ class Validation(object):
             except ValueError:
                 continue
             break
-        if definitely_date is None:
+        else:
             error_str = "{} þarf að vera dagsetning á forminu ÁÁÁÁ-MM-DD. "
             error_str += "{} er ekki gilt."
             raise ValueError(error_str.format(name, maybe_date))
@@ -224,3 +226,18 @@ class Validation(object):
             phone_number, email, cc_holder_first_name, cc_holder_last_name,
             ccn, cc_exp_date
         )
+
+    def validate_order(
+            self, car, customer, pickup_time,
+            estimated_return_time, pickup_branch_name, return_branch_name,
+            insurance_total, extra_insurance_total,
+            kilometer_allowance_per_day, total_cost, remaining_debt,
+            kilometers_driven, return_time
+            ):
+        orders = RentOrderRepository().get_all()
+        if orders:
+            order_number = max(orders, key=Order.get_key) + 1
+        else:
+            order_number = 1
+        print(order_number)
+        raise NotImplementedError()

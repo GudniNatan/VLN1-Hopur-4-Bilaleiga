@@ -78,6 +78,9 @@ class Car(Model):
     def get_current_branch(self):
         return self.__current_branch
 
+    def get_key(self):
+        return self.__license_plate_number
+
     # Set
     def set_license_plate_number(self, license_plate_number):
         self.__license_plate_number = license_plate_number

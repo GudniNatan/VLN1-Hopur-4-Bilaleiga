@@ -110,6 +110,9 @@ class RentOrder(Model):
             return None
         return self.__return_time
 
+    def get_key(self):
+        return self.__order_number
+
     # Sets
     def set_order_number(self, order_number):
         self.__order_number = order_number

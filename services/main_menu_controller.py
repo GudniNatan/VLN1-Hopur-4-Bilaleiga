@@ -6,6 +6,7 @@ from services.help_menu_controller import HelpMenuController
 from services.manage_salespeople_controller import ManageSalespeopleController
 from services.manage_customers_controller import ManageCustomersController
 from services.manage_cars_controller import ManageCarsController
+from services.manage_orders_controller import ManageOrdersController
 
 
 class MainMenuController(Controller):
@@ -39,6 +40,10 @@ class MainMenuController(Controller):
         car_controller = ManageCarsController(self._service)
         self._service.add(car_controller)
 
+    def go_to_order_controller(self, value, menu):
+        order_controller = ManageOrdersController(self._service)
+        self._service.add(order_controller)
+
     def go_to_add_customer(self, values, menu):
         customer_controller = ManageCustomersController(
             self._service, shortcut_to_register=True
@@ -69,7 +74,7 @@ class MainMenuController(Controller):
             {"description": "Verðskrá"},
             {"description": "Bóka bílaleigubíl"},
             {"description": "Innskráning starfsmanna", "value": go_to_login},
-            ]
+        ]
         footer = "Notaðu örvatakkana til að hreyfa bendilinn. "
         footer += "Notaðu enter til að velja."
         menu = Menu(header=header, options=customer_options, can_go_back=False,
@@ -78,7 +83,7 @@ class MainMenuController(Controller):
 
     def __make_staff_menu(self):
         user = self._service.get_current_user()
-        header = "Skráður inn sem {}\n".format(type(user))
+        header = "Skráður inn sem {}\n".format(type(user).__name__)
         header += "Velkomin/n aftur, {}!".format(user.get_name())
         staff_options = [
             {"description": "Leigja bíl"},
@@ -88,11 +93,12 @@ class MainMenuController(Controller):
                 "value": self.go_to_add_customer},
             {"description": "Fletta upp viðskiptavini",
                 "value": self.go_to_customer_controller},
-            {"description": "Pantanaskrá"},
+            {"description": "Pantanaskrá",
+                "value": self.go_to_order_controller},
             {"description": "Bílaskrá",
                 "value": self.go_to_car_controller},
             {"hotkey": 'X', "description": "Skrá út", "value": self.log_out}
-            ]
+        ]
         if type(user) == Admin:
             staff_op = {"description": "Starfsmannaskrá",
                         "value": self.go_to_salespeople_controller}
@@ -110,5 +116,5 @@ class MainMenuController(Controller):
         login_menu = Menu(
             header=header, inputs=inputs, stop_function=self.stop,
             submit_function=self.handle_login, back_function=self.back
-            )
+        )
         return login_menu

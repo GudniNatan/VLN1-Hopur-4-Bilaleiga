@@ -47,4 +47,10 @@ CustomerRepository().write((my_customer,))
 for customer in CustomerRepository().get_all():
     print(customer.get_dict())
 
-my_order = RentOrder()
+my_order = Validation().validate_order(
+    my_car, my_customer, pickup_date, pickup_time,
+    estimated_return_time, pickup_branch_name, return_branch_name,
+    insurance_total, extra_insurance_total,
+    kilometer_allowance_per_day, total_cost, remaining_debt,
+    kilometers_driven, return_time
+)
