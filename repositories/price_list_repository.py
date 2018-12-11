@@ -1,5 +1,6 @@
 from repositories.repository import Repository
 
+
 class PriceListRepository(Repository):
     _FILENAME = "./data/PriceChart.csv"
     _TYPE = None
