@@ -1,3 +1,8 @@
+import sys
+import os.path
+sys.path.append(
+    os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
+
 from repositories.car_repository import CarRepository
 from repositories.branch_repository import BranchRepository
 from repositories.rent_order_repository import RentOrderRepository
@@ -5,6 +10,7 @@ from repositories.customer_repository import CustomerRepository
 from models.car import Car
 from models.branch import Branch
 from models.customer import Customer
+from models.rent_order import RentOrder
 from services.validation import Validation
 
 my_branch = Branch("BB Reykjavík", "Flugvallarvegur, Reykjavík")
@@ -40,3 +46,5 @@ CustomerRepository().write((my_customer,))
 
 for customer in CustomerRepository().get_all():
     print(customer.get_dict())
+
+my_order = RentOrder()

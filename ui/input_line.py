@@ -3,7 +3,7 @@ import os
 
 class InputLine(object):
     def __init__(self, prompt="", default_text="", type_=""):
-        self.__left_side = default_text
+        self.__left_side = str(default_text)
         self.__right_side = ""
         self.__cursor = "█"
         self.__active = False

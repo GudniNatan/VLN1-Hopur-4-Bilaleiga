@@ -108,13 +108,14 @@ class CarRentalUI(object):
                                     options=options, stop_function=self.__stop)
         return delete_feedback_menu
 
-    def get_new_model_object_menu(self, controller_header, fields, type_str):
+    def get_new_model_object_menu(self, controller_header, fields, type_str,
+                                  submit_callback):
         header = controller_header + " -> Nýr"
         header += "\nSláðu inn upplýsingarnar fyrir nýja {}:"
         header = header.format(type_str)
         inputs = [{"prompt": field} for field in fields]
         new_model_object_menu = Menu(
             header=header, inputs=inputs, back_function=self.__back,
-            stop_function=self.__stop
+            stop_function=self.__stop, submit_function=submit_callback
         )
         return new_model_object_menu

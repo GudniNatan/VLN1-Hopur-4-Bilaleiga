@@ -32,7 +32,7 @@ class ManageCustomersController(Controller):
         type_str = "Viðskiptavininn"
         fields = self.__customer_repo.get_row_names()
         new_customer_menu = self._ui.get_new_model_object_menu(
-            self.__controller_header, fields, type_str
+            self.__controller_header, fields, type_str, self.create_customer
         )
         self._menu_stack.append(new_customer_menu)
 
@@ -42,7 +42,7 @@ class ManageCustomersController(Controller):
             self.go_to_edit, self.go_to_delete
         )
         self.__selected_customer = customer
-        self._menu_stack.append(customer)
+        self._menu_stack.append(customer_menu)
 
     def go_to_edit(self, values, menu):
         customer = self.__selected_customer
@@ -57,7 +57,7 @@ class ManageCustomersController(Controller):
         customer = self.__selected_customer
         deletion_menu = self._ui.get_deletion_menu(
             customer, customer.get_name(), self.__controller_header,
-            self.delete_selected_person
+            self.delete_selected_customer
         )
         self._menu_stack.append(deletion_menu)
 
@@ -77,7 +77,7 @@ class ManageCustomersController(Controller):
     def edit_selected_customer(self, values, menu):
         # Update the salesperson
         old_customer = self.__selected_customer
-        old_key = old_customer.get_drivers_license_id()
+        old_key = old_customer.get_driver_license_id()
         try:
             customer = self._validation.validate_customer(*values)
         except ValueError as error:
@@ -92,7 +92,7 @@ class ManageCustomersController(Controller):
 
     def create_customer(self, values, menu):
         try:
-            customer = self._validation.validate_salesperson(*values)
+            customer = self._validation.validate_customer(*values)
         except ValueError as error:
             menu.set_errors((error,))
             return

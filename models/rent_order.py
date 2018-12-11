@@ -106,6 +106,8 @@ class RentOrder(Model):
         return self.__kilometers_driven
 
     def get_return_time(self):
+        if self.__return_time == datetime(1, 1, 1):
+            return None
         return self.__return_time
 
     # Sets

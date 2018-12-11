@@ -46,13 +46,17 @@ class MainMenuController(Controller):
         self._service.add(customer_controller)
 
     def handle_login(self, values, menu):
-        user = self._validation.validate_login(*values)
+        try:
+            user = self._validation.validate_login(*values)
+        except ValueError as error_str:
+            menu.set_errors((error_str,))
+            return
+        except FileNotFoundError as error_str:
+            menu.set_errors((error_str,))
+            return
         self._service.set_current_user(user)
-        if user is None:
-            menu.set_errors(("Rangt notendanafn eða lykilorð.",))
-        else:
-            self._menu_stack[0] = self.__make_staff_menu()
-            self.back()
+        self._menu_stack[0] = self.__make_staff_menu()
+        self.back()
 
     # Menu makers
     # Maybe move these to the UI layer?

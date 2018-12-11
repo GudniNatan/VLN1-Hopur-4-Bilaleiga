@@ -6,7 +6,7 @@ from datetime import date
 class CustomerRepository(Repository):
     _FILENAME = "./data/Customers.csv"
     _TYPE = Customer
-    _PRIMARY_KEY = "driver_licence_id"  # name of primary key
+    _PRIMARY_KEY = "driver_license_id"  # name of primary key
     _CSV_ROW_NAMES = [
         "driver_license_id", "personal_id", "first_name", "last_name",
         "birthdate", "phone_number", "email", "cc_holder_first_name",

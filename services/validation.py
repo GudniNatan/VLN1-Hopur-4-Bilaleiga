@@ -27,7 +27,7 @@ class Validation(object):
             if person.get_username() == username:
                 if person.get_password() == password:
                     return person
-        return None
+        raise ValueError("Rangt notendanafn eða lykilorð")
 
     def validate_salesperson(self, username, password,
                              name, email, phone):
@@ -195,17 +195,17 @@ class Validation(object):
         )
 
     def validate_customer(
-            self, driver_license_id: str, personal_id: str, first_name: str,
-            last_name: str, birthdate: str, phone_number: str,
-            email: str, cc_holder_first_name: str, cc_holder_last_name: str,
-            ccn: str, cc_exp_date: str
+            self, driver_license_id: str, personal_id: str, email: str,
+            first_name: str, last_name: str, birthdate: str, phone_number: str,
+            cc_holder_first_name: str, cc_holder_last_name: str, ccn: str,
+            cc_exp_date: str
             ):
         driver_license_id = self.validate_str(
             driver_license_id, "Ökuskírteinisnúmer"
         )
         personal_id = self.validate_str(personal_id, "Kennitala/SSN")
         first_name = self.validate_str(first_name, "Fornafn")
-        last_name = self.validate_str(first_name, "Eftirnafn")
+        last_name = self.validate_str(last_name, "Eftirnafn")
         birthdate = self.validate_date(birthdate, "Fæðingardagur")
         phone_number = self.validate_phone_number(phone_number)
         email = self.validate_email(email)
