@@ -6,7 +6,7 @@ from models.rent_order import RentOrder
 
 
 class RentOrderRepository(Repository):
-    _FILENAME = "./data/Cars.csv"
+    _FILENAME = "./data/RentOrders.csv"
     _TYPE = RentOrder
     _PRIMARY_KEY = "order_number"  # name of primary key
     _CSV_ROW_NAMES = [
