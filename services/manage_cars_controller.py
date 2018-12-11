@@ -18,7 +18,7 @@ class ManageCarsController(Controller):
     def go_to_search(self, values, menu):
         results = Search().search_cars(*values)
         search_menu = self._ui.get_search_result_menu(
-            results, self.__controller_header, self.select_customer
+            results, self.__controller_header, self.select_car
         )
         self._menu_stack.append(search_menu)
 
@@ -36,12 +36,12 @@ class ManageCarsController(Controller):
         self._menu_stack.append(new_car_menu)
 
     def select_car(self, car, menu):
-        customer_menu = self._ui.get_model_object_options_menu(
+        car_menu = self._ui.get_model_object_options_menu(
             car, car.get_license_plate_number(), self.__controller_header,
             self.go_to_edit, self.go_to_delete
         )
         self.__selected_car = car
-        self._menu_stack.append(car)
+        self._menu_stack.append(car_menu)
 
     def go_to_edit(self, values, menu):
         car = self.__selected_car
@@ -66,6 +66,9 @@ class ManageCarsController(Controller):
             customer, self.__controller_header, self.restart
         )
         self._menu_stack.append(update_report_menu)
+
+    def go_to_delete(self, values, menu):
+        pass
 
     # Menus - try to move these to the ui layer
     def __make_main_menu(self):
