@@ -1,4 +1,4 @@
-from services.controller import Controller
+from controllers.controller import Controller
 from repositories.customer_repository import CustomerRepository
 from ui.menu import Menu
 

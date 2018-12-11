@@ -1,4 +1,4 @@
-from services.controller import Controller
+from controllers.controller import Controller
 from repositories.rent_order_repository import RentOrderRepository
 from ui.menu import Menu
 from models.admin import Admin

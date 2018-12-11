@@ -1,4 +1,4 @@
-from services.car_rental_service import CarRentalService
+from controllers.controller_service import CarRentalService
 from ui.splash_screen import splash_screen
 
 

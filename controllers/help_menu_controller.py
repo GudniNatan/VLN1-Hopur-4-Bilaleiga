@@ -1,4 +1,4 @@
-from services.controller import Controller
+from controllers.controller import Controller
 from ui.menu import Menu
 
 

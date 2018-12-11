@@ -1,5 +1,5 @@
-from services.main_menu_controller import MainMenuController
-from services.controller import Controller
+from controllers.main_menu_controller import MainMenuController
+from controllers.controller import Controller
 
 
 class CarRentalService(object):

@@ -1,4 +1,4 @@
-from services.controller import Controller
+from controllers.controller import Controller
 from repositories.car_repository import CarRepository
 from ui.menu import Menu
 from models.admin import Admin

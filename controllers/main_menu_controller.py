@@ -1,13 +1,13 @@
-from services.controller import Controller
+from controllers.controller import Controller
 from models.admin import Admin
 from models.salesperson import Salesperson
 from ui.menu import Menu
-from services.help_menu_controller import HelpMenuController
-from services.manage_salespeople_controller import ManageSalespeopleController
-from services.manage_customers_controller import ManageCustomersController
-from services.manage_cars_controller import ManageCarsController
-from services.manage_orders_controller import ManageOrdersController
-from services.price_list_controller import PriceListController
+from controllers.help_menu_controller import HelpMenuController
+from controllers.manage_salespeople_controller import ManageSalespeopleController
+from controllers.manage_customers_controller import ManageCustomersController
+from controllers.manage_cars_controller import ManageCarsController
+from controllers.manage_orders_controller import ManageOrdersController
+from controllers.price_list_controller import PriceListController
 
 
 class MainMenuController(Controller):
