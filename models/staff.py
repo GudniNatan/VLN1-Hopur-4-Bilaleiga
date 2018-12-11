@@ -24,6 +24,9 @@ class Staff(Model):
         else:
             return self._username == str(other)
 
+    def __str__(self):
+        return "Nafn: {}\n\tNotendanafn: {}".format(self._name, self._email)
+
     # Get
     def get_username(self):
         return self._username

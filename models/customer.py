@@ -45,6 +45,9 @@ class Customer(Model):
         else:
             return self._username == str(other)
 
+    def __str__(self):
+        return "Nafn: {} {}\n\tÖkuskírteni: {}".format(self.__first_name, self.__last_name, self.__driver_license_id)
+
     # Get
     def get_driver_license_id(self):
         return self.__driver_license_id
