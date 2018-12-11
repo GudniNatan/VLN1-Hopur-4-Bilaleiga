@@ -49,6 +49,16 @@ class Car(Model):
         else:
             return self.__license_plate_number == str(other)
 
+    def __str__(self):
+        if self.__automatic_transmission:
+            automatic_shift = "Já"
+        else:
+            automatic_shift = "Nei"
+        info_string = "Flokkur bíls: {}\n\tGerð: {}\n\t"
+        info_string += "Sjalfskyptur: {}\n\tKílómetrafjöldi: {}"
+        return info_string.format(self.__category, self.__model,
+                                  automatic_shift, self.__kilometer_count)
+
     # Get
     def get_license_plate_number(self):
         return self.__license_plate_number
