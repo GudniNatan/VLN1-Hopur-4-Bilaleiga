@@ -1,6 +1,7 @@
 from controllers.controller import Controller
 from ui.menu import Menu
 
+
 class PriceListController(Controller):
     def __init__(self, service, priority_controller=False):
         super().__init__(service, priority_controller)
