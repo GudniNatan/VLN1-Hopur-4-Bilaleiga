@@ -32,11 +32,13 @@ class RentOrder(Model):
     def csv_repr(self):
         rent_order_dict = self.get_dict()
         return_time_str = self.__estimated_return_time.isoformat()
+        lpn = self.__customer.get_key()
         rent_order_dict["car"] = self.__car.get_license_plate_number()
-        rent_order_dict["customer"] = self.__customer.get_name()
+        rent_order_dict["customer"] = lpn
         rent_order_dict["pickup_time"] = self.__pickup_time.isoformat()
         rent_order_dict["estimated_return_time"] = return_time_str
-        rent_order_dict["return_time"] = self.__return_time.isoformat()
+        if self.__return_time:
+            rent_order_dict["return_time"] = self.__return_time.isoformat()
         return rent_order_dict
 
     def get_dict(self):

@@ -165,7 +165,10 @@ class Menu(object):
             self.move_cursor(-1)
         elif key == 27:  # escape
             if self.__selected_input is None:
-                self.__selection = BACK
+                if self.__back_function is not None:
+                    self.__selection = MenuOption(
+                        self.__back_function, ""
+                    )
             else:
                 self.move_cursor()
         elif key == 9:  # tab
