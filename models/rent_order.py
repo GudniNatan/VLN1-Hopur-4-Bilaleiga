@@ -8,6 +8,7 @@ class RentOrder(Model):
     INSURANCE_PERCENT = 0.05
     KM_ALLOWANCE_PER_DAY = 100
     EXTRA_INSURANCE = 3000
+    ADDON_PRICE = 450
 
     def __init__(
             self, order_number: int, car: Car, customer: Customer,
@@ -124,6 +125,13 @@ class RentOrder(Model):
 
     def get_key(self):
         return self.__order_number
+
+    def get_name(self):
+        return "".join(
+            self.get_customer().get_name(),
+            ": ",
+            self.get_car().get_name()
+        )
 
     # Sets
     def set_order_number(self, order_number):

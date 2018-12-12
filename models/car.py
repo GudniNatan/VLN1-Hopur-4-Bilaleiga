@@ -82,6 +82,9 @@ class Car(Model):
     def get_key(self):
         return self.__license_plate_number
 
+    def get_name(self):
+        return self.get_model()
+
     # Set
     def set_license_plate_number(self, license_plate_number):
         self.__license_plate_number = license_plate_number
