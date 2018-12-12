@@ -30,7 +30,7 @@ class Search(object):
             if hide_unavailable is not None:
                 if hide_unavailable and not car_available:
                     continue
-            if seat_count and seat_count != str(car.get_sear_count()):
+            if seat_count and seat_count != str(car.get_seat_count()):
                 continue
             if license_plate_number:
                 if license_plate_number != car.get_license_plate_number:

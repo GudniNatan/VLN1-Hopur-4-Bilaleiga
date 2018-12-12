@@ -48,9 +48,9 @@ for customer in CustomerRepository().get_all():
     print(customer.get_dict())
 
 my_order = Validation().validate_order(
-    my_car, my_customer, pickup_date, pickup_time,
-    estimated_return_time, pickup_branch_name, return_branch_name,
-    insurance_total, extra_insurance_total,
+    my_car, my_customer, "2018-02-20", "12:20",
+    estimated_return_date="2018-03-20", estimated_return_time="13:00", pickup_branch_name="BB Reykjavík",
+    return_branch_name="BB Reykjavík", include_extra_insurance="",
     kilometer_allowance_per_day, total_cost, remaining_debt,
-    kilometers_driven, return_time
+    kilometers_driven, return_datetime
 )

@@ -228,15 +228,14 @@ class Validation(object):
         )
 
     def validate_order(
-            self, car, customer, pickup_time,
-            estimated_return_time, pickup_branch_name, return_branch_name,
-            insurance_total, extra_insurance_total,
-            kilometer_allowance_per_day, total_cost, remaining_debt,
-            kilometers_driven, return_time
+            self, car, customer, pickup_date, pickup_time, est_return_date,
+            est_return_time, pickup_branch_name, return_branch_name,
+            include_extra_insurance, kilometer_allowance_per_day, total_cost,
+            remaining_debt, kilometers_driven, return_time
             ):
         orders = RentOrderRepository().get_all()
         if orders:
-            order_number = max(orders, key=Order.get_key) + 1
+            order_number = max(orders, key=RentOrder.get_key) + 1
         else:
             order_number = 1
         print(order_number)
