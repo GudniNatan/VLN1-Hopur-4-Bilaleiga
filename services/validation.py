@@ -136,7 +136,7 @@ class Validation(object):
     def validate_email(self, email):
         if email.count('@') != 1:
             raise ValueError("Ekki gilt netfang")
-        elif email.split("@")[1].count(".") != 1:
+        elif email.split("@")[1].count(".") == 0:
             raise ValueError("Ekki gilt netfang")
         return email
 
