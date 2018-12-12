@@ -109,23 +109,3 @@ class ManageCarsController(Controller):
             max_options_per_page=10
         )
         return menu
-
-    def __make_new_car_menu(self):
-        header = self.__controller_header + " -> Nýr bíll"
-        header += "\nSláðu inn upplýsingarnar fyrir nýja bílinn:"
-        inputs = [
-            {"prompt": "license_plate_number"},
-            {"prompt": "model"},
-            {"prompt": "category"},
-            {"prompt": "wheel_count"},
-            {"prompt": "drivetrain", "type": "date"},
-            {"prompt": "automatic_transmission (J/N)"},
-            {"prompt": "seat_count"},
-            {"prompt": "extra_properties (comma seperated)"},
-            {"prompt": "kilometer_count"},
-        ]
-        new_customer_menu = Menu(header=header, inputs=inputs,
-                                 back_function=self.back,
-                                 stop_function=self.stop,
-                                 submit_function=self.create_car)
-        return new_customer_menu
