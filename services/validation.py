@@ -192,10 +192,10 @@ class Validation(object):
         )
 
     def validate_customer(
-            self, driver_license_id: str, personal_id: str, email: str,
+            self, driver_license_id: str, personal_id: str,
             first_name: str, last_name: str, birthdate: str, phone_number: str,
-            cc_holder_first_name: str, cc_holder_last_name: str, ccn: str,
-            cc_exp_date: str
+            email: str, cc_holder_first_name: str, cc_holder_last_name: str,
+            ccn: str, cc_exp_date: str
             ):
         driver_license_id = self.validate_str(
             driver_license_id, "Ökuskírteinisnúmer"
