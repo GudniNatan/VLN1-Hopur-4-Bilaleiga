@@ -241,10 +241,10 @@ class Validation(object):
             branches = BranchRepository().get_all()
             branch_str_list = [branch.get_name() for branch in branches]
             branch_str = ", ".join(branch_str_list)
-            error_msg = "".join(
+            error_msg = "".join((
                 "'", branch_name, "' er ekki gilt útibú.",
                 "Þetta eru gild útibú:\n", branch_str
-            )
+            ))
         return branch
 
     def validate_order(
