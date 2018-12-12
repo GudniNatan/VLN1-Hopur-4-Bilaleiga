@@ -62,3 +62,8 @@ class Controller(ABC):
 
     def deactivate(self):
         self._active = False
+
+    def go_to_search_all(self, values, menu):
+        for i in range(len(values)):
+            values[i] = ""
+        self.go_to_search(values, menu)

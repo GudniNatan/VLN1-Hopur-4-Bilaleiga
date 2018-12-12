@@ -13,11 +13,13 @@ class ManageOrdersController(Controller):
         self.__selected_order = None
         self._menu_stack.append(self.__make_main_menu())
 
+    # Operations
     def go_to_search(self, values, menu):
-        pass
-
-    def go_to_search_all(self, values, menu):
-        pass
+        results = self._search.search_rent_orders(*values)
+        search_menu = self._ui.get_search_result_menu(
+            results, self.__controller_header, self.select_customer
+        )
+        self._menu_stack.append(search_menu)
 
     def go_to_create(self, values, menu):
         pass

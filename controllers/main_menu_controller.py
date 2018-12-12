@@ -94,7 +94,7 @@ class MainMenuController(Controller):
         staff_options = [
             {"description": "Leigja bíl"},
             {"description": "Skila bíl"},
-            {"description": "Verðskrá", 
+            {"description": "Verðskrá",
                 "value": self.go_to_price_list_controller},
             {"description": "Skrá viðskiptavin",
                 "value": self.go_to_add_customer},

@@ -23,11 +23,6 @@ class ManageCustomersController(Controller):
         )
         self._menu_stack.append(search_menu)
 
-    def go_to_search_all(self, values, menu):
-        for i in range(len(values)):
-            values[i] = ""
-        self.go_to_search(values, menu)
-
     def go_to_create(self, values, menu):
         type_str = "Viðskiptavininn"
         fields = self.__customer_repo.get_row_names()
