@@ -57,7 +57,7 @@ class ManageCustomersController(Controller):
         self._menu_stack.append(deletion_menu)
 
     def delete_selected_customer(self, values, menu):
-        # delete the salesperson
+        # delete the customer
         self.__customer_repo.remove(self.__selected_customer)
         # create deletion feedback menu
         # the menu should be a special no-back menu
@@ -70,7 +70,7 @@ class ManageCustomersController(Controller):
         self._menu_stack.append(delete_feedback_menu)
 
     def edit_selected_customer(self, values, menu):
-        # Update the salesperson
+        # Update the customer
         old_customer = self.__selected_customer
         old_key = old_customer.get_driver_license_id()
         try:
@@ -118,24 +118,6 @@ class ManageCustomersController(Controller):
                     options=options, footer=footer, can_submit=False,
                     back_function=self.back, stop_function=self.stop)
         return menu
-
-    def __make_new_customer_menu(self):
-        header = self.__controller_header + " -> Nýr viðskiptavinur"
-        header += "\nSláðu inn upplýsingarnar fyrir nýja viðskiptavininn:"
-        inputs = [
-            {"prompt": "driver license id"},
-            {"prompt": "personal id"},
-            {"prompt": "first name"},
-            {"prompt": "last_name"},
-            {"prompt": "first birthdate", "type": "date"},
-            {"prompt": "phone number"},
-            {"prompt": "email"},
-        ]
-        new_customer_menu = Menu(header=header, inputs=inputs,
-                                 back_function=self.back,
-                                 stop_function=self.stop,
-                                 submit_function=self.create_customer)
-        return new_customer_menu
 
     # Other
     def __search_customers(self, username="", name="", email="", phone=""):
