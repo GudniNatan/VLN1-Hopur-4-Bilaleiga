@@ -122,3 +122,18 @@ class CarRentalUI(object):
             stop_function=self.__stop, submit_function=submit_callback
         )
         return new_model_object_menu
+
+    def get_edit_by_field_menu(self, fields, object_name,
+                               header_message, submit_callback):
+        inputs = list()
+        header = "{} -> Leit -> Val: {} -> Breyta\nSkráðu gildi fyrir {}"
+        header = header.format(header_message, object_name, object_name)
+        for key, value in fields.items():
+            input_type = key
+            input_dict = {"prompt": key, "value": value, "type": input_type}
+            inputs.append(input_dict)
+        edit_menu = Menu(
+            header=header, inputs=inputs, back_function=self.__back,
+            stop_function=self.__stop, submit_function=submit_callback
+        )
+        return edit_menu

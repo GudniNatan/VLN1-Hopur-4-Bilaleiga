@@ -127,11 +127,12 @@ class RentOrder(Model):
         return self.__order_number
 
     def get_name(self):
-        return "".join(
+        return "".join((
+            "[", str(self.get_pickup_time().date()), "]",
             self.get_customer().get_name(),
             ": ",
             self.get_car().get_name()
-        )
+        ))
 
     # Sets
     def set_order_number(self, order_number):

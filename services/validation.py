@@ -6,7 +6,7 @@ from repositories.car_repository import CarRepository
 from repositories.customer_repository import CustomerRepository
 from repositories.price_list_repository import PriceListRepository
 from models.salesperson import Salesperson
-from datetime import date, time, datetime
+from datetime import date, time, datetime, timedelta
 from math import inf
 from models.branch import Branch
 from models.car import Car
@@ -306,3 +306,7 @@ class Validation(object):
             order_number, car, customer, pickup_datetime, est_return_datetime,
             pickup_branch_name, return_branch_name, extra_insurance, base_cost
         )
+
+    def validate_rent_range(self, from_date, to_date):
+        if to_date - from_date < timedelta.days(1):
+            raise ValueError("Leigutímabil verður að vera minnst 24 klst.")
