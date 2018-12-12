@@ -22,7 +22,24 @@ class ManageOrdersController(Controller):
         self._menu_stack.append(search_menu)
 
     def go_to_create(self, values, menu):
-        pass
+        type_str = "pöntun"
+        fields = [
+            "car", "customer", "pickup_date", "pickup_time",
+            "estimated_return_date", "estimated_return_time", 
+            "pickup_branch_name", "return_branch_name",
+        ]
+        new_car_menu = self._ui.get_new_model_object_menu(
+            self.__controller_header, fields, type_str, self.create_order
+        )
+        self._menu_stack.append(new_car_menu)
+
+    def create_order(self, values, menu):
+        try:
+            order = self._validation.validate_order(*values)
+        except ValueError as error_msg:
+            menu.set_errors((error_msg,))
+            return
+        self.quit()
 
     def __make_main_menu(self):
         header = self.__controller_header

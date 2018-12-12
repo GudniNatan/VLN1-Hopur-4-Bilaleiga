@@ -71,7 +71,7 @@ class Repository(ABC):
     def read_file(self):
         file = list()
         with open(self._FILENAME) as file_pointer:
-            csv_dict_reader = csv.DictReader(file_pointer)
+            csv_dict_reader = csv.DictReader(file_pointer, delimiter=";")
             file.extend(csv_dict_reader)
         return file
 
