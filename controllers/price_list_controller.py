@@ -26,7 +26,7 @@ class PriceListController(Controller):
             " \t|-------------|------------|\n",
             price_list,
             "\t----------------------------\n",
-            "\n *ATH Hver aukahlutur kostar 50 kr aukalega á dag."
+            "\n *ATH Hver aukahlutur kostar 450 kr aukalega á dag."
         ))
         return header.strip()
 
