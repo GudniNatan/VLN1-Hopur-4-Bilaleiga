@@ -17,9 +17,17 @@ class ManageOrdersController(Controller):
     def go_to_search(self, values, menu):
         results = self._search.search_rent_orders(*values)
         search_menu = self._ui.get_search_result_menu(
-            results, self.__controller_header, self.select_customer
+            results, self.__controller_header, self.select_order
         )
         self._menu_stack.append(search_menu)
+
+    def select_order(self, order, menu):
+        order_menu = self._ui.get_model_object_options_menu(
+            order, order.get_key(), self.__controller_header,
+            self.go_to_edit, self.go_to_delete
+        )
+        self.__selected_car = order
+        self._menu_stack.append(order_menu)
 
     def go_to_create(self, values, menu):
         type_str = "pöntun"

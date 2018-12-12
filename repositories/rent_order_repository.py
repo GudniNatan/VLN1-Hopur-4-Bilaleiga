@@ -12,9 +12,8 @@ class RentOrderRepository(Repository):
     _CSV_ROW_NAMES = [
         "order_number", "car", "customer", "pickup_time",
         "estimated_return_time", "pickup_branch_name", "return_branch_name",
-        "insurance_total", "extra_insurance_total",
-        "kilometer_allowance_per_day", "total_cost", "remaining_debt",
-        "kilometers_driven", "return_time"
+        "include_extra_insurance", "kilometer_allowance_per_day", "base_cost",
+        "remaining_debt", "kilometers_driven", "return_time"
     ]
 
     def dict_to_model_object(self, rent_order_dict):
@@ -26,11 +25,10 @@ class RentOrderRepository(Repository):
         estimated_return_time = datetime.fromisoformat(est_return_str)
         pickup_branch_name = rent_order_dict["pickup_branch_name"]
         return_branch_name = rent_order_dict["return_branch_name"]
-        insurance_total = int(rent_order_dict["insurance_total"])
-        extra_insurance_total = int(rent_order_dict["extra_insurance_total"])
         km_allowance_str = rent_order_dict["kilometer_allowance_per_day"]
         kilometer_allowance_per_day = int(km_allowance_str)
-        total_cost = int(rent_order_dict["total_cost"])
+        base_cost = int(rent_order_dict["base_cost"])
+        extra_insurance = bool(rent_order_dict["include_extra_insurance"])
         remaining_debt = int(rent_order_dict["remaining_debt"])
         kilometers_driven = int(rent_order_dict["kilometers_driven"])
         if rent_order_dict["return_time"]:
@@ -40,8 +38,9 @@ class RentOrderRepository(Repository):
         else:
             return_time = None
         return RentOrder(
-            order_number, car, customer, pickup_time, estimated_return_time,
-            pickup_branch_name, return_branch_name, insurance_total,
-            extra_insurance_total, kilometer_allowance_per_day, total_cost,
-            remaining_debt, kilometers_driven, return_time
+            order_number, car, customer,
+            pickup_time, estimated_return_time,
+            pickup_branch_name, return_branch_name,
+            extra_insurance, base_cost, remaining_debt,
+            kilometers_driven, return_time
         )
