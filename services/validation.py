@@ -2,8 +2,6 @@ from repositories.admin_repository import AdminRepository
 from repositories.salesperson_repository import SalespersonRepository
 from repositories.branch_repository import BranchRepository
 from repositories.rent_order_repository import RentOrderRepository
-from repositories.customer_repository import CustomerRepository
-from repositories.car_repository import CarRepository
 from models.salesperson import Salesperson
 from datetime import date, time, datetime
 from math import inf
@@ -11,7 +9,6 @@ from models.branch import Branch
 from models.car import Car
 from models.customer import Customer
 from models.rent_order import RentOrder
-from services.utils import process_yes_no_answer, count_days_in_range
 
 # This is a class in which the methods take in some user inputted strings and
 # the names of whatever the input field is. The methods will return objects of
@@ -220,77 +217,16 @@ class Validation(object):
             ccn, cc_exp_date
         )
 
-    def validate_branch_in_repo(self, branch_name):
-        try:
-            branch = BranchRepository().get(branch_name)
-        except ValueError:
-            branches = BranchRepository().get_all()
-            branch_name_list = [branch.get_name() for branch in branches]
-            branch_str = ", ".join(branch_name_list)
-            error_msg = "".join(
-                "Útibúið ", branch_name, " fannst ekki.\n"
-                "\tLögleg útibú eru: ", branch_str
-            )
-            raise ValueError(error_msg)
-        return branch
-
     def validate_order(
             self, car, customer, pickup_date, pickup_time, est_return_date,
             est_return_time, pickup_branch_name, return_branch_name,
-            include_extra_insurance="", total_cost="", remaining_debt="",
-            kilometers_driven="", return_time=""
+            include_extra_insurance, kilometer_allowance_per_day, total_cost,
+            remaining_debt, kilometers_driven, return_time
             ):
         orders = RentOrderRepository().get_all()
         if orders:
             order_number = max(orders, key=RentOrder.get_key) + 1
         else:
             order_number = 1
-        try:
-            if type(car) != Car:
-                car = CarRepository().get(car)
-        except ValueError:
-            error_msg = "".join(
-                "Fann ekki þetta bílnúmer:", car,
-                "\n\tÞað er hægt að bæta við bílum í Bílaskránni."
-            )
-            raise ValueError(error_msg)
-        try:
-            customer = CustomerRepository().get(customer)
-        except ValueError:
-            error_msg = "".join(
-                "Viðskiptavinurinn fannst ekki ",
-                "Nauðsynlegt er að skrá viðskiptavininn ",
-                "áður en hann pantar bíl. "
-            )
-            raise ValueError(error_msg)
-        pickup_datetime = self.validate_datetime_by_parts(
-            pickup_date, pickup_time, "Pickup"
-        )
-        est_return_datetime = self.validate_datetime_by_parts(
-            est_return_date, est_return_time, "Estimated return time"
-        )
-        pickup_branch = self.validate_branch_in_repo(
-            pickup_branch_name
-        )
-        return_branch = self.validate_branch_in_repo(
-            return_branch_name
-        )
-        extra_insurance = process_yes_no_answer(include_extra_insurance)
-        if total_cost:
-            total_cost = self.validate_int(total_cost)
-        else:
-            total_cost = car.get_category["price"] * count_days_in_range(
-                pickup_datetime, est_return_datetime
-            )
-        if remaining_debt:
-            remaining_debt = self.validate_int(remaining_debt)
-        else:
-            remaining_debt = total_cost
-        kilometers_driven = None
-        return_time = None
-        return RentOrder(
-            order_number, car, customer, pickup_datetime, est_return_datetime,
-            pickup_branch_name, return_branch_name, , total_cost: int = 0,
-            remaining_debt: int = 0, kilometers_driven: int = 0,
-            return_time: datetime = None,
-        )
+        print(order_number)
+        raise NotImplementedError()
