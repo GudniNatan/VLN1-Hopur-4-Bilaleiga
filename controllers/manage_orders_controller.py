@@ -26,8 +26,16 @@ class ManageOrdersController(Controller):
             order, order.get_key(), self.__controller_header,
             self.go_to_edit, self.go_to_delete
         )
-        self.__selected_car = order
+        self.__selected_order = order
         self._menu_stack.append(order_menu)
+
+    def go_to_edit(self, values, menu):
+        order = self.__selected_order
+        name = order.get_name()
+        edit_menu = self._ui.get_edit_menu(
+            order, name, self.__controller_header, self.edit_selected_order
+        )
+        self._menu_stack.append(edit_menu)
 
     def go_to_create(self, values, menu):
         type_str = "pöntun"
@@ -54,6 +62,12 @@ class ManageOrdersController(Controller):
             order, self.__controller_header, self.restart
         )
         self._menu_stack.append(new_order_report_menu)
+
+    def go_to_delete(self, values, menu):
+        pass
+
+    def edit_selected_order(self, values, menu):
+        pass
 
     def __make_main_menu(self):
         header = self.__controller_header
