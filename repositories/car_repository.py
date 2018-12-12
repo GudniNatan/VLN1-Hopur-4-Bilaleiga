@@ -1,5 +1,6 @@
 from repositories.repository import Repository
 from repositories.branch_repository import BranchRepository
+from repositories.price_list_repository import PriceListRepository
 from models.car import Car
 
 
@@ -16,7 +17,7 @@ class CarRepository(Repository):
     def dict_to_model_object(self, car_dict):
         license_plate_number = car_dict['license_plate_number']
         model = car_dict['model']
-        category = car_dict["category"]
+        category = PriceListRepository().get(car_dict["category"])
         wheel_count = int(car_dict["wheel_count"])
         drivetrain = car_dict["drivetrain"]
         automatic_transmission = bool(car_dict['automatic_transmission'])

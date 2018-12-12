@@ -1,3 +1,3 @@
 license_plate_number;model;category;wheel_count;drivetrain;automatic_transmission;seat_count;extra_properties;kilometer_count;current_branch
-AJ-123;My car model;Small car;4;4x4;TRUE;4;Heated seats,A/C;100;BB Reykjavík
-TR-990;Nissan Leaf 2017;Small car;4;2 Wheel Drive;TRUE;4;Heated seats,A/C;20000;BB Reykjavík
+AJ-123;My car model;Standard;4;4x4;TRUE;4;Heated seats,A/C;100;BB Reykjavík
+TR-990;Nissan Leaf 2017;Standard;4;2 Wheel Drive;TRUE;4;Heated seats,A/C;20000;BB Reykjavík

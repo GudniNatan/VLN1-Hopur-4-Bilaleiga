@@ -65,6 +65,12 @@ class RentOrder(Model):
             self.__car.get_license_plate_number(), str(self.__total_cost)
         )
 
+    def __eq__(self, other):
+        if type(other) == type(self):
+            return self.get_order_number() == other.get_order_number()
+        else:
+            return self.get_order_number() == str(other)
+
     # Gets
     def get_order_number(self):
         return self.__order_number

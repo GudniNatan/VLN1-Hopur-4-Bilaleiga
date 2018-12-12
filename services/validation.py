@@ -2,6 +2,8 @@ from repositories.admin_repository import AdminRepository
 from repositories.salesperson_repository import SalespersonRepository
 from repositories.branch_repository import BranchRepository
 from repositories.rent_order_repository import RentOrderRepository
+from repositories.car_repository import CarRepository
+from repositories.customer_repository import CustomerRepository
 from models.salesperson import Salesperson
 from datetime import date, time, datetime
 from math import inf
@@ -223,11 +225,23 @@ class Validation(object):
             ccn, cc_exp_date
         )
 
+    def validate_branch_in_repo(self, branch_name):
+        try:
+            branch = BranchRepository().get(branch_name)
+        except ValueError:
+            branches = BranchRepository().get_all()
+            branch_str_list = [branch.get_name() for branch in branches]
+            branch_str = ", ".join(branch_str_list)
+            error_msg = "".join(
+                "'", branch_name, "' er ekki gilt útibú.",
+                "Þetta eru gild útibú:\n", branch_str
+            )
+        return branch
+
     def validate_order(
             self, car, customer, pickup_date, pickup_time, est_return_date,
             est_return_time, pickup_branch_name, return_branch_name,
-            include_extra_insurance, kilometer_allowance_per_day, total_cost,
-            remaining_debt, kilometers_driven, return_time
+            include_extra_insurance, total_cost="", remaining_debt="",
             ):
         orders = RentOrderRepository().get_all()
         if orders:

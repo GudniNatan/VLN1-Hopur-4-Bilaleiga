@@ -25,8 +25,9 @@ class ManageOrdersController(Controller):
         type_str = "pöntun"
         fields = [
             "car", "customer", "pickup_date", "pickup_time",
-            "estimated_return_date", "estimated_return_time", 
+            "estimated_return_date", "estimated_return_time",
             "pickup_branch_name", "return_branch_name",
+            "Include extra insurance (J/N)"
         ]
         new_car_menu = self._ui.get_new_model_object_menu(
             self.__controller_header, fields, type_str, self.create_order
@@ -40,6 +41,19 @@ class ManageOrdersController(Controller):
             menu.set_errors((error_msg,))
             return
         self.quit()
+
+    def create_car(self, values, menu):
+        try:
+            car = self._validation.validate_car(*values)
+        except ValueError as error:
+            menu.set_errors((error,))
+            return
+        self.__car_repo.add(car)
+        new_car_report_menu = self._ui.get_creation_report_menu(
+            car, self.__controller_header, self.restart
+        )
+        self._menu_stack.append(new_car_report_menu)
+
 
     def __make_main_menu(self):
         header = self.__controller_header
