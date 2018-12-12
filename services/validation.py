@@ -151,32 +151,23 @@ class Validation(object):
         raise ValueError("Ekki gilt kreditkortanúmer")
 
     def validate_car(
-            self, license_plate, model, price_per_day,
-            extra_insurance_per_day, category, wheel_count,
-            drive_train, automatic_shift, seat_count, door_count,
-            weight, fuel_type, fuel_efficiency, extra_properties,
-            kilometer_count, horsepower, current_branch=None
+            self, license_plate_number: str, model: str,
+            category: str, wheel_count: int, drivetrain: str,
+            automatic_transmission: bool, seat_count: int,
+            extra_properties: set, kilometer_count: int,
+            current_branch=None,
             ):
 
-        valid_license_plate = self.validate_str(license_plate)
+        valid_license_plate = self.validate_str(license_plate_number)
         valid_model = self.validate_str(model)
-        valid_price_per_day = self.validate_int(price_per_day)
-        valid_extra_insurance_per_day = self.validate_str(
-            extra_insurance_per_day
-        )
         valid_category = self.validate_str(category)
         valid_wheel_count = self.validate_int(wheel_count)
-        valid_drive_train = self.validate_str(drive_train)
-        automatic_shift_upper = self.validate_str(automatic_shift) == "J"
-        valid_automatic_shift = automatic_shift_upper
+        valid_drivetrain = self.validate_str(drivetrain)
+        automatic_transmission_upper = self.validate_str(automatic_shift) == "J"
+        valid_automatic_transmission = automatic_transmission_upper
         valid_seat_count = self.validate_int(seat_count)
-        valid_door_count = self.validate_int(door_count)
-        valid_weight = self.validate_int(weight)
-        valid_fuel_type = self.validate_str
-        valid_fuel_efficiency = self.validate_float(fuel_efficiency) 
         valid_extra_properties = self.validate_set
         valid_kilometer_count = self.validate_int
-        valid_horsepower = self.validate_int(horsepower)
 
         if current_branch is None:
             branch_repo = BranchRepository()
@@ -188,12 +179,10 @@ class Validation(object):
                 raise ValueError("Útibú er ekki gilt.")
 
         return Car(
-            valid_license_plate, valid_model, valid_price_per_day,
-            valid_extra_insurance_per_day, valid_category, valid_wheel_count,
-            valid_drive_train, valid_automatic_shift, valid_seat_count,
-            valid_door_count, valid_weight, valid_fuel_type,
-            valid_fuel_efficiency, valid_extra_properties,
-            valid_kilometer_count, valid_horsepower
+            valid_license_plate, valid_model, valid_category,
+            valid_wheel_count, valid_drive_train, automatic_shift_upper,
+            valid_automatic_shift, valid_seat_count, valid_extra_properties,
+            valid_kilometer_count
         )
 
     def validate_customer(
