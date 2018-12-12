@@ -5,7 +5,7 @@
 
 Allar skrárnar tengdar forritinu munu verða geymdar hér.
 
-## Bílaleigan: {Nafn á bílaleigu kemur hér}
+## Bílaleigan: Bílaleiga Björgvins
 
 
 ## Credits

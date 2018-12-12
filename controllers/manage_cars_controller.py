@@ -70,9 +70,6 @@ class ManageCarsController(Controller):
         pass
 
     def create_car(self, values, menu):
-        pass
-
-    def create_car(self, values, menu):
         try:
             car = self._validation.validate_car(*values)
         except ValueError as error:
