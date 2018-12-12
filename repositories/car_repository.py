@@ -22,7 +22,7 @@ class CarRepository(Repository):
         drivetrain = car_dict["drivetrain"]
         automatic_transmission = bool(car_dict['automatic_transmission'])
         seat_count = int(car_dict['seat_count'])
-        extra_properties = set(car_dict['extra_properties'].split(","))
+        extra_properties = set(car_dict['extra_properties'].split(", "))
         kilometer_count = int(car_dict['kilometer_count'])
         current_branch = BranchRepository().get(car_dict['current_branch'])
         return Car(

@@ -33,7 +33,7 @@ class CarRentalUI(object):
                                       delete_callback):
         header = "{} -> Leit -> Val".format(header_message)
         header += "\nÞú valdir: {}".format(object_name)
-        for key, value in model_object.get_dict().items():
+        for key, value in model_object.csv_repr().items():
             header += "\n\t{}: {}".format(key, value)
         edit_text = "Breyta: {}".format(object_name)
         delete_text = "Eyða: {}".format(object_name)
@@ -79,7 +79,7 @@ class CarRentalUI(object):
         inputs = list()
         header = "{} -> Leit -> Val: {} -> Breyta\nSkráðu gildi fyrir {}"
         header = header.format(header_message, object_name, object_name)
-        for key, value in model_object.get_dict().items():
+        for key, value in model_object.csv_repr().items():
             input_type = key
             input_dict = {"prompt": key, "value": value, "type": input_type}
             inputs.append(input_dict)

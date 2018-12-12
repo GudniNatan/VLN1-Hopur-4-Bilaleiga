@@ -26,7 +26,7 @@ class Car(Model):
         car_dict = self.get_dict()
         car_dict["current_branch"] = car_dict["current_branch"].get_name()
         properties = car_dict["extra_properties"]
-        property_string = ",".join(properties)
+        property_string = ", ".join(properties)
         car_dict["extra_properties"] = property_string
         return car_dict
 
