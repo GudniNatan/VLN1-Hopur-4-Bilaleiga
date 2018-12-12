@@ -35,13 +35,20 @@ class Search(object):
             if seat_count and seat_count != str(car.get_seat_count()):
                 continue
             if license_plate_number:
-                if license_plate_number != car.get_license_plate_number():
+                if license_plate_number != car.get_license_plate_number:
                     continue
             if category:
                 if category != car.get_category():
                     continue
             relevant_cars.append(car)
         return relevant_cars
+
+    def __process_yes_no_answer(self, yes_no):
+        if yes_no:
+            yes_no = str(yes_no)[0].upper()
+            if yes_no in ["J", "Y"]:
+                return True
+            return False
 
     def car_available(self, car, lower_time_bound, upper_time_bound=None):
         if type(lower_time_bound) not in [datetime, date]:

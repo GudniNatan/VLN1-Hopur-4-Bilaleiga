@@ -2,8 +2,6 @@ from repositories.admin_repository import AdminRepository
 from repositories.salesperson_repository import SalespersonRepository
 from repositories.branch_repository import BranchRepository
 from repositories.rent_order_repository import RentOrderRepository
-from repositories.customer_repository import CustomerRepository
-from repositories.car_repository import CarRepository
 from models.salesperson import Salesperson
 from datetime import date, time, datetime
 from math import inf
@@ -120,7 +118,7 @@ class Validation(object):
         phone_number = phone_number.strip()
         phone_number = phone_number.replace("-", "")
         phone_number = phone_number.replace(" ", "")
-        if len(phone_number) < 7:
+        if len(phone_number) != 7 and len(phone_number) != 10:
             raise ValueError("Ekki gilt símanúmer")
         return phone_number
 
@@ -155,32 +153,28 @@ class Validation(object):
         raise ValueError("Ekki gilt kreditkortanúmer")
 
     def validate_car(
-            self, license_plate, model, price_per_day,
-            extra_insurance_per_day, category, wheel_count,
-            drive_train, automatic_shift, seat_count, door_count,
-            weight, fuel_type, fuel_efficiency, extra_properties,
-            kilometer_count, horsepower, current_branch=None
+            self, license_plate_number: str, model: str,
+            category: str, wheel_count: int, drivetrain: str,
+            automatic_transmission: str, seat_count: int,
+            extra_properties: set, kilometer_count: int,
+            current_branch=None,
             ):
 
-        valid_license_plate = self.validate_str(license_plate)
-        valid_model = self.validate_str(model)
-        valid_price_per_day = self.validate_int(price_per_day)
-        valid_extra_insurance_per_day = self.validate_str(
-            extra_insurance_per_day
+        valid_license_plate = self.validate_str(
+            license_plate_number, "Bílnúmer"
         )
-        valid_category = self.validate_str(category)
-        valid_wheel_count = self.validate_int(wheel_count)
-        valid_drive_train = self.validate_str(drive_train)
-        automatic_shift_upper = self.validate_str(automatic_shift) == "J"
-        valid_automatic_shift = automatic_shift_upper
-        valid_seat_count = self.validate_int(seat_count)
-        valid_door_count = self.validate_int(door_count)
-        valid_weight = self.validate_int(weight)
-        valid_fuel_type = self.validate_str
-        valid_fuel_efficiency = self.validate_float(fuel_efficiency) 
-        valid_extra_properties = self.validate_set
-        valid_kilometer_count = self.validate_int
-        valid_horsepower = self.validate_int(horsepower)
+        valid_model = self.validate_str(model, "Model")
+        valid_category = self.validate_str(category, "Category")
+        valid_wheel_count = self.validate_int(wheel_count, "Wheel count")
+        valid_drivetrain = self.validate_str(drivetrain, "Drivetrain")
+        valid_automatic_transmission = Utils.process_yes_no_answer(
+            self, automatic_transmission
+        )
+        valid_seat_count = self.validate_int(seat_count, "Seat count")
+        valid_extra_properties = self.validate_set(extra_properties)
+        valid_kilometer_count = self.validate_int(
+            kilometer_count, "Kilometer count"
+        )
 
         if current_branch is None:
             branch_repo = BranchRepository()
@@ -192,20 +186,17 @@ class Validation(object):
                 raise ValueError("Útibú er ekki gilt.")
 
         return Car(
-            valid_license_plate, valid_model, valid_price_per_day,
-            valid_extra_insurance_per_day, valid_category, valid_wheel_count,
-            valid_drive_train, valid_automatic_shift, valid_seat_count,
-            valid_door_count, valid_weight, valid_fuel_type,
-            valid_fuel_efficiency, valid_extra_properties,
-            valid_kilometer_count, valid_horsepower
+            valid_license_plate, valid_model, valid_category,
+            valid_wheel_count, valid_drivetrain, valid_automatic_transmission,
+            valid_seat_count, valid_extra_properties, valid_kilometer_count,
+            valid_current_branch
         )
 
     def validate_customer(
             self, driver_license_id: str, personal_id: str,
-            first_name: str, last_name: str, birthdate: str,
-            phone_number: str, email: str,
-            cc_holder_first_name: str, cc_holder_last_name: str, ccn: str,
-            cc_exp_date: str
+            first_name: str, last_name: str, birthdate: str, phone_number: str,
+            email: str, cc_holder_first_name: str, cc_holder_last_name: str,
+            ccn: str, cc_exp_date: str
             ):
         driver_license_id = self.validate_str(
             driver_license_id, "Ökuskírteinisnúmer"
@@ -232,25 +223,11 @@ class Validation(object):
             ccn, cc_exp_date
         )
 
-    def validate_branch_in_repo(self, branch_name):
-        try:
-            branch = BranchRepository().get(branch_name)
-        except ValueError:
-            branches = BranchRepository().get_all()
-            branch_name_list = [branch.get_name() for branch in branches]
-            branch_str = ", ".join(branch_name_list)
-            error_msg = "".join(
-                "Útibúið ", branch_name, " fannst ekki.\n"
-                "\tLögleg útibú eru: ", branch_str
-            )
-            raise ValueError(error_msg)
-        return branch
-
     def validate_order(
             self, car, customer, pickup_date, pickup_time, est_return_date,
             est_return_time, pickup_branch_name, return_branch_name,
-            include_extra_insurance="", total_cost="", remaining_debt="",
-            kilometers_driven="", return_time=""
+            include_extra_insurance, kilometer_allowance_per_day, total_cost,
+            remaining_debt, kilometers_driven, return_time
             ):
         orders = RentOrderRepository().get_all()
         if orders:
