@@ -6,9 +6,9 @@ from datetime import date
 class CustomerRepository(Repository):
     _FILENAME = "./data/Customers.csv"
     _TYPE = Customer
-    _PRIMARY_KEY = "Ökuskírteinis númer"  # name of primary key
+    _PRIMARY_KEY = "Ökuskirteinis numer"  # name of primary key
     _CSV_ROW_NAMES = [
-        "Ökuskírteinis númer", "Kennitala", "Fornafn", "Eftirnafn",
+        "Ökuskirteinis númer", "Kennitala", "Fornafn", "Eftirnafn",
         "Fæðingar dagssetning", "Símanúmer", "Netfang", "Fornafn kortahafa",
         "Eftirnafn kortahafa", "Kortanúmer", "Gildistími korts"
     ]
@@ -18,4 +18,5 @@ class CustomerRepository(Repository):
         cc_exp_date = date.fromisoformat(customer_dict["Gildistími korts"])
         customer_dict["Fæðingar dagssetning"] = birthdate
         customer_dict["Gildistími korts"] = cc_exp_date
-        return Customer(**customer_dict)
+        args_list = [value for value in customer_dict.values()]
+        return Customer(*args_list)
