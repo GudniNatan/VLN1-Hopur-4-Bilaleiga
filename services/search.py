@@ -2,7 +2,7 @@ from repositories.car_repository import CarRepository
 from repositories.rent_order_repository import RentOrderRepository
 from services.validation import Validation
 from datetime import datetime, date
-from services.utils import process_yes_no_answer
+from services.utils import Utils
 
 
 class Search(object):
@@ -11,9 +11,10 @@ class Search(object):
             is_automatic="", hide_available="", hide_unavailable="",
             availability_lower_bound=None, availability_upper_bound=None
             ):
-        is_automatic = self.__process_yes_no_answer(is_automatic)
-        hide_available = self.__process_yes_no_answer(hide_available)
-        hide_unavailable = self.__process_yes_no_answer(hide_unavailable)
+        process_yes_no_answer = Utils().process_yes_no_answer
+        is_automatic = process_yes_no_answer(is_automatic)
+        hide_available = process_yes_no_answer(hide_available)
+        hide_unavailable = process_yes_no_answer(hide_unavailable)
         if not (availability_lower_bound and availability_upper_bound):
             availability_lower_bound = datetime.now()
             availability_upper_bound = datetime.now()

@@ -22,7 +22,7 @@ class ManageOrdersController(Controller):
         self._menu_stack.append(search_menu)
 
     def go_to_create(self, values, menu):
-        type_str = "Bílinn"
+        type_str = "pöntun"
         fields = [
             "car", "customer", "pickup_date", "pickup_time",
             "estimated_return_date", "estimated_return_time", 

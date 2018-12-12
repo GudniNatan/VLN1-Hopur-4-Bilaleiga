@@ -11,7 +11,7 @@ from models.branch import Branch
 from models.car import Car
 from models.customer import Customer
 from models.rent_order import RentOrder
-from services.utils import process_yes_no_answer, count_days_in_range
+from services.utils import Utils
 
 # This is a class in which the methods take in some user inputted strings and
 # the names of whatever the input field is. The methods will return objects of
@@ -23,6 +23,7 @@ class Validation(object):
     def __init__(self):
         self.__admin_repo = AdminRepository()
         self.__salesperson_repo = SalespersonRepository()
+        self.__utils = Utils()
 
     def validate_login(self, username, password):
         admins = self.__admin_repo.get_all()
@@ -51,7 +52,7 @@ class Validation(object):
             raise ValueError("{} þarf að vera tala".format(name))
         return definitely_int
 
-    def validate_date(self, maybe_date, name):
+    def validate_date(self, maybe_date, name=''):
         date_formats = ["%Y-%m-%d", "%m/%y", "%d/%m/%Y", "%d-%m-%Y"]
         definitely_date = None
         for date_format in date_formats:
@@ -62,15 +63,15 @@ class Validation(object):
             break
         else:
             error_str = "{} þarf að vera dagsetning á forminu ÁÁÁÁ-MM-DD. "
-            error_str += "{} er ekki gilt."
+            error_str += "'{}' er ekki gilt."
             raise ValueError(error_str.format(name, maybe_date))
         return definitely_date.date()
 
-    def validate_time(self, maybe_time):
+    def validate_time(self, maybe_time, name=''):
         try:
             definitely_time = time.fromisoformat(maybe_time)
         except ValueError:
-            error_str = "Tími: {} er ekki gildur tími".format(maybe_time)
+            error_str = "Tími: '{}' er ekki gildur tími".format(maybe_time)
             raise ValueError(error_str)
         return definitely_time
 
@@ -110,7 +111,7 @@ class Validation(object):
         try:
             valid_float = float(some_float)
         except ValueError:
-            error_str = "{} þarf að vera rauntala. {} er ekki rauntala."
+            error_str = "{} þarf að vera rauntala. '{}' er ekki rauntala."
             error_str_format = error_str.format(name, some_float)
             raise ValueError(error_str_format)
         return valid_float
@@ -260,19 +261,19 @@ class Validation(object):
             if type(car) != Car:
                 car = CarRepository().get(car)
         except ValueError:
-            error_msg = "".join(
-                "Fann ekki þetta bílnúmer:", car,
-                "\n\tÞað er hægt að bæta við bílum í Bílaskránni."
-            )
+            error_msg = "".join((
+                "Fann ekki þetta bílnúmer: '", car, "'",
+                "\n Það er hægt að bæta við bílum í Bílaskránni."
+            ))
             raise ValueError(error_msg)
         try:
             customer = CustomerRepository().get(customer)
         except ValueError:
-            error_msg = "".join(
+            error_msg = "".join((
                 "Viðskiptavinurinn fannst ekki ",
-                "Nauðsynlegt er að skrá viðskiptavininn ",
+                "Nauðsynlegt er að viðskiptavinurnn sé skráður ",
                 "áður en hann pantar bíl. "
-            )
+            ))
             raise ValueError(error_msg)
         pickup_datetime = self.validate_datetime_by_parts(
             pickup_date, pickup_time, "Pickup"
@@ -286,12 +287,16 @@ class Validation(object):
         return_branch = self.validate_branch_in_repo(
             return_branch_name
         )
-        extra_insurance = process_yes_no_answer(include_extra_insurance)
+        extra_insurance = self.__utils.process_yes_no_answer(
+            include_extra_insurance
+        )
+        if extra_insurance is None:
+            extra_insurance = False
         if total_cost:
             total_cost = self.validate_int(total_cost)
         else:
-            total_cost = car.get_category["price"] * count_days_in_range(
-                pickup_datetime, est_return_datetime
+            base_cost = self.__utils.calculate_base_cost(
+                car, pickup_datetime, est_return_datetime
             )
         if remaining_debt:
             remaining_debt = self.validate_int(remaining_debt)
@@ -301,7 +306,6 @@ class Validation(object):
         return_time = None
         return RentOrder(
             order_number, car, customer, pickup_datetime, est_return_datetime,
-            pickup_branch_name, return_branch_name, , total_cost: int = 0,
-            remaining_debt: int = 0, kilometers_driven: int = 0,
-            return_time: datetime = None,
+            pickup_branch_name, return_branch_name, total_cost,
+            remaining_debt
         )
