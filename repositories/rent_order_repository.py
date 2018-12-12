@@ -33,8 +33,10 @@ class RentOrderRepository(Repository):
         total_cost = int(rent_order_dict["total_cost"])
         remaining_debt = int(rent_order_dict["remaining_debt"])
         kilometers_driven = int(rent_order_dict["kilometers_driven"])
-        if return_time:
-            return_time = datetime.fromisoformat(rent_order_dict["return_time"])
+        if rent_order_dict["return_time"]:
+            return_time = datetime.fromisoformat(
+                rent_order_dict["return_time"]
+            )
         else:
             return_time = None
         return RentOrder(
