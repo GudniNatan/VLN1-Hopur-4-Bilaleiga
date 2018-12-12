@@ -11,5 +11,5 @@ class Utils(object):
 
     def calculate_base_cost(self, car, pickup_datetime, return_datetime):
         days = self.count_days_in_range(pickup_datetime, return_datetime)
-        day_cost = car.category["price"]
+        day_cost = car.get_category["price"]
         return days * day_cost

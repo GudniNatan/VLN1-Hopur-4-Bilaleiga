@@ -1,6 +1,3 @@
-username,password,name,email,phone
-gudni,12345,GuÃ°ni Natan,gudni@ru.is,5812345
-hemmi,321,Hermann,hermanng18@ru.is,113
-tati,987,Vytautas,vytautas@ru.is,123456
-0,0,0,0,0
-s,s,Smari Gunnarsson,smari18@ru.is,911
+username;password;name;email;phone
+gudni;12345;Guğni Natan;gudni@ru.is;5812345
+hemmi;321;Hermann;hermanng18@ru.is;113
