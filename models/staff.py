@@ -11,9 +11,9 @@ class Staff(Model):
         self.__phone = phone
 
     def csv_repr(self):
-        return {"username": self.__username, "password": self.__password,
-                "name": self.__name, "email": self.__email,
-                "phone": self.__phone}
+        return {"Notandanafn": self.__username, "Lykilorð": self.__password,
+                "Nafn": self.__name, "Netfang": self.__email,
+                "Símanúmer": self.__phone}
 
     def get_dict(self):
         return self.csv_repr()
@@ -28,6 +28,7 @@ class Staff(Model):
         return "Nafn: {}\n\tNotendanafn: {}".format(self.__name,
                                                     self.__username)
     # Get
+    
     def get_username(self):
         return self.__username
 
