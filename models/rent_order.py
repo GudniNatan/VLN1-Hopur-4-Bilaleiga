@@ -5,12 +5,15 @@ from datetime import datetime
 
 
 class RentOrder(Model):
+    INSURANCE_PERCENT = 0.05
+    KM_ALLOWANCE_PER_DAY = 100
+    EXTRA_INSURANCE = 3000
+
     def __init__(
             self, order_number: int, car: Car, customer: Customer,
             pickup_time: datetime, estimated_return_time: datetime,
             pickup_branch_name: str, return_branch_name: str,
-            insurance_total: int, extra_insurance_total: int,
-            kilometer_allowance_per_day: int = 100, total_cost: int = 0,
+            include_extra_insurance: bool, base_cost: int,
             remaining_debt: int = 0, kilometers_driven: int = 0,
             return_time: datetime = None,
             ):
@@ -21,13 +24,15 @@ class RentOrder(Model):
         self.__estimated_return_time = estimated_return_time
         self.__pickup_branch_name = pickup_branch_name
         self.__return_branch_name = return_branch_name
-        self.__insurance_total = insurance_total
-        self.__extra_insurance_total = extra_insurance_total
-        self.__kilometer_allowance_per_day = kilometer_allowance_per_day
-        self.__total_cost = total_cost
         self.__remaining_debt = remaining_debt
         self.__kilometers_driven = kilometers_driven
         self.__return_time = return_time
+        self.__base_cost = base_cost
+        self.__insurance_total = int(base_cost * self.INSURANCE_PERCENT)
+        self.__extra_insurance_total = 0
+        if include_extra_insurance:
+            self.__extra_insurance_total += self.EXTRA_INSURANCE
+        self.__total_cost = base_cost + self.__extra_insurance_total
 
     def csv_repr(self):
         rent_order_dict = self.get_dict()
@@ -63,7 +68,7 @@ class RentOrder(Model):
         order_string = "Pöntun #{},\n\tViðskiptavinur: {},\n\tÖkuskírteini {},"
         order_string += "\n\tBíltegund {},\n\tBílnúmer {},\n\tKostnaður {}"
         return order_string.format(
-            str(self.__order_number), self.get_customer.get_name(),
+            str(self.__order_number), self.get_customer().get_name(),
             self.__customer.get_driver_license_id(), self.__car.get_model(),
             self.__car.get_license_plate_number(), str(self.__total_cost)
         )

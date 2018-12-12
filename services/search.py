@@ -52,7 +52,7 @@ class Search(object):
 
     def car_available(self, car, lower_time_bound, upper_time_bound=None):
         if type(lower_time_bound) not in [datetime, date]:
-            lower_time_bound = Validate().validate_datetime(lower_time_bound)
+            lower_time_bound = Validation().validate_datetime(lower_time_bound)
         if type(upper_time_bound) not in [datetime, date]:
             upper_time_bound = lower_time_bound
         rent_orders = RentOrderRepository().get_all()
@@ -79,7 +79,7 @@ class Search(object):
                 continue
             if customer and customer != str(customer.get_driver_license_id()):
                 continue
-            if not self.__order_active(order) == active:
+            if (not self.__order_active(order)) == active:
                 continue
             matching_orders.append(order)
         return matching_orders
