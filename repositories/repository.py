@@ -58,7 +58,7 @@ class Repository(ABC):
         if an object with the given key is not found.'''
         file = self.read_file()
         for line in file:
-            if line[self._PRIMARY_KEY] == key:
+            if str(line[self._PRIMARY_KEY]).lower() == str(key).lower():
                 return self.dict_to_model_object(line)
         raise ValueError("Fann ekki {} í {}".format(
             key, self._FILENAME
