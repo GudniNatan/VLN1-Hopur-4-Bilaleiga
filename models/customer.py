@@ -23,8 +23,8 @@ class Customer(Model):
 
     def csv_repr(self):
         customer_dict = self.get_dict()
-        customer_dict['birthdate'] = self.__birthdate.isoformat()
-        customer_dict['cc_exp_date'] = self.__cc_exp_date.isoformat()
+        customer_dict['Fæðingar dagssetning'] = self.__birthdate.isoformat()
+        customer_dict['Gildistími korts'] = self.__cc_exp_date.isoformat()
         return customer_dict
 
     def get_dict(self):
