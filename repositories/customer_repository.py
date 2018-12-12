@@ -6,16 +6,16 @@ from datetime import date
 class CustomerRepository(Repository):
     _FILENAME = "./data/Customers.csv"
     _TYPE = Customer
-    _PRIMARY_KEY = "driver_license_id"  # name of primary key
+    _PRIMARY_KEY = "Ökuskírteinis númer"  # name of primary key
     _CSV_ROW_NAMES = [
-        "driver_license_id", "personal_id", "first_name", "last_name",
-        "birthdate", "phone_number", "email", "cc_holder_first_name",
-        "cc_holder_last_name", "ccn", "cc_exp_date"
+        "Ökuskírteinis númer", "Kennitala", "Fornafn", "Eftirnafn",
+        "Fæðingar dagssetning", "Símanúmer", "Netfang", "Fornafn kortahafa",
+        "Eftirnafn kortahafa", "Kortanúmer", "Gildistími korts"
     ]
 
     def dict_to_model_object(self, customer_dict):
-        birthdate = date.fromisoformat(customer_dict["birthdate"])
-        cc_exp_date = date.fromisoformat(customer_dict["cc_exp_date"])
-        customer_dict["birthdate"] = birthdate
-        customer_dict["cc_exp_date"] = cc_exp_date
+        birthdate = date.fromisoformat(customer_dict["Fæðingar dagssetning"])
+        cc_exp_date = date.fromisoformat(customer_dict["Gildistími korts"])
+        customer_dict["Fæðingar dagssetning"] = birthdate
+        customer_dict["Gildistími korts"] = cc_exp_date
         return Customer(**customer_dict)

@@ -29,14 +29,14 @@ class Customer(Model):
 
     def get_dict(self):
         return {
-            "driver_license_id": self.__driver_license_id,
-            "personal_id": self.__personal_id, "email": self.__email,
-            "first_name": self.__first_name, "last_name": self.__last_name,
-            "birthdate": self.__birthdate, "phone_number": self.__phone_number,
-            "phone_number": self.__phone_number,
-            "cc_holder_first_name": self.__cc_holder_first_name,
-            "cc_holder_last_name": self.__cc_holder_last_name,
-            "ccn": self.__ccn, "cc_exp_date": self.__cc_exp_date
+            "Ökuskírteinis númer": self.__driver_license_id,
+            "Kennitala": self.__personal_id, "Netfang": self.__email,
+            "Fornafn": self.__first_name, "Eftirnafn": self.__last_name,
+            "Fæðingar dagssetning": self.__birthdate,
+            "Símanúmer": self.__phone_number,
+            "Fornafn kortahafa": self.__cc_holder_first_name,
+            "Eftirnafn kortahafa": self.__cc_holder_last_name,
+            "Kortanúmer": self.__ccn, "Gildistími korts": self.__cc_exp_date
             }
 
     def __eq__(self, other):
@@ -46,7 +46,9 @@ class Customer(Model):
             return self._username == str(other)
 
     def __str__(self):
-        return "Nafn: {} {}\n\tÖkuskírteni: {}".format(self.__first_name, self.__last_name, self.__driver_license_id)
+        return "Nafn: {} {}\n\tÖkuskírteini: {}".format(self.__first_name,
+                                                        self.__last_name,
+                                                        self.__driver_license_id)
 
     # Get
     def get_driver_license_id(self):
