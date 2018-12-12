@@ -1,5 +1,6 @@
 from models.model import Model
 from datetime import date
+from collections import OrderedDict
 
 
 class Customer(Model):
@@ -28,7 +29,7 @@ class Customer(Model):
         return customer_dict
 
     def get_dict(self):
-        return {
+        return OrderedDict({
             "driver_license_id": self.__driver_license_id,
             "personal_id": self.__personal_id, "email": self.__email,
             "first_name": self.__first_name, "last_name": self.__last_name,
@@ -37,7 +38,7 @@ class Customer(Model):
             "cc_holder_first_name": self.__cc_holder_first_name,
             "cc_holder_last_name": self.__cc_holder_last_name,
             "ccn": self.__ccn, "cc_exp_date": self.__cc_exp_date
-            }
+            })
 
     def __eq__(self, other):
         if isinstance(other, Customer):

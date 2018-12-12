@@ -8,8 +8,8 @@ class CustomerRepository(Repository):
     _TYPE = Customer
     _PRIMARY_KEY = "driver_license_id"  # name of primary key
     _CSV_ROW_NAMES = [
-        "driver_license_id", "personal_id", "first_name", "last_name",
-        "birthdate", "phone_number", "email", "cc_holder_first_name",
+        "driver_license_id", "personal_id", "email", "first_name", "last_name",
+        "birthdate", "phone_number", "cc_holder_first_name",
         "cc_holder_last_name", "ccn", "cc_exp_date"
     ]
 

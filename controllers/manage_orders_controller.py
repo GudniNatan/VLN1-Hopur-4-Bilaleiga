@@ -39,21 +39,13 @@ class ManageOrdersController(Controller):
             order = self._validation.validate_order(*values)
         except ValueError as error_msg:
             menu.set_errors((error_msg,))
+            self._validation.validate_order(*values)
             return
-        self.quit()
-
-    def create_car(self, values, menu):
-        try:
-            car = self._validation.validate_car(*values)
-        except ValueError as error:
-            menu.set_errors((error,))
-            return
-        self.__car_repo.add(car)
-        new_car_report_menu = self._ui.get_creation_report_menu(
-            car, self.__controller_header, self.restart
+        self.__order_repo.write((order,))
+        new_order_report_menu = self._ui.get_creation_report_menu(
+            order, self.__controller_header, self.restart
         )
-        self._menu_stack.append(new_car_report_menu)
-
+        self._menu_stack.append(new_order_report_menu)
 
     def __make_main_menu(self):
         header = self.__controller_header

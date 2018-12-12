@@ -17,7 +17,8 @@ class Repository(ABC):
                 return
         with open(self._FILENAME, "a+", newline='') as file_pointer:
             csv_dict_writer = csv.DictWriter(file_pointer,
-                                             fieldnames=self._CSV_ROW_NAMES)
+                                             fieldnames=self._CSV_ROW_NAMES,
+                                             delimiter=";")
             representation = model_object.csv_repr()
             csv_dict_writer.writerow(representation)
 
@@ -25,7 +26,8 @@ class Repository(ABC):
         ''' Writes the csv file with the given object list'''
         with open(self._FILENAME, "w", newline='') as file_pointer:
             csv_dict_writer = csv.DictWriter(file_pointer,
-                                             fieldnames=self._CSV_ROW_NAMES)
+                                             fieldnames=self._CSV_ROW_NAMES,
+                                             delimiter=";")
             reps = [model_obj.csv_repr() for model_obj in model_object_list]
             csv_dict_writer.writeheader()
             csv_dict_writer.writerows(reps)
@@ -58,7 +60,9 @@ class Repository(ABC):
         for line in file:
             if line[self._PRIMARY_KEY] == key:
                 return self.dict_to_model_object(line)
-        raise ValueError
+        raise ValueError("Fann ekki {} í {}".format(
+            key, self._FILENAME
+        ))
 
     def get_all(self):
         file = self.read_file()

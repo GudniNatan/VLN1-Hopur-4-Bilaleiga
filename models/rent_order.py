@@ -12,7 +12,7 @@ class RentOrder(Model):
             insurance_total: int, extra_insurance_total: int,
             kilometer_allowance_per_day: int = 100, total_cost: int = 0,
             remaining_debt: int = 0, kilometers_driven: int = 0,
-            return_time: datetime = datetime(1, 1, 1),
+            return_time: datetime = None,
             ):
         self.__order_number = order_number
         self.__car = car
@@ -37,6 +37,7 @@ class RentOrder(Model):
         rent_order_dict["pickup_time"] = self.__pickup_time.isoformat()
         rent_order_dict["estimated_return_time"] = return_time_str
         rent_order_dict["return_time"] = self.__return_time.isoformat()
+        return rent_order_dict
 
     def get_dict(self):
         return {
@@ -112,8 +113,6 @@ class RentOrder(Model):
         return self.__kilometers_driven
 
     def get_return_time(self):
-        if self.__return_time == datetime(1, 1, 1):
-            return None
         return self.__return_time
 
     def get_key(self):
