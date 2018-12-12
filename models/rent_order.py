@@ -5,14 +5,17 @@ from datetime import datetime
 
 
 class RentOrder(Model):
+    INSURANCE_PERCENT = 0.05
+    KM_ALLOWANCE_PER_DAY = 100
+    EXTRA_INSURANCE = 3000
+
     def __init__(
             self, order_number: int, car: Car, customer: Customer,
             pickup_time: datetime, estimated_return_time: datetime,
             pickup_branch_name: str, return_branch_name: str,
-            insurance_total: int, extra_insurance_total: int,
-            kilometer_allowance_per_day: int = 100, total_cost: int = 0,
+            include_extra_insurance: bool, base_cost: int,
             remaining_debt: int = 0, kilometers_driven: int = 0,
-            return_time: datetime = datetime(1, 1, 1),
+            return_time: datetime = None,
             ):
         self.__order_number = order_number
         self.__car = car
@@ -21,13 +24,15 @@ class RentOrder(Model):
         self.__estimated_return_time = estimated_return_time
         self.__pickup_branch_name = pickup_branch_name
         self.__return_branch_name = return_branch_name
-        self.__insurance_total = insurance_total
-        self.__extra_insurance_total = extra_insurance_total
-        self.__kilometer_allowance_per_day = kilometer_allowance_per_day
-        self.__total_cost = total_cost
         self.__remaining_debt = remaining_debt
         self.__kilometers_driven = kilometers_driven
         self.__return_time = return_time
+        self.__base_cost = base_cost
+        self.__insurance_total = int(base_cost * self.INSURANCE_PERCENT)
+        self.__extra_insurance_total = 0
+        if include_extra_insurance:
+            self.__extra_insurance_total += self.EXTRA_INSURANCE
+        self.__total_cost = base_cost + self.__extra_insurance_total
 
     def csv_repr(self):
         rent_order_dict = self.get_dict()
@@ -106,8 +111,6 @@ class RentOrder(Model):
         return self.__kilometers_driven
 
     def get_return_time(self):
-        if self.__return_time == datetime(1, 1, 1):
-            return None
         return self.__return_time
 
     def get_key(self):

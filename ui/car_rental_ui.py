@@ -33,6 +33,8 @@ class CarRentalUI(object):
                                       delete_callback):
         header = "{} -> Leit -> Val".format(header_message)
         header += "\nÞú valdir: {}".format(object_name)
+        for key, value in model_object.get_dict().items():
+            header += "\n\t{}: {}".format(key, value)
         edit_text = "Breyta: {}".format(object_name)
         delete_text = "Eyða: {}".format(object_name)
         options = [
