@@ -41,6 +41,10 @@ my_customer = Validation().validate_customer(
     ccn="5372 8320 1588 4476", cc_exp_date="12/20"
 )
 
+my_car2 = Validation().validate_car(
+    
+)
+
 print(my_customer.get_dict())
 CustomerRepository().write((my_customer,))
 

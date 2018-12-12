@@ -22,16 +22,15 @@ class ManageCarsController(Controller):
         )
         self._menu_stack.append(search_menu)
 
-    def go_to_search_all(self, values, menu):
-        for i in range(len(values)):
-            values[i] = ""
-        self.go_to_search(values, menu)
-
     def go_to_create(self, values, menu):
         type_str = "Bílinn"
-        fields = self.__car_repo.get_row_names()
+        fields = [
+            "license_plate_number", "model", "category", "wheel_count",
+            "drivetrain", "automatic_transmission (J/N)", "seat_count",
+            "extra_properties (comma seperated)", "kilometer_count"
+        ]
         new_car_menu = self._ui.get_new_model_object_menu(
-            self.__controller_header, fields, type_str
+            self.__controller_header, fields, type_str, self.create_car
         )
         self._menu_stack.append(new_car_menu)
 
@@ -51,7 +50,7 @@ class ManageCarsController(Controller):
         )
         self._menu_stack.append(edit_menu)
 
-    def edit_selected_customer(self, values, menu):
+    def edit_selected_car(self, values, menu):
         # Update the salesperson
         old_customer = self.__selected_customer
         old_key = old_customer.get_drivers_license_id()
@@ -68,6 +67,9 @@ class ManageCarsController(Controller):
         self._menu_stack.append(update_report_menu)
 
     def go_to_delete(self, values, menu):
+        pass
+
+    def create_car(self, values, menu):
         pass
 
     # Menus - try to move these to the ui layer
@@ -98,3 +100,23 @@ class ManageCarsController(Controller):
             max_options_per_page=10
         )
         return menu
+
+    def __make_new_car_menu(self):
+        header = self.__controller_header + " -> Nýr bíll"
+        header += "\nSláðu inn upplýsingarnar fyrir nýja bílinn:"
+        inputs = [
+            {"prompt": "license_plate_number"},
+            {"prompt": "model"},
+            {"prompt": "category"},
+            {"prompt": "wheel_count"},
+            {"prompt": "drivetrain", "type": "date"},
+            {"prompt": "automatic_transmission (J/N)"},
+            {"prompt": "seat_count"},
+            {"prompt": "extra_properties (comma seperated)"},
+            {"prompt": "kilometer_count"},
+        ]
+        new_customer_menu = Menu(header=header, inputs=inputs,
+                                 back_function=self.back,
+                                 stop_function=self.stop,
+                                 submit_function=self.create_customer)
+        return new_customer_menu
