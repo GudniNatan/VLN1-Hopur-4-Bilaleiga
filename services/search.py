@@ -33,7 +33,7 @@ class Search(object):
             if seat_count and seat_count != str(car.get_seat_count()):
                 continue
             if license_plate_number:
-                if license_plate_number != car.get_license_plate_number():
+                if license_plate_number != car.get_license_plate_number:
                     continue
             if category:
                 if category != car.get_category():
