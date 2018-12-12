@@ -55,9 +55,9 @@ class Validation(object):
         for date_format in date_formats:
             try:
                 definitely_date = datetime.strptime(maybe_date, date_format)
+                break
             except ValueError:
                 continue
-            break
         else:
             error_str = "{} þarf að vera dagsetning á forminu ÁÁÁÁ-MM-DD. "
             error_str += "{} er ekki gilt."
@@ -117,7 +117,7 @@ class Validation(object):
         phone_number = phone_number.strip()
         phone_number = phone_number.replace("-", "")
         phone_number = phone_number.replace(" ", "")
-        if len(phone_number) != 7 and len(phone_number) != 10:
+        if len(phone_number) < 7:
             raise ValueError("Ekki gilt símanúmer")
         return phone_number
 
