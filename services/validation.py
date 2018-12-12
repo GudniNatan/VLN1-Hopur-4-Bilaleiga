@@ -239,13 +239,14 @@ class Validation(object):
         except ValueError:
             categories = PriceListRepository().get_all()
             category_str_list = [
-                category.get_name() for category in categories
+                category["category"] for category in categories
             ]
             category_str = ", ".join(category_str_list)
-            error_msg = "".join(
-                "'", category_name, "' er ekki gildur flokkur. ",
-                "Þetta eru gildir flokkar:\n", category_str_list
-            )
+            error_msg = " ".join((
+                "'", category_name, "' er ekki gildur flokkur.",
+                "Þetta eru gildir flokkar:\n", *category_str_list, "\n"
+            ))
+            raise ValueError(error_msg)
         return category
 
     def validate_branch_in_repo(self, branch_name):
@@ -253,12 +254,16 @@ class Validation(object):
             branch = BranchRepository().get(branch_name)
         except ValueError:
             branches = BranchRepository().get_all()
+            if branch_name is None:
+                if branches:
+                    return branches[0]
             branch_str_list = [branch.get_name() for branch in branches]
             branch_str = ", ".join(branch_str_list)
-            error_msg = "".join(
-                "'", branch_name, "' er ekki gilt útibú.",
+            error_msg = "".join((
+                "'", str(branch_name), "' er ekki gilt útibú.",
                 "Þetta eru gild útibú:\n", branch_str
-            )
+            ))
+            raise ValueError(error_msg)
         return branch
 
     def validate_order(

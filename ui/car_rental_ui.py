@@ -105,7 +105,7 @@ class CarRentalUI(object):
                                  restart_callback):
         header = "{}\n{} hefur verið eytt."
         header = header.format(controller_message, object_name)
-        options = [{"description": "Aftur í starfsmannaskrá",
+        options = [{"description": "Aftur í " + controller_message,
                     "value": restart_callback}]
         delete_feedback_menu = Menu(header=header, can_go_back=False,
                                     options=options, stop_function=self.__stop)
