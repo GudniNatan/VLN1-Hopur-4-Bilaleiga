@@ -1,3 +1,4 @@
 license_plate_number,model,category,wheel_count,drivetrain,automatic_transmission,seat_count,extra_properties,kilometer_count,current_branch
 AJ-123,My car model,Small car,4,4x4,True,4,"Heated seats,A/C",100,BB Reykjav�k
 TR-990,Nissan Leaf 2017,Small car,4,2 Wheel Drive,True,4,"Heated seats,A/C",20000,BB Reykjav�k
+IZP26,Honda Oddesey,minivan,4,fwd,True,8,"radio,aircon",140000,BB Reykjav�k

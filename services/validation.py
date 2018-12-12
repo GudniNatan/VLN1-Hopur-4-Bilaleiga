@@ -9,6 +9,7 @@ from models.branch import Branch
 from models.car import Car
 from models.customer import Customer
 from models.rent_order import RentOrder
+from services.utils import Utils
 
 # This is a class in which the methods take in some user inputted strings and
 # the names of whatever the input field is. The methods will return objects of
@@ -153,21 +154,26 @@ class Validation(object):
     def validate_car(
             self, license_plate_number: str, model: str,
             category: str, wheel_count: int, drivetrain: str,
-            automatic_transmission: bool, seat_count: int,
+            automatic_transmission: str, seat_count: int,
             extra_properties: set, kilometer_count: int,
             current_branch=None,
             ):
 
-        valid_license_plate = self.validate_str(license_plate_number)
-        valid_model = self.validate_str(model)
-        valid_category = self.validate_str(category)
-        valid_wheel_count = self.validate_int(wheel_count)
-        valid_drivetrain = self.validate_str(drivetrain)
-        automatic_transmission_upper = self.validate_str(automatic_shift) == "J"
-        valid_automatic_transmission = automatic_transmission_upper
-        valid_seat_count = self.validate_int(seat_count)
-        valid_extra_properties = self.validate_set
-        valid_kilometer_count = self.validate_int
+        valid_license_plate = self.validate_str(
+            license_plate_number, "Bílnúmer"
+        )
+        valid_model = self.validate_str(model, "Model")
+        valid_category = self.validate_str(category, "Category")
+        valid_wheel_count = self.validate_int(wheel_count, "Wheel count")
+        valid_drivetrain = self.validate_str(drivetrain, "Drivetrain")
+        valid_automatic_transmission = Utils.process_yes_no_answer(
+            self, automatic_transmission
+        )
+        valid_seat_count = self.validate_int(seat_count, "Seat count")
+        valid_extra_properties = self.validate_set(extra_properties)
+        valid_kilometer_count = self.validate_int(
+            kilometer_count, "Kilometer count"
+        )
 
         if current_branch is None:
             branch_repo = BranchRepository()
@@ -180,9 +186,9 @@ class Validation(object):
 
         return Car(
             valid_license_plate, valid_model, valid_category,
-            valid_wheel_count, valid_drive_train, automatic_shift_upper,
-            valid_automatic_shift, valid_seat_count, valid_extra_properties,
-            valid_kilometer_count
+            valid_wheel_count, valid_drivetrain, valid_automatic_transmission,
+            valid_seat_count, valid_extra_properties, valid_kilometer_count,
+            valid_current_branch
         )
 
     def validate_customer(
