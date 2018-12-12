@@ -2,7 +2,6 @@ from repositories.car_repository import CarRepository
 from repositories.rent_order_repository import RentOrderRepository
 from services.validation import Validation
 from datetime import datetime, date
-from services.utils import process_yes_no_answer
 
 
 class Search(object):
@@ -41,6 +40,13 @@ class Search(object):
                     continue
             relevant_cars.append(car)
         return relevant_cars
+
+    def __process_yes_no_answer(self, yes_no):
+        if yes_no:
+            yes_no = str(yes_no)[0].upper()
+            if yes_no in ["J", "Y"]:
+                return True
+            return False
 
     def car_available(self, car, lower_time_bound, upper_time_bound=None):
         if type(lower_time_bound) not in [datetime, date]:

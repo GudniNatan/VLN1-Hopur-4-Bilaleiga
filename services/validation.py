@@ -116,7 +116,7 @@ class Validation(object):
         phone_number = phone_number.strip()
         phone_number = phone_number.replace("-", "")
         phone_number = phone_number.replace(" ", "")
-        if len(phone_number) < 7:
+        if len(phone_number) != 7 and len(phone_number) != 10:
             raise ValueError("Ekki gilt símanúmer")
         return phone_number
 
@@ -186,9 +186,8 @@ class Validation(object):
         )
 
     def validate_customer(
-            self, driver_license_id: str, personal_id: str,
-            first_name: str, last_name: str, birthdate: str,
-            phone_number: str, email: str,
+            self, driver_license_id: str, personal_id: str, email: str,
+            first_name: str, last_name: str, birthdate: str, phone_number: str,
             cc_holder_first_name: str, cc_holder_last_name: str, ccn: str,
             cc_exp_date: str
             ):
