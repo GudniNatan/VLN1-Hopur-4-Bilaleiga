@@ -1,1 +1,2 @@
 virkar ekki að bæta við bíl vantar positional argument í submit_callback 
+virkar að setja already expired ccn þegar nýr viðskiptavinur er skráður
