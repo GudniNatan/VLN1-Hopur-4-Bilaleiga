@@ -1,2 +1,2 @@
 order_number;car;customer;pickup_time;estimated_return_time;pickup_branch_name;return_branch_name;include_extra_insurance;base_cost;remaining_debt;kilometers_driven;return_time
-2;AJ-123;55lstfbs;2019-01-01T12:00:00;2019-01-05T19:00:00;BB Reykjavík;BB Reykjavík;True;70000;73000;0;
+2;AJ-123;55lstfbs;2019-01-01T12:00:00;2019-01-05T19:00:00;BB Reykjavï¿½k;BB Reykjavï¿½k;True;70000;73000;0;

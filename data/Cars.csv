@@ -1,3 +1,33 @@
 license_plate_number;model;category;wheel_count;drivetrain;automatic_transmission;seat_count;extra_properties;kilometer_count;current_branch
-AJ-123;My car model;Standard;4;4x4;True;4;A/C,Heated seats;100;BB Reykjav�k
-TR-990;Nissan Leaf 2017;Standard;4;2 Wheel Drive;True;4;A/C,Heated seats;20000;BB Reykjav�k
+AJ-123;My car model;Standard;4;4x4;True;4;A/C,Heated seats;100;BB Reykjav�k
+TR-990;Nissan Leaf 2017;Standard;4;2 Wheel Drive;True;4;A/C,Heated seats;20000;BB Reykjav�k
+XF-N97;Mercedes Benz V Klasse 2017;Minivan;4;4x4;True;8;A/C, ABS, GPS, Bluetooth;50200;BB Reykjav�k
+SC-A35;Toyota Land Cruiser 150 Series 2018;SUV;4;4x4;True;5;A/C, ABS;63000;BB Reykjav�k
+XU-Z15;Volvo V90 Cross Country D4 AWD Pro 2018;Crossover;4;4x4;True;6;A/C, ABS, Bluetooth;27100;BB Reykjav�k
+JT-A73;BMW 530E MTech 2018;Standard;4;FWD;True;5;A/C, ABS;45900;BB Reykjav�k
+PZ-A54;Mercedes Benz E350 Plugin Hybrid 2017;Standard;4;FWD;True;5;A/C, ABS, Bakkmyndavél, Bluetooth;14200;BB Reykjav�k
+NQ-W65;Mercedes Benz SL55 AMG 2005;Sport;4;FWD;True;2;A/C, ABS;58700;BB Reykjav�k
+IZ-W25;Chrysler Pacifica Platinum Plugin Hybrid 2017;Minivan;4;4x4;True;8;A/C, ABS, Bluetooth;78900;BB Reykjav�k
+UD-E26;Kia Stinger 2017;Standard;4;RWD;True;5;A/C, Bakkmyndavél, Bluetooth;32800;BB Reykjav�k
+NR-D43;Volvo S60 2016;Standard;4;FWD;True;5;A/C, ABS;42700;BB Reykjav�k
+QU-Q59;Volkswagen Golf R 2017;Standard;4;FWD;True;5;ABS, Bakkmyndavél, Bluetooth;33200;BB Reykjav�k
+RM-V83;Jaguar XF Prestige 2017;Standard;4;4x4;True;5;A/C, ABS, GPS;46400;BB Reykjav�k
+TQ-E32;Toyota Proace Verso Active Plus 2017;Minivan;4;4x4;True;8;A/C, ABS, Bluetooth;41000;BB Reykjav�k
+HG-Z99;Ford CNG Technik Focus RS 2016;Standard;4;FWD;True;5;A/C, ABS;65900;BB Reykjav�k
+PO-P38;Honda Civic R 2018;Standard;4;FWD;True;5;A/C, ABS, Bakkmyndavél, Bluetooth;22000;BB Reykjav�k
+RD-O76;Volkswagen Golf GTI 2016;Standard;4;FWD;True;5;Bakkmyndavél, Bluetooth;39800;BB Reykjav�k
+JD-N56;Toyota Yaris GRMN 2018;Standard;4;FWD;True;5;A/C, Bakkmyndavél, Bluetooth;21000;BB Reykjav�k
+OX-L36;Ford Galaxy 2016;Standard;4;4x4;True;5;A/C, ABS;56000;BB Reykjav�k
+GG-S35;Volvo S60 2017;Standard;4;FWD;True;5;A/C, ABS, Bluetooth;67000;BB Reykjav�k
+TT-C24;Mitsubishi Outlander 2015;Standard;4;FWD;True;5;A/C, ABS;72000;BB Reykjav�k
+KB-D24;Chevrolet Suburban 2017;SUV;4;4x4;True;5;A/C, ABS;54000;BB Reykjav�k
+YJ-I39;Land Rover Discovery 2018;SUV;4;4x4;True;5;A/C, ABS, Bakkmyndavél, Bluetooth;34000;BB Reykjav�k
+OO-L75;MBW X5 XDrive50E 2016;Crossover;4;4x4;True;5;A/C, ABS, Bluetooth;43900;BB Reykjav�k
+HM-A88;Lexus RX 450H F Sport 2017;Crossover;4;4x4;True;5;A/C, ABS, Bluetooth;54800;BB Reykjav�k
+DO-I46;Porche Cayenne S E-Hybrid 2016;Crossover;4;4x4;True;5;A/C, Bakkmyndavél, Bluetooth;52800;BB Reykjav�k
+RA-Q99;Lexus GS 450H F-Sport Hybrid 2017;Standard;4;FWD;True;5;A/C, ABS, Bluetooth;32000;BB Reykjav�k
+JT-A37;BMW 530E MTech 2018;Standard;4;FWD;True;5;Bakkmyndavél, Bluetooth;17200;BB Reykjav�k
+AJ-G53;Aston Martin DB9 2010;Sport;4;FWD;False;4;A/C, ABS;69500;BB Reykjav�k
+RK-V53;Land Rover Range Rover Vouge 2017;SUV;4;4x4;True;5;A/C, ABS, Bakkmyndavél;72300;BB Reykjav�k
+UJ-S19;Porche 911 Carrera 2015;Sport;4;FWD;False;2;A/C, Bluetooth;49900;BB Reykjav�k
+AL-O84;Ford Mustang GT Stage 3 2016;Sport;4;FWD;False;2;A/C, Bluetooth;54700;BB Reykjav�k
