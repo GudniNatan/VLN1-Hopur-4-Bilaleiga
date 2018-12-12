@@ -1,6 +1,6 @@
-category,price
-Standard,14000
-Crossover,18000
-SUV,22000
-Minivan,21000
-Sport,17000
+category;price
+Standard;14000
+Crossover;18000
+SUV;22000
+Minivan;21000
+Sport;17000
