@@ -14,7 +14,7 @@ class RentOrder(Model):
             pickup_time: datetime, estimated_return_time: datetime,
             pickup_branch_name: str, return_branch_name: str,
             include_extra_insurance: bool, base_cost: int,
-            remaining_debt: int = 0, kilometers_driven: int = 0,
+            remaining_debt: int = -1, kilometers_driven: int = 0,
             return_time: datetime = None,
             ):
         self.__order_number = order_number
@@ -33,6 +33,8 @@ class RentOrder(Model):
         if include_extra_insurance:
             self.__extra_insurance_total += self.EXTRA_INSURANCE
         self.__total_cost = base_cost + self.__extra_insurance_total
+        if remaining_debt == -1:
+            self.__remaining_debt = self.__total_cost
 
     def csv_repr(self):
         rent_order_dict = self.get_dict()
@@ -55,10 +57,7 @@ class RentOrder(Model):
             "estimated_return_time": self.__estimated_return_time,
             "pickup_branch_name": self.__pickup_branch_name,
             "return_branch_name": self.__return_branch_name,
-            "insurance_total": self.__insurance_total,
-            "extra_insurance_total": self.__extra_insurance_total,
-            "kilometer_allowance_per_day": self.__kilometer_allowance_per_day,
-            "total_cost": self.__total_cost,
+            "include_extra_insurance": self.__extra_insurance_total != 0,
             "remaining_debt": self.__remaining_debt,
             "kilometers_driven": self.__kilometers_driven,
             "return_time": self.__return_time,

@@ -241,7 +241,7 @@ class Validation(object):
     def validate_order(
             self, car, customer, pickup_date, pickup_time, est_return_date,
             est_return_time, pickup_branch_name, return_branch_name,
-            include_extra_insurance, total_cost="", remaining_debt="",
+            include_extra_insurance,
             ):
         orders = RentOrderRepository().get_all()
         if orders:
@@ -283,20 +283,12 @@ class Validation(object):
         )
         if extra_insurance is None:
             extra_insurance = False
-        if total_cost:
-            total_cost = self.validate_int(total_cost)
-        else:
-            base_cost = self.__utils.calculate_base_cost(
-                car, pickup_datetime, est_return_datetime
-            )
-        if remaining_debt:
-            remaining_debt = self.validate_int(remaining_debt)
-        else:
-            remaining_debt = total_cost
+        base_cost = self.__utils.calculate_base_cost(
+            car, pickup_datetime, est_return_datetime
+        )
         kilometers_driven = None
         return_time = None
         return RentOrder(
             order_number, car, customer, pickup_datetime, est_return_datetime,
-            pickup_branch_name, return_branch_name, total_cost,
-            remaining_debt
+            pickup_branch_name, return_branch_name, extra_insurance, base_cost
         )
