@@ -54,19 +54,34 @@ class Validation(object):
         return definitely_int
 
     def validate_date(self, maybe_date, name=''):
-        date_formats = ["%Y-%m-%d", "%m/%y", "%d/%m/%Y", "%d-%m-%Y"]
+        date_formats = ["%Y-%m-%d", "%d-%m-%Y"]
+        seperators = [" ", "/", ":"]
         definitely_date = None
+        for seperator in seperators:
+            maybe_date = maybe_date.replace(seperator, "-")
         for date_format in date_formats:
             try:
                 definitely_date = datetime.strptime(maybe_date, date_format)
-                break
+                return definitely_date.date()
             except ValueError:
                 continue
-        else:
-            error_str = "{} þarf að vera dagsetning á forminu ÁÁÁÁ-MM-DD. "
+        error_str = "{} þarf að vera dagsetning á forminu ÁÁÁÁ-MM-DD. "
+        error_str += "'{}' er ekki gilt."
+        raise ValueError(error_str.format(name, maybe_date))
+
+    def validate_ccn_exp_date(self, maybe_date, name=""):
+        date_format = "%m-%y"
+        seperators = [" ", "/", ":"]
+        definitely_date = None
+        for seperator in seperators:
+            maybe_date = maybe_date.replace(seperator, "-")
+        try:
+            definitely_date = datetime.strptime(maybe_date, date_format)
+            return definitely_date.date()
+        except ValueError:
+            error_str = "{} þarf að vera dagsetning á forminu MM-ÁÁ. "
             error_str += "'{}' er ekki gilt."
             raise ValueError(error_str.format(name, maybe_date))
-        return definitely_date.date()
 
     def validate_time(self, maybe_time, name=''):
         try:
@@ -209,8 +224,8 @@ class Validation(object):
             cc_holder_last_name, "Eftirnafn kreditkortahandhafa"
         )
         ccn = self.validate_ccn(ccn)
-        cc_exp_date = self.validate_date(
-            cc_exp_date, "Fyrningardagsetning (MM/YY)"
+        cc_exp_date = self.validate_ccn_exp_date(
+            cc_exp_date, "Fyrningardagsetning"
         )
         return Customer(
             driver_license_id, personal_id, first_name, last_name, birthdate,
@@ -239,12 +254,16 @@ class Validation(object):
             branch = BranchRepository().get(branch_name)
         except ValueError:
             branches = BranchRepository().get_all()
+            if branch_name is None:
+                if branches:
+                    return branches[0]
             branch_str_list = [branch.get_name() for branch in branches]
             branch_str = ", ".join(branch_str_list)
             error_msg = "".join((
-                "'", branch_name, "' er ekki gilt útibú.",
+                "'", str(branch_name), "' er ekki gilt útibú.",
                 "Þetta eru gild útibú:\n", branch_str
             ))
+            raise ValueError(error_msg)
         return branch
 
     def validate_order(
