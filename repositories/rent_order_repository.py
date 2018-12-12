@@ -12,8 +12,8 @@ class RentOrderRepository(Repository):
     _CSV_ROW_NAMES = [
         "order_number", "car", "customer", "pickup_time",
         "estimated_return_time", "pickup_branch_name", "return_branch_name",
-        "include_extra_insurance", "kilometer_allowance_per_day", "base_cost",
-        "remaining_debt", "kilometers_driven", "return_time"
+        "include_extra_insurance", "base_cost", "remaining_debt",
+        "kilometers_driven", "return_time"
     ]
 
     def dict_to_model_object(self, rent_order_dict):
@@ -25,8 +25,6 @@ class RentOrderRepository(Repository):
         estimated_return_time = datetime.fromisoformat(est_return_str)
         pickup_branch_name = rent_order_dict["pickup_branch_name"]
         return_branch_name = rent_order_dict["return_branch_name"]
-        km_allowance_str = rent_order_dict["kilometer_allowance_per_day"]
-        kilometer_allowance_per_day = int(km_allowance_str)
         base_cost = int(rent_order_dict["base_cost"])
         extra_insurance = bool(rent_order_dict["include_extra_insurance"])
         remaining_debt = int(rent_order_dict["remaining_debt"])

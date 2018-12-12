@@ -253,7 +253,8 @@ class Validation(object):
             ):
         orders = RentOrderRepository().get_all()
         if orders:
-            order_number = max(orders, key=RentOrder.get_key) + 1
+            last_order = max(orders, key=RentOrder.get_key)
+            order_number = last_order.get_order_number() + 1
         else:
             order_number = 1
         try:

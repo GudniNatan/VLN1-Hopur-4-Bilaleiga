@@ -58,6 +58,7 @@ class RentOrder(Model):
             "pickup_branch_name": self.__pickup_branch_name,
             "return_branch_name": self.__return_branch_name,
             "include_extra_insurance": self.__extra_insurance_total != 0,
+            "base_cost": self.__base_cost,
             "remaining_debt": self.__remaining_debt,
             "kilometers_driven": self.__kilometers_driven,
             "return_time": self.__return_time,
