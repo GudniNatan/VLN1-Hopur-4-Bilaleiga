@@ -39,8 +39,8 @@ class Repository(ABC):
         if key is None:
             index = model_object_list.index(model_object)
         else:
-            for i, model_object in enumerate(model_object_list):
-                if model_object.get_key() == key:
+            for i, some_model_object in enumerate(model_object_list):
+                if some_model_object.get_key() == key:
                     index = i
                     break
         model_object_list[index] = model_object
