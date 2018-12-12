@@ -72,6 +72,18 @@ class ManageCarsController(Controller):
     def create_car(self, values, menu):
         pass
 
+    def create_car(self, values, menu):
+        try:
+            car = self._validation.validate_car(*values)
+        except ValueError as error:
+            menu.set_errors((error,))
+            return
+        self.__car_repo.add(car)
+        new_car_report_menu = self._ui.get_creation_report_menu(
+            car, self.__controller_header, self.restart
+        )
+        self._menu_stack.append(new_car_report_menu)
+
     # Menus - try to move these to the ui layer
     def __make_main_menu(self):
         header = self.__controller_header
@@ -118,5 +130,5 @@ class ManageCarsController(Controller):
         new_customer_menu = Menu(header=header, inputs=inputs,
                                  back_function=self.back,
                                  stop_function=self.stop,
-                                 submit_function=self.create_customer)
+                                 submit_function=self.create_car)
         return new_customer_menu
