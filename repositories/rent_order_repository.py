@@ -33,7 +33,10 @@ class RentOrderRepository(Repository):
         total_cost = int(rent_order_dict["total_cost"])
         remaining_debt = int(rent_order_dict["remaining_debt"])
         kilometers_driven = int(rent_order_dict["kilometers_driven"])
-        return_time = datetime.fromisoformat(rent_order_dict["return_time"])
+        if return_time:
+            return_time = datetime.fromisoformat(rent_order_dict["return_time"])
+        else:
+            return_time = None
         return RentOrder(
             order_number, car, customer, pickup_time, estimated_return_time,
             pickup_branch_name, return_branch_name, insurance_total,

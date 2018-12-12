@@ -1,0 +1,2 @@
+order_number;car;customer;pickup_time;estimated_return_time;pickup_branch_name;return_branch_name;insurance_total;extra_insurance_total;kilometer_allowance_per_day;total_cost;remaining_debt;kilometers_driven;return_time
+1;AJ-123;Guðni Gunnarsson;2019-01-01T12:00:00;2019-01-05T19:00:00;BB Reykjavík;BB Reykjavík;;;100;0;0;0;0001-01-01T00:00:00
