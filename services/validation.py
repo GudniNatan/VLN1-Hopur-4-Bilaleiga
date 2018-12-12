@@ -4,6 +4,7 @@ from repositories.branch_repository import BranchRepository
 from repositories.rent_order_repository import RentOrderRepository
 from repositories.car_repository import CarRepository
 from repositories.customer_repository import CustomerRepository
+from repositories.price_list_repository import PriceListRepository
 from models.salesperson import Salesperson
 from datetime import date, time, datetime
 from math import inf
@@ -166,7 +167,7 @@ class Validation(object):
             license_plate_number, "Bílnúmer"
         )
         valid_model = self.validate_str(model, "Model")
-        valid_category = self.validate_str(category, "Category")
+        valid_category = self.validate_category_in_repo(category)
         valid_wheel_count = self.validate_int(wheel_count, "Wheel count")
         valid_drivetrain = self.validate_str(drivetrain, "Drivetrain")
         valid_automatic_transmission = Utils.process_yes_no_answer(
@@ -177,15 +178,7 @@ class Validation(object):
         valid_kilometer_count = self.validate_int(
             kilometer_count, "Kilometer count"
         )
-
-        if current_branch is None:
-            branch_repo = BranchRepository()
-            valid_current_branch = branch_repo.get_all()[0]
-        else:
-            if type(current_branch) == Branch:
-                valid_current_branch = current_branch
-            else:
-                raise ValueError("Útibú er ekki gilt.")
+        valid_current_branch = self.validate_branch_in_repo(current_branch)
 
         return Car(
             valid_license_plate, valid_model, valid_category,
@@ -224,6 +217,21 @@ class Validation(object):
             phone_number, email, cc_holder_first_name, cc_holder_last_name,
             ccn, cc_exp_date
         )
+
+    def validate_category_in_repo(self, category_name):
+        try:
+            category = PriceListRepository().get(category_name)
+        except ValueError:
+            categories = PriceListRepository().get_all()
+            category_str_list = [
+                category.get_name() for category in categories
+            ]
+            category_str = ", ".join(category_str_list)
+            error_msg = "".join(
+                "'", category_name, "' er ekki gildur flokkur. ",
+                "Þetta eru gildir flokkar:\n", category_str_list
+            )
+        return category
 
     def validate_branch_in_repo(self, branch_name):
         try:

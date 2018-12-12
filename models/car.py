@@ -1,5 +1,6 @@
 from models.model import Model
 from models.branch import Branch
+from collections import OrderedDict
 
 
 class Car(Model):
@@ -30,18 +31,18 @@ class Car(Model):
         return car_dict
 
     def get_dict(self):
-        return {
-            "license_plate_number": self.__license_plate_number,
-            "model": self.__model,
-            "category": self.__category,
-            "wheel_count": self.__wheel_count,
-            "drivetrain": self.__drivetrain,
-            "automatic_transmission": self.__automatic_transmission,
-            "seat_count": self.__seat_count,
-            "extra_properties": self.__extra_properties,
-            "kilometer_count": self.__kilometer_count,
-            "current_branch": self.__current_branch,
-        }
+        return OrderedDict([
+            ("license_plate_number", self.__license_plate_number),
+            ("model", self.__model),
+            ("category", self.__category["category"]),
+            ("wheel_count", self.__wheel_count),
+            ("drivetrain", self.__drivetrain),
+            ("automatic_transmission", self.__automatic_transmission),
+            ("seat_count", self.__seat_count),
+            ("extra_properties", self.__extra_properties),
+            ("kilometer_count", self.__kilometer_count),
+            ("current_branch", self.__current_branch),
+        ])
 
     def __eq__(self, other):
         if isinstance(other, Car):
