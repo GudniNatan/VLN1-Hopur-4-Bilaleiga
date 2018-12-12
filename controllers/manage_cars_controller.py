@@ -67,7 +67,25 @@ class ManageCarsController(Controller):
         self._menu_stack.append(update_report_menu)
 
     def go_to_delete(self, values, menu):
-        pass
+        car = self.__selected_car
+        deletion_menu = self._ui.get_deletion_menu(
+            car, car.get_model(), self.__controller_header,
+            self.delete_selected_car
+        )
+        self._menu_stack.append(deletion_menu)
+
+    def delete_selected_car(self, values, menu):
+        # delete the car
+        self.__car_repo.remove(self.__selected_car)
+        # create deletion feedback menu
+        # the menu should be a special no-back menu
+        # go to deletion feedback screen
+        delete_feedback_menu = self._ui.get_delete_feedback_menu(
+            self.__selected_car.get_model(),
+            self.__controller_header, self.restart
+        )
+        self.__selected_car = None
+        self._menu_stack.append(delete_feedback_menu)
 
     def create_car(self, values, menu):
         try:
