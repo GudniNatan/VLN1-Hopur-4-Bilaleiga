@@ -5,7 +5,7 @@ from ui.menu import Menu
 
 class ManageCustomersController(Controller):
     def __init__(self, service, shortcut_to_register=False,
-                 priority_controller=False, rent=False):
+                 priority_controller=False):
         super().__init__(service, priority_controller)
         self.__controller_header = "Viðskiptavinaskrá"
         self.__customer_repo = CustomerRepository()
@@ -14,7 +14,6 @@ class ManageCustomersController(Controller):
             self.go_to_create(None, None)
         else:
             self._menu_stack.append(self.__make_main_menu())
-        self.__renting = rent
 
     # Operations
     def go_to_search(self, values, menu):
@@ -93,15 +92,9 @@ class ManageCustomersController(Controller):
             menu.set_errors((error,))
             return
         self.__customer_repo.add(customer)
-        if self.__renting:
-            new_report_menu = self._ui.get_creation_report_menu(
-                customer, self.__controller_header, self.controller_back,
-                pop_after_create=self.__renting
-            )
-        else:
-            new_report_menu = self._ui.get_creation_report_menu(
-                customer, self.__controller_header, self.restart,
-            )
+        new_report_menu = self._ui.get_creation_report_menu(
+            customer, self.__controller_header, self.restart
+        )
         self._menu_stack.append(new_report_menu)
 
     # Menus
@@ -127,20 +120,17 @@ class ManageCustomersController(Controller):
         return menu
 
     # Other
-    def __search_customers(self, username="", name="", email="", phone=""):
-        salespeople = self.__customer_repo.get_all()
-        username = username.strip()
+    def __search_customers(self, driver_license_id="", personal_id="", name=""):
+        customers = self.__customer_repo.get_all()
+        driver_license_id = driver_license_id.strip()
         name = name.strip()
-        email = email.strip()
-        phone = phone.strip()
-        for i in range(len(salespeople) - 1, -1, -1):
-            person = salespeople[i]
-            if username and username != person.get_username():
-                salespeople.pop(i)
+        personal_id = personal_id.strip()
+        for i in range(len(customers) - 1, -1, -1):
+            person = customers[i]
+            if driver_license_id and driver_license_id != person.get_driver_license_id():
+                customers.pop(i)
             elif name and name != person.get_name():
-                salespeople.pop(i)
-            elif email and email != person.get_email():
-                salespeople.pop(i)
-            elif phone and phone != person.get_phone():
-                salespeople.pop(i)
-        return salespeople
+                customers.pop(i)
+            elif personal_id and personal_id != person.get_email():
+                customers.pop(i)
+        return customers

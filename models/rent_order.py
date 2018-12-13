@@ -41,28 +41,29 @@ class RentOrder(Model):
         rent_order_dict = self.get_dict()
         return_time_str = self.__estimated_return_time.isoformat()
         lpn = self.__customer.get_key()
-        rent_order_dict["car"] = self.__car.get_license_plate_number()
-        rent_order_dict["customer"] = lpn
-        rent_order_dict["pickup_time"] = self.__pickup_time.isoformat()
-        rent_order_dict["estimated_return_time"] = return_time_str
+        rent_order_dict["Bíll"] = self.__car.get_license_plate_number()
+        rent_order_dict["Viðskiptavinur"] = lpn
+        rent_order_dict["Sóttur þann"] = self.__pickup_time.isoformat()
+        rent_order_dict["Áætlaður skilatími"] = return_time_str
         if self.__return_time:
-            rent_order_dict["return_time"] = self.__return_time.isoformat()
+            return_time_iso = self.__return_time.isoformat()
+            rent_order_dict["Raunverulegur skilatími"] = return_time_iso
         return rent_order_dict
 
     def get_dict(self):
         return {
-            "order_number": self.__order_number,
-            "car": self.__car,
-            "customer": self.__customer,
-            "pickup_time": self.__pickup_time,
-            "estimated_return_time": self.__estimated_return_time,
-            "pickup_branch_name": self.__pickup_branch_name,
-            "return_branch_name": self.__return_branch_name,
-            "include_extra_insurance": self.__extra_insurance_total != 0,
-            "base_cost": self.__base_cost,
-            "remaining_debt": self.__remaining_debt,
-            "kilometers_driven": self.__kilometers_driven,
-            "return_time": self.__return_time,
+            "Bókunar númer": self.__order_number,
+            "Bíll": self.__car,
+            "Viðskiptavinur": self.__customer,
+            "Sóttur þann": self.__pickup_time,
+            "Áætlaður skilatími": self.__estimated_return_time,
+            "Sóttur hjá": self.__pickup_branch_name,
+            "Skilaður hjá": self.__return_branch_name,
+            "Auka trygging": self.__extra_insurance_total != 0,
+            "Grunnkostnaður": self.__base_cost,
+            "Eftirstaða borgunar": self.__remaining_debt,
+            "Keyrðir kílómetrar": self.__kilometers_driven,
+            "Raunverulegur skilatími": self.__return_time,
         }
 
     def __str__(self):

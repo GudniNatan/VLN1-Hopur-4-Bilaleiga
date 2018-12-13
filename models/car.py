@@ -6,7 +6,7 @@ from collections import OrderedDict
 class Car(Model):
     def __init__(
             self, license_plate_number: str, model: str,
-            category: str, wheel_count: int, drivetrain: str,
+            category: dict, wheel_count: int, drivetrain: str,
             automatic_transmission: bool, seat_count: int,
             extra_properties: set, kilometer_count: int,
             current_branch: Branch,
@@ -24,24 +24,24 @@ class Car(Model):
 
     def csv_repr(self):
         car_dict = self.get_dict()
-        car_dict["current_branch"] = car_dict["current_branch"].get_name()
-        properties = car_dict["extra_properties"]
+        car_dict["Núverandi útibú"] = car_dict["Núverandi útibú"].get_name()
+        properties = car_dict["Aðrir eiginleikar"]
         property_string = ", ".join(properties)
-        car_dict["extra_properties"] = property_string
+        car_dict["Aðrir eiginleikar"] = property_string
         return car_dict
 
     def get_dict(self):
         return OrderedDict([
-            ("license_plate_number", self.__license_plate_number),
-            ("model", self.__model),
-            ("category", self.__category["category"]),
-            ("wheel_count", self.__wheel_count),
-            ("drivetrain", self.__drivetrain),
-            ("automatic_transmission", self.__automatic_transmission),
-            ("seat_count", self.__seat_count),
-            ("extra_properties", self.__extra_properties),
-            ("kilometer_count", self.__kilometer_count),
-            ("current_branch", self.__current_branch),
+            ("Bílnúmer", self.__license_plate_number),
+            ("Gerð", self.__model),
+            ("Flokkur", self.__category["category"]),
+            ("Fjöldi hjóla", self.__wheel_count),
+            ("Drif", self.__drivetrain),
+            ("Sjálfskiptur", self.__automatic_transmission),
+            ("Fjöldi sæta", self.__seat_count),
+            ("Aðrir eiginleikar", self.__extra_properties),
+            ("Kílómetrafjöldi", self.__kilometer_count),
+            ("Núverandi útibú", self.__current_branch),
         ])
 
     def __eq__(self, other):
@@ -55,12 +55,10 @@ class Car(Model):
             automatic_shift = "Já"
         else:
             automatic_shift = "Nei"
-        info_string = "{}\n\tFlokkur bíls: {}\n\t"
-        info_string += "Sjalfskiptur: {}\n\tAukahlutir: {}"
-        return info_string.format(
-            self.__model, self.__category["category"],
-            automatic_shift, ", ".join(self.__extra_properties)
-        )
+        info_string = "Flokkur bíls: {}\n\tGerð: {}\n\t"
+        info_string += "Sjalfskiptur: {}\n\tKílómetrafjöldi: {}"
+        return info_string.format(self.__category["category"], self.__model,
+                                  automatic_shift, self.__kilometer_count)
 
     # Get
     def get_license_plate_number(self):

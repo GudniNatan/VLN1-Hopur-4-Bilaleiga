@@ -28,13 +28,11 @@ class RentCarController(Controller):
         from_date = values[0:2]
         to_date = values[2:4]
         try:
-            date_range = self._validation.validate_rent_range(
-                from_date, to_date
-            )
+            self._validation.validate_rent_range(from_date, to_date)
         except ValueError as error_msg:
             menu.set_errors((error_msg,))
             return
-        self.__selected_date_range = date_range
+        self.__selected_date_range = (from_date, to_date)
         self._menu_stack.append(self.__make_category_option_menu())
 
     def go_to_pickup_branch_choice(self, category, menu):
@@ -76,12 +74,6 @@ class RentCarController(Controller):
             return
         self.__selected_customer = customer
         self._menu_stack.append(self.__make_customer_select_menu())
-
-    def register(self, values, menu):
-        customer_controller = ManageCustomersController(
-            self._service, shortcut_to_register=True, rent=True
-        )
-        self._service.add(customer_controller)
 
     def __make_main_menu(self):
         header = " ".join((
@@ -137,22 +129,3 @@ class RentCarController(Controller):
         opts = [{"description": brnch, "value": choice} for brnch in branches]
         return Menu(header=header, options=opts, back_function=self.back,
                     stop_function=self.stop,)
-
-    def __make_customer_select_menu(self):
-        header = "".join((
-            "Leigja bíl -> Innskráning",
-            "\n\nHefur þú ekki leigt bíl áður hjá Bílaleigu Björgvins?",
-            "\nÞú getur skráð þig með því að velja 'Skrá nýjann viðskiptavin'",
-            "\n\nEf þú ert skráður í kerfið er nóg að slá inn ",
-            "ökuskírteinisnúmerið þitt hér:"
-        ))
-        inputs = [{"prompt": "Ökuskírteinisnúmer:"}]
-        options = [
-            {"description": "Skrá inn", "value": self.log_in},
-            {"description": "Skrá nýjann viðskiptavin", "value": self.register}
-        ]
-        result_menu = Menu(
-            header=header, inputs=inputs, options=options, can_submit=False,
-            back_function=self.back, stop_function=self.stop
-        )
-        return result_menu

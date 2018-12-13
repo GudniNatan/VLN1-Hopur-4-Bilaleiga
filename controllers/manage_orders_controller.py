@@ -38,15 +38,15 @@ class ManageOrdersController(Controller):
         if order.get_extra_insurance_total != 0:
             extra_insurance_str = "N"
         fields = OrderedDict([
-            ("Car's license plate",  order.get_car().get_key()),
-            ("Customer's drivers license", order.get_customer().get_key()),
-            ("Pickup date", order.get_pickup_time().date()),
-            ("Pickup time", order.get_pickup_time().time()),
-            ("Estimated return date", est_return_datetime.date()),
-            ("Estimated return time", est_return_datetime.time()),
-            ("pickup_branch_name", order.get_pickup_branch_name()),
-            ("return_branch_name", order.get_return_branch_name()),
-            ("Include extra insurance (J/N)", extra_insurance_str)
+            ("Bílnúmer",  order.get_car().get_key()),
+            ("Ökuskírteinisnúmer", order.get_customer().get_key()),
+            ("Sótt (dagssetning)", order.get_pickup_time().date()),
+            ("Sótt (klukkan)", order.get_pickup_time().time()),
+            ("Áætluð skiladagssetning", est_return_datetime.date()),
+            ("Áætlaður skilatími", est_return_datetime.time()),
+            ("Sótt hjá", order.get_pickup_branch_name()),
+            ("Skilað hjá", order.get_return_branch_name()),
+            ("Inniheldur auka tryggingu (J/N)", extra_insurance_str)
         ])
 
         edit_menu = self._ui.get_edit_by_field_menu(
@@ -58,10 +58,10 @@ class ManageOrdersController(Controller):
         type_str = "pöntun"
         order = self.__selected_order
         fields = [
-            "car", "customer", "pickup date", "pickup time",
-            "estimated_return_date", "estimated return time",
-            "pickup branch name", "return branch name",
-            "Include extra insurance (J/N)"
+            "Bílnúmer", "Ökuskírteinisnúmer Viðskiptavinur",
+            "Sótt (dagssetning)", "Sótt (klukkan)", "Áætluð skiladagssetning",
+            "Áætlaður skilatími", "Sótt hjá", "Skilað hjá",
+            "Inniheldur auka tryggingu (J/N)"
         ]
         new_car_menu = self._ui.get_new_model_object_menu(
             self.__controller_header, fields, type_str, self.create_order

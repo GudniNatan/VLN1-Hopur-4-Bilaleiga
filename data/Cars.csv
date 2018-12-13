@@ -1,6 +1,6 @@
-license_plate_number;model;category;wheel_count;drivetrain;automatic_transmission;seat_count;extra_properties;kilometer_count;current_branch
-AJ-123;My car model;Standard;4;4x4;True;4;A/C, Heated seats;100;BB Reykjavík
-TR-990;Nissan Leaf 2017;Standard;4;2 Wheel Drive;True;4;A/C, Heated seats;20000;BB Reykjavík
+Bílnúmer;Gerð;Flokkur;Fjöldi hjóla;Drif;Sjálfskiptur;Fjöldi sæta;Aðrir eiginleikar;Kílómetrafjöldi;Núverandi útibú
+AJ-123;My car model;Standard;4;4x4;True;4;A/C,Heated seats;100;BB Reykjavík
+TR-990;Nissan Leaf 2017;Standard;4;2 Wheel Drive;True;4;A/C,Heated seats;20000;BB Reykjavík
 XF-N97;Mercedes Benz V Klasse 2017;Minivan;4;4x4;True;8;A/C, ABS, GPS, Bluetooth;50200;BB Reykjavík
 SC-A35;Toyota Land Cruiser 150 Series 2018;SUV;4;4x4;True;5;A/C, ABS;63000;BB Reykjavík
 XU-Z15;Volvo V90 Cross Country D4 AWD Pro 2018;Crossover;4;4x4;True;6;A/C, ABS, Bluetooth;27100;BB Reykjavík
@@ -31,9 +31,4 @@ AJ-G53;Aston Martin DB9 2010;Sport;4;FWD;False;4;A/C, ABS;69500;BB Reykjavík
 RK-V53;Land Rover Range Rover Vouge 2017;SUV;4;4x4;True;5;A/C, ABS, Bakkmyndavél;72300;BB Reykjavík
 UJ-S19;Porche 911 Carrera 2015;Sport;4;FWD;False;2;A/C, Bluetooth;49900;BB Reykjavík
 AL-O84;Ford Mustang GT Stage 3 2016;Sport;4;FWD;False;2;A/C, Bluetooth;54700;BB Reykjavík
-BB-W78;Chevrolet Suburban LT Premier 2017;Crossover;4;4x4;True;5;A/C, Bluetooth, ABS;53900;BB Reykjavík
-WW-A96;Land Rover Range Rover Sport HSE Dynamic SDV6 2017;Crossover;4;4x4;True;5;A/C, Bakkmyndavél, Bluetooth, ABS;43600;BB Reykjavík
-MQ-M59;Toyota Land Cruiser 200 VX 2016;SUV;4;4x4;True;5;A/C, ABS;75900;BB Reykjavík
-SM-B76;Toyota Land Cruiser 150 GX 2016;SUV;4;4x4;True;5;A/C, ABS;62900;BB Reykjavík
-FF-Z82;Tesla Model S P85D 2015;Standard;4;FWD;True;5;A/C, Bakkmyndavél, Bluetooth;54300;BB Reykjavík
-PU-H79;Audi RS5 Quattro Supercharged 2012;Standard;4;FWD;False;5;A/C, Bluetooth, ABS;92500;BB Reykjavík
+AA-111;Subaru legacy;Standard;4;4WD;False;5;dos, tres, uno;20000;BB Reykjavík

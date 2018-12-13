@@ -5,10 +5,10 @@ from collections import OrderedDict
 
 class Customer(Model):
     def __init__(
-            self, driver_license_id: str, personal_id: str, first_name: str,
-            last_name: str, birthdate: date, phone_number: str,
-            email: str, cc_holder_first_name: str, cc_holder_last_name: str,
-            ccn: str, cc_exp_date: date,
+            self, driver_license_id: str, personal_id: str, email: str,
+            first_name: str, last_name: str, birthdate: date,
+            phone_number: str, cc_holder_first_name: str,
+            cc_holder_last_name: str, ccn: str, cc_exp_date: date,
             ):
         self.__driver_license_id = driver_license_id
         self.__personal_id = personal_id
@@ -24,21 +24,21 @@ class Customer(Model):
 
     def csv_repr(self):
         customer_dict = self.get_dict()
-        customer_dict['birthdate'] = self.__birthdate.isoformat()
-        customer_dict['cc_exp_date'] = self.__cc_exp_date.isoformat()
+        customer_dict['Fæðingar dagssetning'] = self.__birthdate.isoformat()
+        customer_dict['Gildistími korts'] = self.__cc_exp_date.isoformat()
         return customer_dict
 
     def get_dict(self):
-        return OrderedDict({
-            "driver_license_id": self.__driver_license_id,
-            "personal_id": self.__personal_id, "email": self.__email,
-            "first_name": self.__first_name, "last_name": self.__last_name,
-            "birthdate": self.__birthdate, "phone_number": self.__phone_number,
-            "phone_number": self.__phone_number,
-            "cc_holder_first_name": self.__cc_holder_first_name,
-            "cc_holder_last_name": self.__cc_holder_last_name,
-            "ccn": self.__ccn, "cc_exp_date": self.__cc_exp_date
-            })
+        return {
+            "Ökuskírteinisnúmer": self.__driver_license_id,
+            "Kennitala": self.__personal_id, "Netfang": self.__email,
+            "Fornafn": self.__first_name, "Eftirnafn": self.__last_name,
+            "Fæðingar dagssetning": self.__birthdate,
+            "Símanúmer": self.__phone_number,
+            "Fornafn kortahafa": self.__cc_holder_first_name,
+            "Eftirnafn kortahafa": self.__cc_holder_last_name,
+            "Kortanúmer": self.__ccn, "Gildistími korts": self.__cc_exp_date
+            }
 
     def __eq__(self, other):
         if isinstance(other, Customer):
@@ -47,7 +47,7 @@ class Customer(Model):
             return self._username == str(other)
 
     def __str__(self):
-        return "Nafn: {} {}\n\tÖkuskírteni: {}".format(
+        return "Nafn: {} {}\n\tÖkuskírteini: {}".format(
             self.__first_name, self.__last_name, self.__driver_license_id
         )
 

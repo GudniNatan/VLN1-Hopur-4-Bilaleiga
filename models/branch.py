@@ -12,8 +12,8 @@ class Branch(Model):
 
     def get_dict(self):
         return {
-            "name": self.__name,
-            "address": self.__address
+            "Nafn": self.__name,
+            "Heimilsfang": self.__address
         }
 
     def __eq__(self, other):

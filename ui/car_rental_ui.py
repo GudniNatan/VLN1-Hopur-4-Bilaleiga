@@ -1,4 +1,5 @@
 from ui.menu import Menu
+from datetime import datetime
 # This class takes care of making generic menus
 # It uses data from the controller it is attatched to
 # Which it gets on its own
@@ -34,6 +35,11 @@ class CarRentalUI(object):
         header = "{} -> Leit -> Val".format(header_message)
         header += "\nÞú valdir: {}".format(object_name)
         for key, value in model_object.csv_repr().items():
+            try:
+                datetime.fromisoformat(value)
+                value = value.replace("T", " ")
+            except:
+                pass
             header += "\n\t{}: {}".format(key, value)
         edit_text = "Breyta: {}".format(object_name)
         delete_text = "Eyða: {}".format(object_name)
@@ -53,29 +59,21 @@ class CarRentalUI(object):
         )
 
     def get_creation_report_menu(self, model_object, controller_name,
-                                 restart_callback, can_go_back=False,
-                                 pop_after_create=False):
+                                 restart_callback, can_go_back=False):
         message = "{} uppfærð!\nNýja hlutinum hefur verið bætt við."
         message = message.format(controller_name)
         return self.get_report_menu(
             model_object, controller_name, restart_callback, message,
-            can_go_back, pop_after_create
+            can_go_back
         )
 
     def get_report_menu(self, model_object, return_location,
-                        restart_callback, message, can_go_back=True,
-                        pop_after_report=False):
+                        restart_callback, message, can_go_back=True):
         message += "\nNýju gildin eru:"
         for key, value in model_object.get_dict().items():
             message += "\n\t{}: {}".format(key, value)
-        if not pop_after_report:
-            options = [{"description": "Aftur í {}".format(return_location),
-                        "value": restart_callback}]
-        else:
-            options = [
-                {"description": "Halda áfram í leiguferli", 
-                    "value": restart_callback}
-                ]
+        options = [{"description": "Aftur í {}".format(return_location),
+                    "value": restart_callback}]
         report_menu = Menu(
             header=message, options=options, back_function=self.__back,
             stop_function=self.__stop, can_go_back=can_go_back
