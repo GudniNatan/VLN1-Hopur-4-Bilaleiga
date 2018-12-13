@@ -38,6 +38,9 @@ class RentCarController(Controller):
         self.__selected_pickup_branch = branch
         self._menu_stack.append(self.__make_branch_option_menu(True))
 
+    def go_to_search(self, branch, menu):
+        pass
+
     def __make_main_menu(self):
         header = " ".join((
             self.__controller_header + " -> Leigutímabil",
