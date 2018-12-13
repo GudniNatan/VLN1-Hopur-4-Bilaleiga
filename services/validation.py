@@ -84,16 +84,18 @@ class Validation(object):
             raise ValueError(error_str.format(name, maybe_date))
 
     def validate_time(self, maybe_time, name=''):
+        if not name:
+            name = "Tími"
         try:
             definitely_time = time.fromisoformat(maybe_time)
         except ValueError:
-            error_str = "Tími: '{}' er ekki gildur tími".format(maybe_time)
+            error_str = "{}: '{}' er ekki gildur tími".format(name, maybe_time)
             raise ValueError(error_str)
         return definitely_time
 
     def validate_datetime_by_parts(self, date_str, time_str, name):
-        a_date = self.validate_date(date_str, name)
-        a_time = self.validate_time(time_str, name)
+        a_date = self.validate_date(date_str, name + " dagsetning")
+        a_time = self.validate_time(time_str, name + " tími")
         a_datetime = datetime.combine(a_date, a_time)
         return a_datetime
 
@@ -325,3 +327,5 @@ class Validation(object):
     def validate_rent_range(self, from_date, to_date):
         if to_date - from_date < timedelta.days(1):
             raise ValueError("Leigutímabil verður að vera minnst 24 klst.")
+        if from_date < datetime.now():
+            raise ValueError("Leigutímabilið má ekki vera í fortíðinni")

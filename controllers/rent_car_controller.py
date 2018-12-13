@@ -16,10 +16,10 @@ class RentCarController(Controller):
     def submit_time_period(self, values, menu):
         try:
             from_date = self._validation.validate_datetime_by_parts(
-                values[0], values[1]
+                values[0], values[1], "Sótt"
             )
             to_date = self._validation.validate_datetime_by_parts(
-                values[0], values[1]
+                values[0], values[1], 'Skilað'
             )
             self._validation.validate_rent_range(from_date, to_date)
         except ValueError as error_msg:
