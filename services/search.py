@@ -15,7 +15,8 @@ class Search(object):
         process_yes_no_answer = Utils().process_yes_no_answer
         is_automatic = process_yes_no_answer(is_automatic)
         hide_available = process_yes_no_answer(hide_available)
-        hide_unavailable = process_yes_no_answer(hide_unavailable)
+        if type(hide_unavailable) != bool:
+            hide_unavailable = process_yes_no_answer(hide_unavailable)
         if not (availability_lower_bound and availability_upper_bound):
             availability_lower_bound = datetime.now()
             availability_upper_bound = datetime.now()

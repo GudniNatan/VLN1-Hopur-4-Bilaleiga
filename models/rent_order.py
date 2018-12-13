@@ -94,6 +94,9 @@ class RentOrder(Model):
     def get_pickup_time(self):
         return self.__pickup_time
 
+    def get_pickup_date(self):
+        return self.__pickup_time
+
     def get_estimated_return_time(self):
         return self.__estimated_return_time
 
@@ -134,6 +137,9 @@ class RentOrder(Model):
             ": ",
             self.get_car().get_name()
         ))
+
+    def get_base_cost(self):
+        return self.__base_cost
 
     # Sets
     def set_order_number(self, order_number):
