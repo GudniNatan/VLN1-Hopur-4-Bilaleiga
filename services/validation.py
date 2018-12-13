@@ -57,6 +57,7 @@ class Validation(object):
         date_formats = ["%Y-%m-%d", "%d-%m-%Y"]
         seperators = [" ", "/", ":"]
         definitely_date = None
+        maybe_date = maybe_date.strip()
         for seperator in seperators:
             maybe_date = maybe_date.replace(seperator, "-")
         for date_format in date_formats:
@@ -84,6 +85,7 @@ class Validation(object):
             raise ValueError(error_str.format(name, maybe_date))
 
     def validate_time(self, maybe_time, name=''):
+        maybe_time = maybe_time.strip()
         if not name:
             name = "Tími"
         try:
@@ -325,7 +327,14 @@ class Validation(object):
         )
 
     def validate_rent_range(self, from_date, to_date):
-        if to_date - from_date < timedelta.days(1):
+        from_date = self.validate_datetime_by_parts(
+                from_date[0], from_date[1], "Sótt"
+        )
+        to_date = self.validate_datetime_by_parts(
+                to_date[0], to_date[1], "Skilað"
+        )
+        range_delta = to_date - from_date
+        if range_delta < timedelta(days=1):
             raise ValueError("Leigutímabil verður að vera minnst 24 klst.")
         if from_date < datetime.now():
             raise ValueError("Leigutímabilið má ekki vera í fortíðinni")
