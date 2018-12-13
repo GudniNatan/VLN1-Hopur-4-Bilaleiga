@@ -5,10 +5,10 @@ from collections import OrderedDict
 
 class Customer(Model):
     def __init__(
-            self, driver_license_id: str, personal_id: str, first_name: str,
-            last_name: str, birthdate: date, phone_number: str,
-            email: str, cc_holder_first_name: str, cc_holder_last_name: str,
-            ccn: str, cc_exp_date: date,
+            self, driver_license_id: str, personal_id: str, email: str,
+            first_name: str, last_name: str, birthdate: date,
+            phone_number: str, cc_holder_first_name: str,
+            cc_holder_last_name: str, ccn: str, cc_exp_date: date,
             ):
         self.__driver_license_id = driver_license_id
         self.__personal_id = personal_id

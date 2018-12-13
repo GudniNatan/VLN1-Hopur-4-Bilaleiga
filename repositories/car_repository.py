@@ -17,7 +17,7 @@ class CarRepository(Repository):
     def dict_to_model_object(self, car_dict):
         license_plate_number = car_dict['Bílnúmer']
         model = car_dict['Gerð']
-        category = car_dict["Fokkur"]
+        category = car_dict["Flokkur"]
         wheel_count = int(car_dict["Fjöldi hjóla"])
         drivetrain = car_dict["Drif"]
         automatic_transmission = bool(car_dict['Sjálfskiptur'])
