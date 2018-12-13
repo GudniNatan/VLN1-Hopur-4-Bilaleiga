@@ -12,12 +12,12 @@ Allar skrárnar tengdar forritinu munu verða geymdar hér.
 Hægt er að nota örvatakkana eða úthlutaða takka á lyklaborði til þess að komast um í kerfinu. 
 
 ## Uppsetning?
+Keyrið main.py í Python 3.70
 
 ## Notkun?
 
 ## Leyfi/License
 [GNU GPLv3](https://choosealicense.com/licenses/gpl-3.0/)
-
 
 ## Credits
 Smári Gunnarsson  
