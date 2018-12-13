@@ -67,16 +67,20 @@ class Search(object):
                 return True
         return False
 
-    def search_rent_orders(self, number="", car="",
-                           customer="", active: bool = None):
+    def search_rent_orders(self, number="", customer="",
+                           car="", active: bool = None):
         rent_orders = RentOrderRepository().get_all()
         matching_orders = list()
         for order in rent_orders:
             if number and number != str(order.get_order_number()):
                 continue
-            if car and car != str(car.get_license_plate_number()):
+            if str(order.get_order_number()).count(number) == 0:
                 continue
-            if customer and customer != str(customer.get_driver_license_id()):
+            if order.get_car().get_key().count(car) == 0:
+                continue
+            if customer and customer != str(order.get_customer().get_key()):
+                continue
+            if order.get_customer().get_key().count(customer) == 0:
                 continue
             if (not self.__order_active(order)) == active:
                 continue
