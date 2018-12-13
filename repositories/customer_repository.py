@@ -8,7 +8,7 @@ class CustomerRepository(Repository):
     _TYPE = Customer
     _PRIMARY_KEY = "Ökuskirteinis numer"  # name of primary key
     _CSV_ROW_NAMES = [
-        "Ökuskirteinis númer", "Kennitala", "Netfang", "Fornafn", "Eftirnafn",
+        "Ökuskírteinisnúmer", "Kennitala", "Netfang", "Fornafn", "Eftirnafn",
         "Fæðingar dagssetning", "Símanúmer", "Fornafn kortahafa",
         "Eftirnafn kortahafa", "Kortanúmer", "Gildistími korts"
     ]

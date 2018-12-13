@@ -30,7 +30,7 @@ class Customer(Model):
 
     def get_dict(self):
         return {
-            "Ökuskírteinis númer": self.__driver_license_id,
+            "Ökuskírteinisnúmer": self.__driver_license_id,
             "Kennitala": self.__personal_id, "Netfang": self.__email,
             "Fornafn": self.__first_name, "Eftirnafn": self.__last_name,
             "Fæðingar dagssetning": self.__birthdate,
@@ -47,7 +47,7 @@ class Customer(Model):
             return self._username == str(other)
 
     def __str__(self):
-        return "Nafn: {} {}\n\tÖkuskírteni: {}".format(
+        return "Nafn: {} {}\n\tÖkuskírteini: {}".format(
             self.__first_name, self.__last_name, self.__driver_license_id
         )
 
