@@ -101,8 +101,8 @@ class Validation(object):
         return definitely_time
 
     def validate_datetime_by_parts(self, date_str, time_str, name):
-        a_date = self.validate_date(date_str, name + " dagsetning")
-        a_time = self.validate_time(time_str, name + " tími")
+        a_date = self.validate_date(date_str, name + "dagsetning")
+        a_time = self.validate_time(time_str, name + "tími")
         a_datetime = datetime.combine(a_date, a_time)
         return a_datetime
 
@@ -350,10 +350,10 @@ class Validation(object):
 
     def validate_rent_range(self, from_date, to_date):
         from_date = self.validate_datetime_by_parts(
-                from_date[0], from_date[1], "Sótt"
+                from_date[0], from_date[1], "Upphafs"
         )
         to_date = self.validate_datetime_by_parts(
-                to_date[0], to_date[1], "Skilað"
+                to_date[0], to_date[1], "Skila"
         )
         range_delta = to_date - from_date
         if range_delta < timedelta(days=1):
