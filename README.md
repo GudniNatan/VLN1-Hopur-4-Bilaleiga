@@ -14,7 +14,7 @@ Hægt er að nota örvatakkana eða úthlutaða takka á lyklaborði til þess a
 
 ## Notkun?
 
-## License?
+## Leyfi (license)
 [GNU GPLv3](https://choosealicense.com/licenses/gpl-3.0/)
 
 
