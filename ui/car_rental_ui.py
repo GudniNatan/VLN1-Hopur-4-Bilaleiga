@@ -1,4 +1,5 @@
 from ui.menu import Menu
+from datetime import datetime
 # This class takes care of making generic menus
 # It uses data from the controller it is attatched to
 # Which it gets on its own
@@ -34,6 +35,11 @@ class CarRentalUI(object):
         header = "{} -> Leit -> Val".format(header_message)
         header += "\nÞú valdir: {}".format(object_name)
         for key, value in model_object.csv_repr().items():
+            try:
+                datetime.fromisoformat(value)
+                value = value.replace("T", " ")
+            except:
+                pass
             header += "\n\t{}: {}".format(key, value)
         edit_text = "Breyta: {}".format(object_name)
         delete_text = "Eyða: {}".format(object_name)
