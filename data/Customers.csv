@@ -1,2 +1,17 @@
-driver_license_id;personal_id;first_name;last_name;birthdate;phone_number;email;cc_holder_first_name;cc_holder_last_name;ccn;cc_exp_date
-55lstfbs;2011012190;Gu�ni;Gunnarsson;2001-11-20;5556969;gu@temala.is;Gu�ni;Gunnarsson;5372832015884470;2020-12-01
+Ökuskírteinisnúmer;Kennitala;Netfang;Fornafn;Eftirnafn;Fæðingar dagssetning;Símanúmer;Fornafn kortahafa;Eftirnafn kortahafa;Kortanúmer;Gildistími korts
+55lstfbs;2011012190;gu@temala.net;Guðni;Gunnarsson;2001-11-20;5556969;Guðni;Gunnarsson;5372832015884476;2020-12-01
+037197939;N/A;vincentmn@hotmail.com;Vincent;Monroe;1997-02-11;8269812;Vincent;Monroe;4398688974334165;2019-10-01
+837123097;150282-2149;johanns@gmail.com;Jóhann;Arnarsson;1982-02-15;8542492;Jóhann;Arnarsson;4248104285058339;2027-09-01
+483728190;2709665289;astas@hotmail.com;Ásta;Svavarsdóttir;1966-09-27;8635681;Ásta;Svavarsdóttir;4898386055735732;2021-11-01
+839271229;N/A;gwynethpaltrow@live.com;Gwyneth;Paltrow;1981-08-19;014893285;Josh;Pecker;4098619341746065;2020-10-01
+693823458;3112729489;bambi@disney.com;Bambi;Dadsson;1972-12-31;0015455501998;Bambi's Dad;N/A;4410238121196457;2021-12-01
+482913059;N/A;darock@johnsson.com;Dwayne The Rock;Johnsson;1975-02-13;01457238890;Dwayne;Johnsson;4195948444030008;2024-06-01
+923184390kdik;N/A;jolly_rancher@happiness.joy;Mr. Jolly;Rancher;1950-12-12;0125849923;Mr. Jolly;Rancher;4258426788173704;2024-03-01
+938i2469kdq;N/A;abbybotts@yahoo.co.uk;Abigail;Botts;1982-04-15;849178390;John;Mayer's;4206320386332353;2024-09-15
+281992ki3ri9e2;N/A;freddyk@murder.co.us;Frederick;Krueger;1954-10-14;949284990;Frederick;Krueger;4039083684113106;2022-12-30
+582811749;2212927239;donnifaro@homtail.com;Eymundur;Bogason;1992-12-22;7548901;Eymundur;Bogason;4107596405273948;2025-08-01
+84892300ki;N/A;benny_n_the_jets@jets.co;Benny;And The Jets;1999-02-14;5439992184;Benny;And The Jets;4191605112233595;2026-07-05
+938871289idkw;3109972429;hilla.k@hilla.com;Hildur;Sigurjónsdóttir;1997-03-08;8477345;Hildur;Sigurjónsdóttir;4553708148143226;2024-08-01
+58839200k4d9;N/A;thebabadook@scary.stuff.com;Mr. Babadook;N/A;2015-12-11;848339901;Mr. Babadook;N/A;4482669517156171;2019-05-01
+589301903;2709775319;donnyd@whoahdude.co.ir;Donny;Darko;1977-09-27;6848299499;Donny;Darko;4537807349331357;2024-03-01
+3838119004ik;N/A;animalguy@animals.love;Steve;Irwin;1962-09-28;582883301;Steve;Irwin;4364469385161855;2019-07-01

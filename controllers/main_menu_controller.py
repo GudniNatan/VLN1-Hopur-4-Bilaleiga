@@ -8,6 +8,7 @@ from controllers.manage_customers_controller import ManageCustomersController
 from controllers.manage_cars_controller import ManageCarsController
 from controllers.manage_orders_controller import ManageOrdersController
 from controllers.price_list_controller import PriceListController
+from controllers.rent_car_controller import RentCarController
 
 
 class MainMenuController(Controller):
@@ -55,6 +56,10 @@ class MainMenuController(Controller):
         )
         self._service.add(customer_controller)
 
+    def go_to_rent_car_controller(self, values, menu):
+        rent_car_controller = RentCarController(self._service)
+        self._service.add(rent_car_controller)
+
     def handle_login(self, values, menu):
         try:
             user = self._validation.validate_login(*values)
@@ -75,10 +80,11 @@ class MainMenuController(Controller):
         go_to_help = self.go_to_help_controller
         go_to_price_list = self.go_to_price_list_controller
         go_to_login = self.go_to_login
+        go_to_rent_car = self.go_to_rent_car_controller
         customer_options = [
             {"hotkey": "H", "description": "Hjálp", "value": go_to_help},
             {"description": "Verðskrá", "value": go_to_price_list},
-            {"description": "Bóka bílaleigubíl"},
+            {"description": "Bóka bílaleigubíl", "value": go_to_rent_car},
             {"description": "Innskráning starfsmanna", "value": go_to_login},
         ]
         footer = "Notaðu örvatakkana til að hreyfa bendilinn. "

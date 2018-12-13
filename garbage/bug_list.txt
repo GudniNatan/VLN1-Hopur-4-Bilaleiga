@@ -1,0 +1,6 @@
+﻿Listi af vandamálum
+	virkar ekki að bæta við bíl vantar positional argument í submit_callback 
+	virkar að setja already expired ccn þegar nýr viðskiptavinur er skráður - breyta validate_ccn_exp_date
+	Í "Sjá alla bíla" valmyndinni stendur "Sjalfskyptur" en á að vera "Sjálfskiptur"
+	Kílómetrafjöldi mætti vera sýndur með . á milli t.d. 47.500 í staðinn fyrir 47500 - hvernig?
+fixed	Virkar ekki að leita að bíl t.d. ef ég skrifa bara sport þá koma 0 niðurstöður upp 

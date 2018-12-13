@@ -1,5 +1,6 @@
 from repositories.repository import Repository
 from repositories.branch_repository import BranchRepository
+from repositories.price_list_repository import PriceListRepository
 from models.car import Car
 
 
