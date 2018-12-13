@@ -9,7 +9,8 @@ class Search(object):
     def search_cars(
             self, license_plate="", category="", seat_count=0,
             is_automatic="", hide_available="", hide_unavailable="",
-            availability_lower_bound=None, availability_upper_bound=None
+            availability_lower_bound=None, availability_upper_bound=None,
+            in_branch=None
             ):
         process_yes_no_answer = Utils().process_yes_no_answer
         is_automatic = process_yes_no_answer(is_automatic)
@@ -37,8 +38,10 @@ class Search(object):
             if car.get_license_plate_number().count(license_plate) == 0:
                 continue
             if category:
-                if category != car.get_category()["category"]:
+                if category != car.get_category():
                     continue
+            if in_branch and car.get_current_branch() != in_branch:
+                continue
             relevant_cars.append(car)
         return relevant_cars
 
@@ -56,7 +59,9 @@ class Search(object):
             upper_time_bound = lower_time_bound
         rent_orders = RentOrderRepository().get_all()
         for order in rent_orders:
-            if order.get_pickup_time() <= upper_time_bound:
+            if order.get_car() != car:
+                continue
+            elif order.get_pickup_time() <= upper_time_bound:
                 if order.get_estimated_return_time() >= lower_time_bound:
                     return False
         return True
