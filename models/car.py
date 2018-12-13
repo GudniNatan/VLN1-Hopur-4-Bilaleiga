@@ -55,10 +55,12 @@ class Car(Model):
             automatic_shift = "Já"
         else:
             automatic_shift = "Nei"
-        info_string = "Flokkur bíls: {}\n\tGerð: {}\n\t"
-        info_string += "Sjalfskiptur: {}\n\tKílómetrafjöldi: {}"
-        return info_string.format(self.__category["category"], self.__model,
-                                  automatic_shift, self.__kilometer_count)
+        info_string = "{}\n\tFlokkur bíls: {}\n\t"
+        info_string += "Sjalfskiptur: {}\n\tAukahlutir: {}"
+        return info_string.format(
+            self.__model, self.__category["category"],
+            automatic_shift, ", ".join(self.__extra_properties)
+        )
 
     # Get
     def get_license_plate_number(self):

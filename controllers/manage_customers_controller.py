@@ -5,7 +5,7 @@ from ui.menu import Menu
 
 class ManageCustomersController(Controller):
     def __init__(self, service, shortcut_to_register=False,
-                 priority_controller=False):
+                 priority_controller=False, rent=False):
         super().__init__(service, priority_controller)
         self.__controller_header = "Viðskiptavinaskrá"
         self.__customer_repo = CustomerRepository()
@@ -14,6 +14,7 @@ class ManageCustomersController(Controller):
             self.go_to_create(None, None)
         else:
             self._menu_stack.append(self.__make_main_menu())
+        self.__renting = rent
 
     # Operations
     def go_to_search(self, values, menu):
@@ -92,9 +93,15 @@ class ManageCustomersController(Controller):
             menu.set_errors((error,))
             return
         self.__customer_repo.add(customer)
-        new_report_menu = self._ui.get_creation_report_menu(
-            customer, self.__controller_header, self.restart
-        )
+        if self.__renting:
+            new_report_menu = self._ui.get_creation_report_menu(
+                customer, self.__controller_header, self.controller_back,
+                pop_after_create=self.__renting
+            )
+        else:
+            new_report_menu = self._ui.get_creation_report_menu(
+                customer, self.__controller_header, self.restart,
+            )
         self._menu_stack.append(new_report_menu)
 
     # Menus
