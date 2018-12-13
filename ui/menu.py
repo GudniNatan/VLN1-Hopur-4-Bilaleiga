@@ -163,6 +163,12 @@ class Menu(object):
             self.move_cursor(1)
         elif key == 10072:  # arrow up
             self.move_cursor(-1)
+        elif key == 10075 and self.__selected_input is None:
+            # arrow left
+            self.__previous_page()
+        elif key == 10077 and self.__selected_input is None:
+            # arrow right
+            self.__next_page()
         elif key == 27:  # escape
             if self.__selected_input is None:
                 if self.__back_function is not None:
@@ -219,10 +225,11 @@ class Menu(object):
         self.__change_page(self.__current_page_number - 1)
 
     def __change_page(self, page_number):
-        self.__current_page_number = page_number
-        self.__current_page_number %= len(self.__pages)
-        self.__cursor_position = 0
-        self.move_cursor()
+        page_number %= len(self.__pages)
+        if page_number != self.__current_page_number:
+            self.__current_page_number = page_number
+            self.__cursor_position = 0
+            self.move_cursor()
 
     def __select_input_by_cursor(self):
         page = self.__pages[self.__current_page_number]

@@ -7,7 +7,7 @@ from services.utils import Utils
 
 class Search(object):
     def search_cars(
-            self, license_plate_number="", category="", seat_count=0,
+            self, license_plate="", category="", seat_count=0,
             is_automatic="", hide_available="", hide_unavailable="",
             availability_lower_bound=None, availability_upper_bound=None
             ):
@@ -34,9 +34,8 @@ class Search(object):
                     continue
             if seat_count and seat_count != str(car.get_seat_count()):
                 continue
-            if license_plate_number:
-                if license_plate_number != car.get_license_plate_number:
-                    continue
+            if car.get_license_plate_number().count(license_plate) == 0:
+                continue
             if category:
                 if category != car.get_category()["category"]:
                     continue
@@ -68,16 +67,20 @@ class Search(object):
                 return True
         return False
 
-    def search_rent_orders(self, number="", car="",
-                           customer="", active: bool = None):
+    def search_rent_orders(self, number="", customer="",
+                           car="", active: bool = None):
         rent_orders = RentOrderRepository().get_all()
         matching_orders = list()
         for order in rent_orders:
             if number and number != str(order.get_order_number()):
                 continue
-            if car and car != str(car.get_license_plate_number()):
+            if str(order.get_order_number()).count(number) == 0:
                 continue
-            if customer and customer != str(customer.get_driver_license_id()):
+            if order.get_car().get_key().count(car) == 0:
+                continue
+            if customer and customer != str(order.get_customer().get_key()):
+                continue
+            if order.get_customer().get_key().count(customer) == 0:
                 continue
             if (not self.__order_active(order)) == active:
                 continue

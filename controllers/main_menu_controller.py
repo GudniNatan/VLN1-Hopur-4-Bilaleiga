@@ -98,7 +98,8 @@ class MainMenuController(Controller):
         header = "Skráður inn sem {}\n".format(type(user).__name__)
         header += "Velkomin/n aftur, {}!".format(user.get_name())
         staff_options = [
-            {"description": "Leigja bíl"},
+            {"description": "Leigja bíl",
+                "value": self.go_to_rent_car_controller},
             {"description": "Skila bíl"},
             {"description": "Verðskrá",
                 "value": self.go_to_price_list_controller},
