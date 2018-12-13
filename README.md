@@ -16,7 +16,7 @@ Hægt er að nota örvatakkana eða úthlutaða takka á lyklaborði til þess a
 *Esc.* og *Enter* takkar notaðir til þess að fara úr/staðfesta innslátt.
 
 **Upphafsskjár:**\
-![alt text](https://imgur.com/a/Pm5OGKm)
+![alt text](https://imgur.com/a/Pm5OGKm "Upphafsskjár")
 
 
 ## Leyfi/License
