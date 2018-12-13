@@ -1,4 +1,1 @@
 ﻿Listi af vandamálum
-	virkar ekki að bæta við bíl vantar positional argument í submit_callback 
-	virkar að setja already expired ccn þegar nýr viðskiptavinur er skráður - breyta validate_ccn_exp_date
-	Í "Sjá alla bíla" valmyndinni stendur "Sjalfskyptur" en á að vera "Sjálfskiptur"
