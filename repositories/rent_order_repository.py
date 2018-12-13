@@ -10,8 +10,8 @@ class RentOrderRepository(Repository):
     _TYPE = RentOrder
     _PRIMARY_KEY = "Bókunar númer"  # name of primary key
     _CSV_ROW_NAMES = [
-        "Bókunar númer", "Bíll", "Viðskiptavinur", "Sóttur þann",
-        "Áætlaður skilatími", "Sóttur hjá", "Skilaður hjá",
+        "Bókunar númer", "Bíll", "Ökuskírteinisnúmer Viðskiptavinar",
+        "Sóttur þann", "Áætlaður skilatími", "Sóttur hjá", "Skilaður hjá",
         "Auka trygging", "Grunnkostnaður", "Eftirstaða borgunar",
         "Keyrðir kílómetrar", "Raunverulegur skilatími"
     ]
