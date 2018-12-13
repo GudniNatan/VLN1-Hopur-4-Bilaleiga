@@ -14,7 +14,7 @@ class Menu(object):
     __CURSOR = "→"
 
     def __init__(self, header="", errors=list(), inputs=list(),
-                 options=list(), footer="", page=0, max_options_per_page=9,
+                 options=list(), footer="", page=0, max_options_per_page=11,
                  can_go_back=True, stop_function=None, back_function=None,
                  submit_function=None, can_submit=True):
         self.__header = header
@@ -165,7 +165,10 @@ class Menu(object):
             self.move_cursor(-1)
         elif key == 27:  # escape
             if self.__selected_input is None:
-                self.__selection = BACK
+                if self.__back_function is not None:
+                    self.__selection = MenuOption(
+                        self.__back_function, ""
+                    )
             else:
                 self.move_cursor()
         elif key == 9:  # tab

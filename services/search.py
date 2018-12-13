@@ -2,6 +2,7 @@ from repositories.car_repository import CarRepository
 from repositories.rent_order_repository import RentOrderRepository
 from services.validation import Validation
 from datetime import datetime, date
+from services.utils import Utils
 
 
 class Search(object):
@@ -10,9 +11,10 @@ class Search(object):
             is_automatic="", hide_available="", hide_unavailable="",
             availability_lower_bound=None, availability_upper_bound=None
             ):
-        is_automatic = self.__process_yes_no_answer(is_automatic)
-        hide_available = self.__process_yes_no_answer(hide_available)
-        hide_unavailable = self.__process_yes_no_answer(hide_unavailable)
+        process_yes_no_answer = Utils().process_yes_no_answer
+        is_automatic = process_yes_no_answer(is_automatic)
+        hide_available = process_yes_no_answer(hide_available)
+        hide_unavailable = process_yes_no_answer(hide_unavailable)
         if not (availability_lower_bound and availability_upper_bound):
             availability_lower_bound = datetime.now()
             availability_upper_bound = datetime.now()
@@ -36,7 +38,7 @@ class Search(object):
                 if license_plate_number != car.get_license_plate_number:
                     continue
             if category:
-                if category != car.get_category():
+                if category != car.get_category()["category"]:
                     continue
             relevant_cars.append(car)
         return relevant_cars
@@ -50,7 +52,7 @@ class Search(object):
 
     def car_available(self, car, lower_time_bound, upper_time_bound=None):
         if type(lower_time_bound) not in [datetime, date]:
-            lower_time_bound = Validate().validate_datetime(lower_time_bound)
+            lower_time_bound = Validation().validate_datetime(lower_time_bound)
         if type(upper_time_bound) not in [datetime, date]:
             upper_time_bound = lower_time_bound
         rent_orders = RentOrderRepository().get_all()
@@ -77,7 +79,7 @@ class Search(object):
                 continue
             if customer and customer != str(customer.get_driver_license_id()):
                 continue
-            if not self.__order_active(order) == active:
+            if (not self.__order_active(order)) == active:
                 continue
             matching_orders.append(order)
         return matching_orders

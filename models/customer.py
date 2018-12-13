@@ -1,5 +1,6 @@
 from models.model import Model
 from datetime import date
+from collections import OrderedDict
 
 
 class Customer(Model):
@@ -46,9 +47,9 @@ class Customer(Model):
             return self._username == str(other)
 
     def __str__(self):
-        return "Nafn: {} {}\n\tÖkuskírteini: {}".format(self.__first_name,
-                                                        self.__last_name,
-                                                        self.__driver_license_id)
+        return "Nafn: {} {}\n\tÖkuskírteni: {}".format(
+            self.__first_name, self.__last_name, self.__driver_license_id
+        )
 
     # Get
     def get_driver_license_id(self):

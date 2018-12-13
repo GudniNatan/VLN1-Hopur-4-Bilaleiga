@@ -1,1 +1,0 @@
-virkar ekki að bæta við bíl vantar positional argument í submit_callback 
