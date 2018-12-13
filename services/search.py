@@ -38,7 +38,7 @@ class Search(object):
                 if license_plate_number != car.get_license_plate_number:
                     continue
             if category:
-                if category != car.get_category():
+                if category != car.get_category()["category"]:
                     continue
             relevant_cars.append(car)
         return relevant_cars

@@ -15,18 +15,18 @@ class Repository(ABC):
             if item == model_object:
                 self.update(model_object)
                 return
-        with open(self._FILENAME, "a+", newline='') as file_pointer:
+        with open(self._FILENAME, "a+", newline='', encoding="utf8") as fl_ptr:
             csv_dict_writer = csv.DictWriter(
-                file_pointer, fieldnames=self._CSV_ROW_NAMES, delimiter=";"
+                fl_ptr, fieldnames=self._CSV_ROW_NAMES, delimiter=";"
             )
             representation = model_object.csv_repr()
             csv_dict_writer.writerow(representation)
 
     def write(self, model_object_list: list):
         ''' Writes the csv file with the given object list'''
-        with open(self._FILENAME, "w", newline='') as file_pointer:
+        with open(self._FILENAME, "w", newline='', encoding="utf8") as fl_ptr:
             csv_dict_writer = csv.DictWriter(
-                file_pointer, fieldnames=self._CSV_ROW_NAMES, delimiter=";"
+                fl_ptr, fieldnames=self._CSV_ROW_NAMES, delimiter=";"
             )
             reps = [model_obj.csv_repr() for model_obj in model_object_list]
             csv_dict_writer.writeheader()
@@ -74,7 +74,7 @@ class Repository(ABC):
 
     def read_file(self):
         file = list()
-        with open(self._FILENAME) as file_pointer:
+        with open(self._FILENAME, encoding="utf8") as file_pointer:
             csv_dict_reader = csv.DictReader(file_pointer, delimiter=";")
             file.extend(csv_dict_reader)
         return file

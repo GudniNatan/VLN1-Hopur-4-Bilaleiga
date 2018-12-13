@@ -24,7 +24,7 @@ class CarRentalUI(object):
             option_list.append(item_option)
         result_menu = Menu(
             header=header, options=option_list, back_function=self.__back,
-            stop_function=self.__stop
+            stop_function=self.__stop, max_options_per_page=5
         )
         return result_menu
 
