@@ -332,7 +332,8 @@ class Validation(object):
         return_time = None
         return RentOrder(
             order_number, car, customer, pickup_datetime, est_return_datetime,
-            pickup_branch_name, return_branch_name, extra_insurance, base_cost
+            pickup_branch.get_name(), return_branch.get_name(),
+            extra_insurance, base_cost
         )
 
     def assemble_order(self, car, customer, date_range,
