@@ -15,6 +15,10 @@ Keyrið *main.py* í **Python 3.70**
 Hægt er að nota örvatakkana eða úthlutaða takka á lyklaborði til þess að komast um í kerfinu. Músin virkar ekki.\
 *Esc.* og *Enter* takkar notaðir til þess að fara úr/staðfesta innslátt.
 
+**Upphafsskjár:**\
+![alt text](https://i.imgur.com/PodgMuY.png "Upphafsskjár")
+
+
 ## Leyfi/License
 [GNU GPLv3](https://choosealicense.com/licenses/gpl-3.0/)
 
