@@ -13,3 +13,6 @@ class Utils(object):
         days = self.count_days_in_range(pickup_datetime, return_datetime)
         day_cost = car.get_category()["price"]
         return days * day_cost
+
+    def calculate_extra_cost(self, order):
+        return []

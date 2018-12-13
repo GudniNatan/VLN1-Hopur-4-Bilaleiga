@@ -1,3 +1,4 @@
+from datetime import datetime
 from controllers.controller import Controller
 from repositories.rent_order_repository import RentOrderRepository
 from repositories.customer_repository import CustomerRepository
@@ -13,6 +14,7 @@ class ReturnCarController(Controller):
         self.__controller_header = "Skila bíl"
         self.__rent_order_repo = RentOrderRepository()
         self._menu_stack.append(self.__make_main_menu())
+        self.__selected_order = None
 
     def search(self, values, menu):
         drivers_license_id = values[0]
@@ -41,7 +43,14 @@ class ReturnCarController(Controller):
         self._menu_stack.append(menu)
 
     def select_order(self, order, menu):
-        pass
+        self.__selected_order = order
+        extra_costs = self._utils.calculate_extra_cost(order)
+        self._menu_stack.append(self.__make_order_menu(order, extra_costs))
+
+    def close_order(self, values, menu):
+        self.__selected_order.set_return_time(datetime.now())
+        self.__rent_order_repo.update(self.__selected_order)
+        self._menu_stack.append(self.__make_close_order_success_menu())
 
     def __make_main_menu(self):
         header = "".join((
@@ -49,7 +58,7 @@ class ReturnCarController(Controller):
             "\n\nSláðu inn ökuskírteinisnúmer hjá viðskiptavini.",
             " Þá er hægt að velja pöntunina fyrir þann bíl sem var skilað.",
         ))
-        
+
         inputs = [
             {"prompt": "Ökuskírteinisnúmer viðskiptavinar:"}
         ]
@@ -58,4 +67,48 @@ class ReturnCarController(Controller):
         return Menu(
             header=header, options=options, back_function=self.back,
             stop_function=self.stop, can_submit=False, inputs=inputs
+        )
+
+    def __make_order_menu(self, order, extra_costs):
+        total = order.get_total_cost()
+        extra_insurance_price = total - order.get_base_cost()
+        already_payed_amount = total - order.get_remaining_debt()
+        extra_cost_total = sum([cost["amount"] for cost in extra_costs])
+        extra_cost_str = "\n\t".join(
+            (cost["name"] + ": " + str(cost["amount"]) for cost in extra_costs)
+        )
+        if not extra_cost_str:
+            extra_cost_str = "Enginn"
+        remaining = order.get_remaining_debt() + extra_cost_total
+        header = "".join((
+            self.__controller_header, " -> Leit -> Valin pöntun",
+            "Pöntun númer: ", str(order.get_order_number()),
+            "\nUpphafstími leigu: ", str(order.get_pickup_time()),
+            "\nÁætlaður skilatími: ", str(order.get_estimated_return_time()),
+            "\nTegund bíls: ", order.get_car().get_name(),
+            "\nNafn leigjanda: ", order.get_customer().get_name(),
+            "\n\nGrunnverð: ", str(order.get_base_cost()), " kr.",
+            "\nAukatrygging: ", str(extra_insurance_price), " kr.",
+            "\nViðbættur kostnaður: ", extra_cost_str,
+            "\nHeildarkostnaður: ", str(total), " kr.",
+            "\n\nÁður greitt: ", str(already_payed_amount), " kr."
+            "\nEftirstöður ", str(remaining), " kr."
+        ))
+        options = [
+            {"description": "Borga núna og loka pöntun",
+                "value": self.close_order}
+        ]
+        return Menu(
+            header=header, options=options, back_function=self.back,
+            stop_function=self.stop,
+        )
+
+    def __make_close_order_success_menu(self):
+        header = "".join((
+            "Skila bíl -> Leit -> Valin pöntun -> Lokið\n\n"
+            "Pöntunin þín er lokuð. ",
+            "\n\n\nTakk fyrir að velja Bílaleigu Björgvins!\n"
+        ))
+        return Menu(
+            header=header, stop_function=self.stop, can_go_back=False
         )

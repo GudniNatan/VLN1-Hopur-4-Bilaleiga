@@ -12,11 +12,11 @@ class Customer(Model):
             ):
         self.__driver_license_id = driver_license_id
         self.__personal_id = personal_id
+        self.__email = email
         self.__first_name = first_name
         self.__last_name = last_name
         self.__birthdate = birthdate
         self.__phone_number = phone_number
-        self.__email = email
         self.__cc_holder_first_name = cc_holder_first_name
         self.__cc_holder_last_name = cc_holder_last_name
         self.__ccn = ccn

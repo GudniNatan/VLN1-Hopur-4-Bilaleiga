@@ -4,6 +4,7 @@ from repositories.salesperson_repository import SalespersonRepository
 from repositories.admin_repository import AdminRepository
 from services.validation import Validation
 from services.search import Search
+from services.utils import Utils
 
 
 class Controller(ABC):
@@ -15,6 +16,7 @@ class Controller(ABC):
         self._active = False
         self._validation = Validation()
         self._search = Search()
+        self._utils = Utils()
 
     def main(self):
         self._active = True
