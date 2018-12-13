@@ -9,8 +9,7 @@ class Search(object):
     def search_cars(
             self, license_plate="", category="", seat_count=0,
             is_automatic="", hide_available="", hide_unavailable="",
-            availability_lower_bound=None, availability_upper_bound=None,
-            in_branch=None
+            availability_lower_bound=None, availability_upper_bound=None
             ):
         process_yes_no_answer = Utils().process_yes_no_answer
         is_automatic = process_yes_no_answer(is_automatic)
@@ -38,10 +37,7 @@ class Search(object):
             if car.get_license_plate_number().count(license_plate) == 0:
                 continue
             if category:
-                if category != car.get_category():
-                    continue
-            if in_branch:
-                if str(in_branch) != str(car.get_current_branch()):
+                if category != car.get_category()["category"]:
                     continue
             relevant_cars.append(car)
         return relevant_cars

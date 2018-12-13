@@ -54,7 +54,7 @@ class Controller(ABC):
         controller = type(self)(self._service)
         self._service.add(controller)
 
-    def pop(self, values=None, menu=None):
+    def pop(self):
         self._menu_stack.pop()
 
     def append(self, menu_function):
