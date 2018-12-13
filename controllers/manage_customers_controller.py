@@ -120,20 +120,17 @@ class ManageCustomersController(Controller):
         return menu
 
     # Other
-    def __search_customers(self, username="", name="", email="", phone=""):
-        salespeople = self.__customer_repo.get_all()
-        username = username.strip()
+    def __search_customers(self, driver_license_id="", personal_id="", name=""):
+        customers = self.__customer_repo.get_all()
+        driver_license_id = driver_license_id.strip()
         name = name.strip()
-        email = email.strip()
-        phone = phone.strip()
-        for i in range(len(salespeople) - 1, -1, -1):
-            person = salespeople[i]
-            if username and username != person.get_username():
-                salespeople.pop(i)
+        personal_id = personal_id.strip()
+        for i in range(len(customers) - 1, -1, -1):
+            person = customers[i]
+            if driver_license_id and driver_license_id != person.get_driver_license_id():
+                customers.pop(i)
             elif name and name != person.get_name():
-                salespeople.pop(i)
-            elif email and email != person.get_email():
-                salespeople.pop(i)
-            elif phone and phone != person.get_phone():
-                salespeople.pop(i)
-        return salespeople
+                customers.pop(i)
+            elif personal_id and personal_id != person.get_email():
+                customers.pop(i)
+        return customers
