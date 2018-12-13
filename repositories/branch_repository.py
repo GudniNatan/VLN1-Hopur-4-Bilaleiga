@@ -9,4 +9,5 @@ class BranchRepository(Repository):
     _CSV_ROW_NAMES = ["Nafn", "Heimilsfang"]
 
     def dict_to_model_object(self, branch_dict):
-        return Branch(**branch_dict)
+        args_list = [value for value in branch_dict.values()]
+        return Branch(*args_list)
