@@ -18,6 +18,15 @@ Hægt er að nota örvatakkana eða úthlutaða takka á lyklaborði til þess a
 **Upphafsskjár:**\
 ![alt text](https://i.imgur.com/PodgMuY.png "Upphafsskjár")
 
+**Upphafsvalmynd:**\
+![alt text](https://i.imgur.com/mVmpJfP.png "Upphafsvalmynd")
+
+**Starfsmannainnskráning:**\
+![alt text](https://i.imgur.com/tTJfBah.png "Starfsmannainnskráning")
+
+**Kerfisstjóri hefur verið skráður inn:**\
+![alt text](https://i.imgur.com/qjdFNuj.png "Kerfisstjóri")
+
 
 ## Leyfi/License
 [GNU GPLv3](https://choosealicense.com/licenses/gpl-3.0/)
