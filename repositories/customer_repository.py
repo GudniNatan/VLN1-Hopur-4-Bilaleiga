@@ -6,7 +6,7 @@ from datetime import date
 class CustomerRepository(Repository):
     _FILENAME = "./data/Customers.csv"
     _TYPE = Customer
-    _PRIMARY_KEY = "Ökuskirteinis numer"  # name of primary key
+    _PRIMARY_KEY = "Ökuskírteinisnúmer"  # name of primary key
     _CSV_ROW_NAMES = [
         "Ökuskírteinisnúmer", "Kennitala", "Netfang", "Fornafn", "Eftirnafn",
         "Fæðingar dagssetning", "Símanúmer", "Fornafn kortahafa",
