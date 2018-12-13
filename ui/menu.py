@@ -8,6 +8,8 @@ QUIT = "Q"
 SUBMIT = "S"
 NEXT_PAGE = ">"
 LAST_PAGE = "<"
+FULL_QUIT = "Hætta"
+NORMAL_QUIT = "Hætta: Aftur í aðalvalmynd"
 
 
 class Menu(object):
@@ -16,7 +18,7 @@ class Menu(object):
     def __init__(self, header="", errors=list(), inputs=list(),
                  options=list(), footer="", page=0, max_options_per_page=11,
                  can_go_back=True, stop_function=None, back_function=None,
-                 submit_function=None, can_submit=True):
+                 submit_function=None, can_submit=True, full_quit=False):
         self.__header = header
         self.__footer = footer
         self.__current_page_number = page
@@ -33,6 +35,7 @@ class Menu(object):
         self.__stop_function = stop_function
         self.__back_function = back_function
         self.__submit_function = submit_function
+        self.__quit_string = FULL_QUIT if full_quit else NORMAL_QUIT
         self.process_inputs(inputs)
         self.process_options(options)
         self.process_pages()
@@ -59,7 +62,8 @@ class Menu(object):
         self.__options.reverse()
 
     def get_foot_options(self):
-        quit_option = MenuOption(self.__stop_function, "Hætta", QUIT)
+        quit_str = self.__quit_string
+        quit_option = MenuOption(self.__stop_function, quit_str, QUIT)
         back_option = MenuOption(self.__back_function, "Til baka", BACK)
         submit_option = MenuOption(self.__submit_function, "Staðfesta", SUBMIT)
         foot_options = [quit_option]
@@ -163,9 +167,18 @@ class Menu(object):
             self.move_cursor(1)
         elif key == 10072:  # arrow up
             self.move_cursor(-1)
+        elif key == 10075 and self.__selected_input is None:
+            # arrow left
+            self.__previous_page()
+        elif key == 10077 and self.__selected_input is None:
+            # arrow right
+            self.__next_page()
         elif key == 27:  # escape
             if self.__selected_input is None:
-                self.__selection = BACK
+                if self.__back_function is not None:
+                    self.__selection = MenuOption(
+                        self.__back_function, ""
+                    )
             else:
                 self.move_cursor()
         elif key == 9:  # tab
@@ -216,10 +229,11 @@ class Menu(object):
         self.__change_page(self.__current_page_number - 1)
 
     def __change_page(self, page_number):
-        self.__current_page_number = page_number
-        self.__current_page_number %= len(self.__pages)
-        self.__cursor_position = 0
-        self.move_cursor()
+        page_number %= len(self.__pages)
+        if page_number != self.__current_page_number:
+            self.__current_page_number = page_number
+            self.__cursor_position = 0
+            self.move_cursor()
 
     def __select_input_by_cursor(self):
         page = self.__pages[self.__current_page_number]

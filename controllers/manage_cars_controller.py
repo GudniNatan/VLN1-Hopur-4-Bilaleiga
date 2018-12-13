@@ -46,28 +46,46 @@ class ManageCarsController(Controller):
         car = self.__selected_car
         name = car.get_license_plate_number()
         edit_menu = self._ui.get_edit_menu(
-            car, name, self.__controller_header, self.edit_car
+            car, name, self.__controller_header, self.edit_selected_car
         )
         self._menu_stack.append(edit_menu)
 
     def edit_selected_car(self, values, menu):
-        # Update the salesperson
-        old_customer = self.__selected_customer
-        old_key = old_customer.get_drivers_license_id()
+        # Update the car
+        old_car = self.__selected_car
+        old_key = old_car.get_license_plate_number()
         try:
-            customer = self._validation.validate_customer(*values)
+            car = self._validation.validate_car(*values)
         except ValueError as error:
             menu.set_errors((error,))
             return
-        self.__customer_repo.update(customer, old_key)
+        self.__car_repo.update(car, old_key)
         # Move to feedback screen
         update_report_menu = self._ui.get_edit_report_menu(
-            customer, self.__controller_header, self.restart
+            car, self.__controller_header, self.restart
         )
         self._menu_stack.append(update_report_menu)
 
     def go_to_delete(self, values, menu):
-        pass
+        car = self.__selected_car
+        deletion_menu = self._ui.get_deletion_menu(
+            car, car.get_model(), self.__controller_header,
+            self.delete_selected_car
+        )
+        self._menu_stack.append(deletion_menu)
+
+    def delete_selected_car(self, values, menu):
+        # delete the car
+        self.__car_repo.remove(self.__selected_car)
+        # create deletion feedback menu
+        # the menu should be a special no-back menu
+        # go to deletion feedback screen
+        delete_feedback_menu = self._ui.get_delete_feedback_menu(
+            self.__selected_car.get_model(),
+            self.__controller_header, self.restart
+        )
+        self.__selected_car = None
+        self._menu_stack.append(delete_feedback_menu)
 
     def create_car(self, values, menu):
         try:
@@ -109,23 +127,3 @@ class ManageCarsController(Controller):
             max_options_per_page=10
         )
         return menu
-
-    def __make_new_car_menu(self):
-        header = self.__controller_header + " -> Nýr bíll"
-        header += "\nSláðu inn upplýsingarnar fyrir nýja bílinn:"
-        inputs = [
-            {"prompt": "license_plate_number"},
-            {"prompt": "model"},
-            {"prompt": "category"},
-            {"prompt": "wheel_count"},
-            {"prompt": "drivetrain", "type": "date"},
-            {"prompt": "automatic_transmission (J/N)"},
-            {"prompt": "seat_count"},
-            {"prompt": "extra_properties (comma seperated)"},
-            {"prompt": "kilometer_count"},
-        ]
-        new_customer_menu = Menu(header=header, inputs=inputs,
-                                 back_function=self.back,
-                                 stop_function=self.stop,
-                                 submit_function=self.create_car)
-        return new_customer_menu

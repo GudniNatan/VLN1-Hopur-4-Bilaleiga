@@ -4,8 +4,9 @@ from repositories.branch_repository import BranchRepository
 from repositories.rent_order_repository import RentOrderRepository
 from repositories.car_repository import CarRepository
 from repositories.customer_repository import CustomerRepository
+from repositories.price_list_repository import PriceListRepository
 from models.salesperson import Salesperson
-from datetime import date, time, datetime
+from datetime import date, time, datetime, timedelta
 from math import inf
 from models.branch import Branch
 from models.car import Car
@@ -53,31 +54,55 @@ class Validation(object):
         return definitely_int
 
     def validate_date(self, maybe_date, name=''):
-        date_formats = ["%Y-%m-%d", "%m/%y", "%d/%m/%Y", "%d-%m-%Y"]
+        date_formats = ["%Y-%m-%d", "%d-%m-%Y"]
+        seperators = [" ", "/", ":"]
         definitely_date = None
+        maybe_date = maybe_date.strip()
+        for seperator in seperators:
+            maybe_date = maybe_date.replace(seperator, "-")
         for date_format in date_formats:
             try:
                 definitely_date = datetime.strptime(maybe_date, date_format)
-                break
+                return definitely_date.date()
             except ValueError:
                 continue
-        else:
-            error_str = "{} þarf að vera dagsetning á forminu ÁÁÁÁ-MM-DD. "
-            error_str += "'{}' er ekki gilt."
+        error_str = "{} þarf að vera dagsetning á forminu ÁÁÁÁ-MM-DD. "
+        error_str += "'{}' er ekki gilt."
+        raise ValueError(error_str.format(name, maybe_date))
+
+    def validate_ccn_exp_date(self, maybe_date, name=""):
+        error_str = "{} þarf að vera dagsetning á forminu MM-ÁÁ. "
+        error_str += "'{}' er ekki gilt."
+        date_format = "%m-%y"
+        seperators = [" ", "/", ":"]
+        definitely_date = None
+        for seperator in seperators:
+            maybe_date = maybe_date.replace(seperator, "-")
+        try:
+            definitely_date = datetime.strptime(maybe_date, date_format)
+            if datetime.now() < definitely_date:
+                return definitely_date.date()
+            else:
+                error_str = "{} er útrunnin. "
+                error_str += "'{}' er ekki gilt."
+                raise ValueError()
+        except ValueError:
             raise ValueError(error_str.format(name, maybe_date))
-        return definitely_date.date()
 
     def validate_time(self, maybe_time, name=''):
+        maybe_time = maybe_time.strip()
+        if not name:
+            name = "Tími"
         try:
             definitely_time = time.fromisoformat(maybe_time)
         except ValueError:
-            error_str = "Tími: '{}' er ekki gildur tími".format(maybe_time)
+            error_str = "{}: '{}' er ekki gildur tími".format(name, maybe_time)
             raise ValueError(error_str)
         return definitely_time
 
     def validate_datetime_by_parts(self, date_str, time_str, name):
-        a_date = self.validate_date(date_str, name)
-        a_time = self.validate_time(time_str, name)
+        a_date = self.validate_date(date_str, name + " dagsetning")
+        a_time = self.validate_time(time_str, name + " tími")
         a_datetime = datetime.combine(a_date, a_time)
         return a_datetime
 
@@ -135,7 +160,7 @@ class Validation(object):
     def validate_email(self, email):
         if email.count('@') != 1:
             raise ValueError("Ekki gilt netfang")
-        elif email.split("@")[1].count(".") != 1:
+        elif email.split("@")[1].count(".") == 0:
             raise ValueError("Ekki gilt netfang")
         return email
 
@@ -166,7 +191,7 @@ class Validation(object):
             license_plate_number, "Bílnúmer"
         )
         valid_model = self.validate_str(model, "Model")
-        valid_category = self.validate_str(category, "Category")
+        valid_category = self.validate_category_in_repo(category)
         valid_wheel_count = self.validate_int(wheel_count, "Wheel count")
         valid_drivetrain = self.validate_str(drivetrain, "Drivetrain")
         valid_automatic_transmission = Utils.process_yes_no_answer(
@@ -177,15 +202,7 @@ class Validation(object):
         valid_kilometer_count = self.validate_int(
             kilometer_count, "Kilometer count"
         )
-
-        if current_branch is None:
-            branch_repo = BranchRepository()
-            valid_current_branch = branch_repo.get_all()[0]
-        else:
-            if type(current_branch) == Branch:
-                valid_current_branch = current_branch
-            else:
-                raise ValueError("Útibú er ekki gilt.")
+        valid_current_branch = self.validate_branch_in_repo(current_branch)
 
         return Car(
             valid_license_plate, valid_model, valid_category,
@@ -216,8 +233,8 @@ class Validation(object):
             cc_holder_last_name, "Eftirnafn kreditkortahandhafa"
         )
         ccn = self.validate_ccn(ccn)
-        cc_exp_date = self.validate_date(
-            cc_exp_date, "Fyrningardagsetning (MM/YY)"
+        cc_exp_date = self.validate_ccn_exp_date(
+            cc_exp_date, "Fyrningardagsetning"
         )
         return Customer(
             driver_license_id, personal_id, first_name, last_name, birthdate,
@@ -225,27 +242,48 @@ class Validation(object):
             ccn, cc_exp_date
         )
 
+    def validate_category_in_repo(self, category_name):
+        try:
+            category = PriceListRepository().get(category_name)
+        except ValueError:
+            categories = PriceListRepository().get_all()
+            category_str_list = [
+                category["category"] for category in categories
+            ]
+            category_str = ", ".join(category_str_list)
+            error_msg = " ".join((
+                "'", category_name, "' er ekki gildur flokkur.",
+                "Þetta eru gildir flokkar:\n", *category_str_list, "\n"
+            ))
+            raise ValueError(error_msg)
+        return category
+
     def validate_branch_in_repo(self, branch_name):
         try:
             branch = BranchRepository().get(branch_name)
         except ValueError:
             branches = BranchRepository().get_all()
+            if branch_name is None:
+                if branches:
+                    return branches[0]
             branch_str_list = [branch.get_name() for branch in branches]
             branch_str = ", ".join(branch_str_list)
-            error_msg = "".join(
-                "'", branch_name, "' er ekki gilt útibú.",
+            error_msg = "".join((
+                "'", str(branch_name), "' er ekki gilt útibú.",
                 "Þetta eru gild útibú:\n", branch_str
-            )
+            ))
+            raise ValueError(error_msg)
         return branch
 
     def validate_order(
             self, car, customer, pickup_date, pickup_time, est_return_date,
             est_return_time, pickup_branch_name, return_branch_name,
-            include_extra_insurance, total_cost="", remaining_debt="",
+            include_extra_insurance,
             ):
         orders = RentOrderRepository().get_all()
         if orders:
-            order_number = max(orders, key=RentOrder.get_key) + 1
+            last_order = max(orders, key=RentOrder.get_key)
+            order_number = last_order.get_order_number() + 1
         else:
             order_number = 1
         try:
@@ -283,20 +321,26 @@ class Validation(object):
         )
         if extra_insurance is None:
             extra_insurance = False
-        if total_cost:
-            total_cost = self.validate_int(total_cost)
-        else:
-            base_cost = self.__utils.calculate_base_cost(
-                car, pickup_datetime, est_return_datetime
-            )
-        if remaining_debt:
-            remaining_debt = self.validate_int(remaining_debt)
-        else:
-            remaining_debt = total_cost
+        base_cost = self.__utils.calculate_base_cost(
+            car, pickup_datetime, est_return_datetime
+        )
         kilometers_driven = None
         return_time = None
         return RentOrder(
             order_number, car, customer, pickup_datetime, est_return_datetime,
-            pickup_branch_name, return_branch_name, total_cost,
-            remaining_debt
+            pickup_branch_name, return_branch_name, extra_insurance, base_cost
         )
+
+    def validate_rent_range(self, from_date, to_date):
+        from_date = self.validate_datetime_by_parts(
+                from_date[0], from_date[1], "Sótt"
+        )
+        to_date = self.validate_datetime_by_parts(
+                to_date[0], to_date[1], "Skilað"
+        )
+        range_delta = to_date - from_date
+        if range_delta < timedelta(days=1):
+            raise ValueError("Leigutímabil verður að vera minnst 24 klst.")
+        if from_date < datetime.now():
+            raise ValueError("Leigutímabilið má ekki vera í fortíðinni")
+        return (from_date, to_date)

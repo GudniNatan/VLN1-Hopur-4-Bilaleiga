@@ -1,5 +1,6 @@
 from models.model import Model
 from models.branch import Branch
+from collections import OrderedDict
 
 
 class Car(Model):
@@ -25,23 +26,23 @@ class Car(Model):
         car_dict = self.get_dict()
         car_dict["current_branch"] = car_dict["current_branch"].get_name()
         properties = car_dict["extra_properties"]
-        property_string = ",".join(properties)
+        property_string = ", ".join(properties)
         car_dict["extra_properties"] = property_string
         return car_dict
 
     def get_dict(self):
-        return {
-            "license_plate_number": self.__license_plate_number,
-            "model": self.__model,
-            "category": self.__category,
-            "wheel_count": self.__wheel_count,
-            "drivetrain": self.__drivetrain,
-            "automatic_transmission": self.__automatic_transmission,
-            "seat_count": self.__seat_count,
-            "extra_properties": self.__extra_properties,
-            "kilometer_count": self.__kilometer_count,
-            "current_branch": self.__current_branch,
-        }
+        return OrderedDict([
+            ("license_plate_number", self.__license_plate_number),
+            ("model", self.__model),
+            ("category", self.__category["category"]),
+            ("wheel_count", self.__wheel_count),
+            ("drivetrain", self.__drivetrain),
+            ("automatic_transmission", self.__automatic_transmission),
+            ("seat_count", self.__seat_count),
+            ("extra_properties", self.__extra_properties),
+            ("kilometer_count", self.__kilometer_count),
+            ("current_branch", self.__current_branch),
+        ])
 
     def __eq__(self, other):
         if isinstance(other, Car):
@@ -55,8 +56,8 @@ class Car(Model):
         else:
             automatic_shift = "Nei"
         info_string = "Flokkur bíls: {}\n\tGerð: {}\n\t"
-        info_string += "Sjalfskyptur: {}\n\tKílómetrafjöldi: {}"
-        return info_string.format(self.__category, self.__model,
+        info_string += "Sjalfskiptur: {}\n\tKílómetrafjöldi: {}"
+        return info_string.format(self.__category["category"], self.__model,
                                   automatic_shift, self.__kilometer_count)
 
     # Get
@@ -80,6 +81,9 @@ class Car(Model):
 
     def get_key(self):
         return self.__license_plate_number
+
+    def get_name(self):
+        return self.get_model()
 
     # Set
     def set_license_plate_number(self, license_plate_number):

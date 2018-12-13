@@ -24,7 +24,7 @@ class CarRentalUI(object):
             option_list.append(item_option)
         result_menu = Menu(
             header=header, options=option_list, back_function=self.__back,
-            stop_function=self.__stop
+            stop_function=self.__stop, max_options_per_page=5
         )
         return result_menu
 
@@ -33,7 +33,7 @@ class CarRentalUI(object):
                                       delete_callback):
         header = "{} -> Leit -> Val".format(header_message)
         header += "\nÞú valdir: {}".format(object_name)
-        for key, value in model_object.get_dict().items():
+        for key, value in model_object.csv_repr().items():
             header += "\n\t{}: {}".format(key, value)
         edit_text = "Breyta: {}".format(object_name)
         delete_text = "Eyða: {}".format(object_name)
@@ -53,15 +53,16 @@ class CarRentalUI(object):
         )
 
     def get_creation_report_menu(self, model_object, controller_name,
-                                 restart_callback):
+                                 restart_callback, can_go_back=False):
         message = "{} uppfærð!\nNýja hlutinum hefur verið bætt við."
         message = message.format(controller_name)
         return self.get_report_menu(
-            model_object, controller_name, restart_callback, message
+            model_object, controller_name, restart_callback, message,
+            can_go_back
         )
 
     def get_report_menu(self, model_object, return_location,
-                        restart_callback, message):
+                        restart_callback, message, can_go_back=True):
         message += "\nNýju gildin eru:"
         for key, value in model_object.get_dict().items():
             message += "\n\t{}: {}".format(key, value)
@@ -69,7 +70,7 @@ class CarRentalUI(object):
                     "value": restart_callback}]
         report_menu = Menu(
             header=message, options=options, back_function=self.__back,
-            stop_function=self.__stop
+            stop_function=self.__stop, can_go_back=can_go_back
         )
         return report_menu
 
@@ -78,13 +79,14 @@ class CarRentalUI(object):
         inputs = list()
         header = "{} -> Leit -> Val: {} -> Breyta\nSkráðu gildi fyrir {}"
         header = header.format(header_message, object_name, object_name)
-        for key, value in model_object.get_dict().items():
+        for key, value in model_object.csv_repr().items():
             input_type = key
             input_dict = {"prompt": key, "value": value, "type": input_type}
             inputs.append(input_dict)
         edit_menu = Menu(
             header=header, inputs=inputs, back_function=self.__back,
-            stop_function=self.__stop, submit_function=submit_callback
+            stop_function=self.__stop, submit_function=submit_callback,
+            can_go_back=False
         )
         return edit_menu
 
@@ -104,7 +106,7 @@ class CarRentalUI(object):
                                  restart_callback):
         header = "{}\n{} hefur verið eytt."
         header = header.format(controller_message, object_name)
-        options = [{"description": "Aftur í starfsmannaskrá",
+        options = [{"description": "Aftur í " + controller_message,
                     "value": restart_callback}]
         delete_feedback_menu = Menu(header=header, can_go_back=False,
                                     options=options, stop_function=self.__stop)
@@ -121,3 +123,18 @@ class CarRentalUI(object):
             stop_function=self.__stop, submit_function=submit_callback
         )
         return new_model_object_menu
+
+    def get_edit_by_field_menu(self, fields, object_name,
+                               header_message, submit_callback):
+        inputs = list()
+        header = "{} -> Leit -> Val: {} -> Breyta\nSkráðu gildi fyrir {}"
+        header = header.format(header_message, object_name, object_name)
+        for key, value in fields.items():
+            input_type = key
+            input_dict = {"prompt": key, "value": value, "type": input_type}
+            inputs.append(input_dict)
+        edit_menu = Menu(
+            header=header, inputs=inputs, back_function=self.__back,
+            stop_function=self.__stop, submit_function=submit_callback
+        )
+        return edit_menu

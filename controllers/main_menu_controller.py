@@ -8,6 +8,7 @@ from controllers.manage_customers_controller import ManageCustomersController
 from controllers.manage_cars_controller import ManageCarsController
 from controllers.manage_orders_controller import ManageOrdersController
 from controllers.price_list_controller import PriceListController
+from controllers.rent_car_controller import RentCarController
 
 
 class MainMenuController(Controller):
@@ -55,6 +56,10 @@ class MainMenuController(Controller):
         )
         self._service.add(customer_controller)
 
+    def go_to_rent_car_controller(self, values, menu):
+        rent_car_controller = RentCarController(self._service)
+        self._service.add(rent_car_controller)
+
     def handle_login(self, values, menu):
         try:
             user = self._validation.validate_login(*values)
@@ -75,16 +80,17 @@ class MainMenuController(Controller):
         go_to_help = self.go_to_help_controller
         go_to_price_list = self.go_to_price_list_controller
         go_to_login = self.go_to_login
+        go_to_rent_car = self.go_to_rent_car_controller
         customer_options = [
             {"hotkey": "H", "description": "Hjálp", "value": go_to_help},
             {"description": "Verðskrá", "value": go_to_price_list},
-            {"description": "Bóka bílaleigubíl"},
+            {"description": "Bóka bílaleigubíl", "value": go_to_rent_car},
             {"description": "Innskráning starfsmanna", "value": go_to_login},
         ]
         footer = "Notaðu örvatakkana til að hreyfa bendilinn. "
         footer += "Notaðu enter til að velja."
         menu = Menu(header=header, options=customer_options, can_go_back=False,
-                    footer=footer, stop_function=self.stop)
+                    footer=footer, stop_function=self.stop, full_quit=True)
         return menu
 
     def __make_staff_menu(self):
@@ -92,7 +98,8 @@ class MainMenuController(Controller):
         header = "Skráður inn sem {}\n".format(type(user).__name__)
         header += "Velkomin/n aftur, {}!".format(user.get_name())
         staff_options = [
-            {"description": "Leigja bíl"},
+            {"description": "Leigja bíl",
+                "value": self.go_to_rent_car_controller},
             {"description": "Skila bíl"},
             {"description": "Verðskrá",
                 "value": self.go_to_price_list_controller},
@@ -111,7 +118,8 @@ class MainMenuController(Controller):
                         "value": self.go_to_salespeople_controller}
             staff_options.insert(-1, staff_op)
         menu = Menu(header=header, options=staff_options, can_go_back=False,
-                    stop_function=self.stop, max_options_per_page=12)
+                    stop_function=self.stop, max_options_per_page=12,
+                    full_quit=True)
         return menu
 
     def __make_login_menu(self):
@@ -122,6 +130,7 @@ class MainMenuController(Controller):
         ]
         login_menu = Menu(
             header=header, inputs=inputs, stop_function=self.stop,
-            submit_function=self.handle_login, back_function=self.back
+            submit_function=self.handle_login, back_function=self.back,
+            full_quit=True
         )
         return login_menu
