@@ -5,6 +5,7 @@ from repositories.price_list_repository import PriceListRepository
 from repositories.customer_repository import CustomerRepository
 from controllers.manage_customers_controller import ManageCustomersController
 from ui.menu import Menu
+from models.rent_order import RentOrder
 from services.search import Search
 
 
@@ -23,6 +24,7 @@ class RentCarController(Controller):
         self.__selected_return_branch = None
         self.__selected_car = None
         self.__selected_customer = None
+        self.__include_insurance = False
 
     def submit_time_period(self, values, menu):
         from_date = values[0:2]
@@ -53,7 +55,8 @@ class RentCarController(Controller):
             category=self.__selected_category,
             availability_lower_bound=from_date,
             availability_upper_bound=to_date,
-            in_branch=self.__selected_pickup_branch
+            in_branch=self.__selected_pickup_branch,
+            hide_unavailable=True
         )
         self._menu_stack.append(self._ui.get_search_result_menu(
             results, self.__controller_header, self.choose_car
@@ -61,6 +64,14 @@ class RentCarController(Controller):
 
     def choose_car(self, car, menu):
         self.__selected_car = car
+        self._menu_stack.append(self.__make_extra_insurance_menu())
+
+    def get_insurance(self, values, menu):
+        self.__include_insurance = True
+        self._menu_stack.append(self.__make_customer_select_menu())
+
+    def skip_insurance(self, values, menu):
+        self.__include_insurance = False
         self._menu_stack.append(self.__make_customer_select_menu())
 
     def log_in(self, values, menu):
@@ -156,3 +167,26 @@ class RentCarController(Controller):
             back_function=self.back, stop_function=self.stop
         )
         return result_menu
+
+    def __make_extra_insurance_menu(self):
+        insurance_price = RentOrder.EXTRA_INSURANCE
+        insurance = self.get_insurance
+        no_insurance = self.skip_insurance
+        header = "".join((
+            self.__controller_header,
+            " -> Leigutímabil -> Veldu bílaflokk",
+            " -> Valin útibú -> Valinn bíll -> Tryggingar",
+            "\n\nGrunntrygging er innifalin í öllum pöntunum, en",
+            "hvað gerist ef þú klessir á í órétti?",
+            "\nLausnin er að hugsa fyrirfram. Við bjóðum upp á",
+            'ódýra kaskó aukatryggingu á fyrir aðeins ', str(insurance_price),
+            " kr og rétt að sálinni þinni við andlát.",
+            "\n\nViltu aukatryggingu?",
+        ))
+        options = [
+            {"description": "Já - " + str(insurance_price) + " kr.",
+                "value": insurance},
+            {"description": "Nei - 0 kr.", "value": no_insurance},
+        ]
+        return Menu(header=header, options=options, back_function=self.back,
+                    stop_function=self.stop,)

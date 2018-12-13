@@ -43,6 +43,8 @@ class Search(object):
             if in_branch:
                 if str(in_branch) != str(car.get_current_branch()):
                     continue
+            if in_branch and car.get_current_branch() != in_branch:
+                continue
             relevant_cars.append(car)
         return relevant_cars
 
@@ -60,7 +62,9 @@ class Search(object):
             upper_time_bound = lower_time_bound
         rent_orders = RentOrderRepository().get_all()
         for order in rent_orders:
-            if order.get_pickup_time() <= upper_time_bound:
+            if order.get_car() != car:
+                continue
+            elif order.get_pickup_time() <= upper_time_bound:
                 if order.get_estimated_return_time() >= lower_time_bound:
                     return False
         return True

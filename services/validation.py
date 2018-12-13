@@ -237,8 +237,8 @@ class Validation(object):
             cc_exp_date, "Fyrningardagsetning"
         )
         return Customer(
-            driver_license_id, personal_id, email, first_name, last_name,
-            birthdate, phone_number, cc_holder_first_name, cc_holder_last_name,
+            driver_license_id, personal_id, first_name, last_name, birthdate,
+            phone_number, email, cc_holder_first_name, cc_holder_last_name,
             ccn, cc_exp_date
         )
 
@@ -339,7 +339,7 @@ class Validation(object):
                        pickup_branch, return_branch):
         return RentOrder(
             self.get_next_order_number(), car, customer, date_range[0],
-            date_range[1]
+            date_range[1], pickup_branch.get_name(), return_branch.get_name(),
         )
 
     def validate_rent_range(self, from_date, to_date):

@@ -7,7 +7,7 @@ from datetime import datetime
 class RentOrder(Model):
     INSURANCE_PERCENT = 0.05
     KM_ALLOWANCE_PER_DAY = 100
-    EXTRA_INSURANCE = 3000
+    EXTRA_INSURANCE = 4000
     ADDON_PRICE = 450
 
     def __init__(
