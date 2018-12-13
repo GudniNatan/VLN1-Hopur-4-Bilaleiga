@@ -42,7 +42,7 @@ class RentOrder(Model):
         return_time_str = self.__estimated_return_time.isoformat()
         lpn = self.__customer.get_key()
         rent_order_dict["Bíll"] = self.__car.get_license_plate_number()
-        rent_order_dict["Viðskiptavinur"] = lpn
+        rent_order_dict["Ökuskírteinisnúmer Viðskiptavinar"] = lpn
         rent_order_dict["Sóttur þann"] = self.__pickup_time.isoformat()
         rent_order_dict["Áætlaður skilatími"] = return_time_str
         if self.__return_time:
@@ -54,7 +54,7 @@ class RentOrder(Model):
         return {
             "Bókunar númer": self.__order_number,
             "Bíll": self.__car,
-            "Viðskiptavinur": self.__customer,
+            "Ökuskírteinisnúmer Viðskiptavinar": self.__customer,
             "Sóttur þann": self.__pickup_time,
             "Áætlaður skilatími": self.__estimated_return_time,
             "Sóttur hjá": self.__pickup_branch_name,
