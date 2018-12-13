@@ -74,7 +74,7 @@ class ManageOrdersController(Controller):
         except ValueError as error_msg:
             menu.set_errors((error_msg,))
             return
-        self.__order_repo.write((order,))
+        self.__order_repo.add(order)
         new_order_report_menu = self._ui.get_creation_report_menu(
             order, self.__controller_header, self.restart
         )
