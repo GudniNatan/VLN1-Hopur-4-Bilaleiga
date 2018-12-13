@@ -275,17 +275,21 @@ class Validation(object):
             raise ValueError(error_msg)
         return branch
 
-    def validate_order(
-            self, car, customer, pickup_date, pickup_time, est_return_date,
-            est_return_time, pickup_branch_name, return_branch_name,
-            include_extra_insurance,
-            ):
+    def get_next_order_number(self):
         orders = RentOrderRepository().get_all()
         if orders:
             last_order = max(orders, key=RentOrder.get_key)
             order_number = last_order.get_order_number() + 1
         else:
             order_number = 1
+        return order_number
+
+    def validate_order(
+            self, car, customer, pickup_date, pickup_time, est_return_date,
+            est_return_time, pickup_branch_name, return_branch_name,
+            include_extra_insurance,
+            ):
+        order_number = self.get_next_order_number()
         try:
             if type(car) != Car:
                 car = CarRepository().get(car)
@@ -329,6 +333,13 @@ class Validation(object):
         return RentOrder(
             order_number, car, customer, pickup_datetime, est_return_datetime,
             pickup_branch_name, return_branch_name, extra_insurance, base_cost
+        )
+
+    def assemble_order(self, car, customer, date_range,
+                       pickup_branch, return_branch):
+        return RentOrder(
+            self.get_next_order_number(), car, customer, date_range[0],
+            date_range[1]
         )
 
     def validate_rent_range(self, from_date, to_date):

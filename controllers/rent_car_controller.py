@@ -2,6 +2,7 @@ from controllers.controller import Controller
 from repositories.car_repository import CarRepository
 from repositories.branch_repository import BranchRepository
 from repositories.price_list_repository import PriceListRepository
+from repositories.customer_repository import CustomerRepository
 from controllers.manage_customers_controller import ManageCustomersController
 from ui.menu import Menu
 from services.search import Search
@@ -14,11 +15,14 @@ class RentCarController(Controller):
         self.__controller_header = "Leigja bíl"
         self.__car_repo = CarRepository()
         self.__price_list_repo = PriceListRepository()
+        self.__customer_repo = CustomerRepository()
         self._menu_stack.append(self.__make_main_menu())
         self.__selected_date_range = None
         self.__selected_category = None
         self.__selected_pickup_branch = None
+        self.__selected_return_branch = None
         self.__selected_car = None
+        self.__selected_customer = None
 
     def submit_time_period(self, values, menu):
         from_date = values[0:2]
@@ -60,7 +64,18 @@ class RentCarController(Controller):
         self._menu_stack.append(self.__make_customer_select_menu())
 
     def log_in(self, values, menu):
-        pass
+        driver_license_id = values[0]
+        try:
+            customer = self.__customer_repo.get(driver_license_id)
+        except ValueError:
+            error_msg = "".join((
+                "Enginn viðskiptavinur með þetta ökuskírteinisnúmer ",
+                "fannst. Ertu örugglega skráð/ur?"
+            ))
+            menu.set_errors((error_msg,))
+            return
+        self.__selected_customer = customer
+        self._menu_stack.append(self.__make_customer_select_menu())
 
     def register(self, values, menu):
         customer_controller = ManageCustomersController(
