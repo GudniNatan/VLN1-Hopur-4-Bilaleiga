@@ -338,3 +338,4 @@ class Validation(object):
             raise ValueError("Leigutímabil verður að vera minnst 24 klst.")
         if from_date < datetime.now():
             raise ValueError("Leigutímabilið má ekki vera í fortíðinni")
+        return (from_date, to_date)
