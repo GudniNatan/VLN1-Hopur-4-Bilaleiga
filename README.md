@@ -10,6 +10,12 @@ Allar skrárnar tengdar forritinu munu verða geymdar hér.
 \
 Hægt er að nota örvatakkana eða úthlutaða takka á lyklaborði til þess að komast um í kerfinu. 
 
+## Uppsetning?
+
+## Notkun?
+
+## License?
+
 
 
 ## Credits
