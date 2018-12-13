@@ -59,8 +59,8 @@ class ManageOrdersController(Controller):
         order = self.__selected_order
         fields = [
             "Bílnúmer", "Ökuskírteinisnúmer Viðskiptavinur",
-            "Sótt (dagssetning)", "Sótt (klukkan)", "Áætluð skiladagssetning",
-            "Áætlaður skilatími", "Sótt hjá", "Skilað hjá",
+            "Dagsetning sótt", "Sótt klukkan", "Áætluð skiladagssetning",
+            "Áætlaður skilatími", "Sótt í útibúi", "Skilað í útibúi",
             "Inniheldur auka tryggingu (J/N)"
         ]
         new_car_menu = self._ui.get_new_model_object_menu(
@@ -73,7 +73,6 @@ class ManageOrdersController(Controller):
             order = self._validation.validate_order(*values)
         except ValueError as error_msg:
             menu.set_errors((error_msg,))
-            self._validation.validate_order(*values)
             return
         self.__order_repo.write((order,))
         new_order_report_menu = self._ui.get_creation_report_menu(
