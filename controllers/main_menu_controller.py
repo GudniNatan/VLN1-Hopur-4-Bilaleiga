@@ -90,7 +90,7 @@ class MainMenuController(Controller):
         footer = "Notaðu örvatakkana til að hreyfa bendilinn. "
         footer += "Notaðu enter til að velja."
         menu = Menu(header=header, options=customer_options, can_go_back=False,
-                    footer=footer, stop_function=self.stop)
+                    footer=footer, stop_function=self.stop, full_quit=True)
         return menu
 
     def __make_staff_menu(self):
@@ -118,7 +118,8 @@ class MainMenuController(Controller):
                         "value": self.go_to_salespeople_controller}
             staff_options.insert(-1, staff_op)
         menu = Menu(header=header, options=staff_options, can_go_back=False,
-                    stop_function=self.stop, max_options_per_page=12)
+                    stop_function=self.stop, max_options_per_page=12,
+                    full_quit=True)
         return menu
 
     def __make_login_menu(self):
@@ -129,6 +130,7 @@ class MainMenuController(Controller):
         ]
         login_menu = Menu(
             header=header, inputs=inputs, stop_function=self.stop,
-            submit_function=self.handle_login, back_function=self.back
+            submit_function=self.handle_login, back_function=self.back,
+            full_quit=True
         )
         return login_menu

@@ -85,7 +85,8 @@ class CarRentalUI(object):
             inputs.append(input_dict)
         edit_menu = Menu(
             header=header, inputs=inputs, back_function=self.__back,
-            stop_function=self.__stop, submit_function=submit_callback
+            stop_function=self.__stop, submit_function=submit_callback,
+            can_go_back=False
         )
         return edit_menu
 
