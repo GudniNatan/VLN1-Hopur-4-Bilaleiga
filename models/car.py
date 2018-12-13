@@ -56,7 +56,7 @@ class Car(Model):
         else:
             automatic_shift = "Nei"
         info_string = "Flokkur bíls: {}\n\tGerð: {}\n\t"
-        info_string += "Sjalfskyptur: {}\n\tKílómetrafjöldi: {}"
+        info_string += "Sjalfskiptur: {}\n\tKílómetrafjöldi: {}"
         return info_string.format(self.__category["category"], self.__model,
                                   automatic_shift, self.__kilometer_count)
 

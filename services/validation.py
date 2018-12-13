@@ -71,6 +71,8 @@ class Validation(object):
         raise ValueError(error_str.format(name, maybe_date))
 
     def validate_ccn_exp_date(self, maybe_date, name=""):
+        error_str = "{} þarf að vera dagsetning á forminu MM-ÁÁ. "
+        error_str += "'{}' er ekki gilt."
         date_format = "%m-%y"
         seperators = [" ", "/", ":"]
         definitely_date = None
@@ -78,10 +80,13 @@ class Validation(object):
             maybe_date = maybe_date.replace(seperator, "-")
         try:
             definitely_date = datetime.strptime(maybe_date, date_format)
-            return definitely_date.date()
+            if datetime.now() < definitely_date:
+                return definitely_date.date()
+            else:
+                error_str = "{} er útrunnin. "
+                error_str += "'{}' er ekki gilt."
+                raise ValueError()
         except ValueError:
-            error_str = "{} þarf að vera dagsetning á forminu MM-ÁÁ. "
-            error_str += "'{}' er ekki gilt."
             raise ValueError(error_str.format(name, maybe_date))
 
     def validate_time(self, maybe_time, name=''):
