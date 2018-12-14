@@ -20,7 +20,7 @@ class CarRepository(Repository):
         category = PriceListRepository().get(car_dict["Flokkur"])
         wheel_count = int(car_dict["Fjöldi hjóla"])
         drivetrain = car_dict["Drif"]
-        automatic_transmission = bool(car_dict['Sjálfskiptur'])
+        automatic_transmission = car_dict['Sjálfskiptur'] == "True"
         seat_count = int(car_dict['Fjöldi sæta'])
         extra_properties = car_dict['Aðrir eiginleikar'].split(",")
         for i, prop in enumerate(extra_properties):

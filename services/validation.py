@@ -200,8 +200,8 @@ class Validation(object):
         valid_category = self.validate_category_in_repo(category)
         valid_wheel_count = self.validate_int(wheel_count, "Wheel count")
         valid_drivetrain = self.validate_str(drivetrain, "Drivetrain")
-        valid_automatic_transmission = Utils.process_yes_no_answer(
-            self, automatic_transmission
+        valid_automatic_transmission = Utils().process_yes_no_answer(
+            automatic_transmission
         )
         valid_seat_count = self.validate_int(seat_count, "Seat count")
         valid_extra_properties = self.validate_set(extra_properties)

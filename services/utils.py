@@ -6,7 +6,7 @@ class Utils(object):
     def process_yes_no_answer(self, yes_no):
             if yes_no:
                 yes_no = str(yes_no)[0].upper()
-                if yes_no in ["J", "Y"]:
+                if yes_no in ["J", "Y", "True", "true"]:
                     return True
                 return False
 
