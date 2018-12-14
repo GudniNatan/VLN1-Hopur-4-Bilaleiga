@@ -1,18 +1,26 @@
+------BEGIN SCENE 6------
 bóka leigubíl
-14/01/2019
+15/12/2018
+17:00
+16/12/2018
 13:00
-19/01/2019
-16:00
 staðfesta
 
-Standard
+breytir skilatímanum því vill kom upp
+
+17:00
+
+Minivan
 
 sækja frá reykjavik
-skila til reykjavik
+skila til ísafjarðar
 
-fléttir áfram tvisvar sinnum og velur toyota yaris
+fléttir áfram einu sinni og velur volkswagen golf
 
-fær eingar tryggingar
+fær tryggingar
+
+reynir að skrá sig inn:
+332037279
 
 þarf að skrá sig eins og nýr viðskiptavinur:
 332037279
@@ -22,14 +30,20 @@ Björgvin
 Björgvinsson
 10/10/2006
 5812345
-Björgvin
-Björgvinsson
-342592547741085
+Áslaug
+Guðmundsdóttir
+342592547741081
 09/21
 staðfestir
 
+kort mömmu hanns virkar ekki, notar sitt:
+Björgvin
+Björgvinsson
+172836293001631
+11/23
+
 skrá inn
-borga núna
+borga í lok leigu
 
 hætta
 ------END OF SCENE 6------
@@ -37,18 +51,13 @@ hætta
 ------BEGIN SCENE 7------
 *bjöggi er skráður inn sem starfsmaður í byrjun*
 *skráðu inn með USERNAME -schmuck- og PASSWORD -12345-*
-*ýtir á skrá viðskiptavin*
-0420942045
-0509843612
-voldyboy@aol.com
-Tom
-Riddle
-05/09/1984
-7814524077
-Tom
-Riddle
-5208036705191784
-05/21
+*ýtir á flétta upp viðskiptavin*
+fær nafnið abigail Botts
+slær inn Abigayl Botts
+*fær einga niðurstöðu*
+*fléttir upp alla viðskiptavini*
+velur hana
+
 *Staðfesta*
 ----END OF SCENE 7-----
 
