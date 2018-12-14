@@ -77,3 +77,9 @@ bjöggib@gmail.com
 ----END SCENE 9-----
 
 ----BEGIN SCENE 10----
+*er skráður inn í kerfið*
+*pantanaskrá*
+*sjá allar pantarnir*
+----END SCENE 10----
+
+----BEGIN SCENE 11----
