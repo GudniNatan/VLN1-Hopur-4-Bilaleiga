@@ -17,6 +17,7 @@ class ReturnCarController(Controller):
         self.__rent_order_repo = RentOrderRepository()
         self._menu_stack.append(self.__make_main_menu())
         self.__selected_order = None
+        self.__selected_car = None
 
     def search(self, values, menu):
         drivers_license_id = values[0]
@@ -46,16 +47,28 @@ class ReturnCarController(Controller):
 
     def select_order(self, order, menu):
         self.__selected_order = order
-        extra_costs = self._utils.calculate_extra_cost(order)
+        self._menu_stack.append(self.__make_ask_km(order))
+
+    def calculate_costs(self, values, menu):
+        try:
+            new_km_count = self._validation.validate_int(values[0])
+        except ValueError:
+            menu.set_errors(["Kílómetrafjöldi þarf að vera tala"])
+            return
+        self.__selected_car = self.__selected_order.get_car
+        old_km_count = self.__selected_car.get_kilometer_count
+        self.__selected_car.set_kilometers_driven(new_km_count)
+        driven_km = new_km_count - old_km_count
+        self.__selected_order.set_kilometers_driven(driven_km)
+        extra_costs = self._utils.calculate_extra_cost(self.__selected_order)
         self._menu_stack.append(self.__make_order_menu(order, extra_costs))
 
     def close_order(self, values, menu):
         self.__selected_order.set_return_time(datetime.now())
         self.__rent_order_repo.update(self.__selected_order)
-        car = self.__selected_order.get_car()
         branch_name = self.__selected_order.get_return_branch_name()
         branch = BranchRepository().get(branch_name)
-        car.set_current_branch(branch)
+        self.selected_car.set_current_branch(branch)
         CarRepository().update(car)
         self._menu_stack.append(self.__make_close_order_success_menu())
 
@@ -76,7 +89,23 @@ class ReturnCarController(Controller):
             stop_function=self.stop, can_submit=False, inputs=inputs
         )
 
-    def 
+    def __make_ask_km(self, order):
+        header = "".join((
+            self.__controller_header, " -> Leit -> Valin pöntun",
+            "Pöntun númer: ", str(order.get_order_number()),
+            "\nUpphafstími leigu: ", str(order.get_pickup_time()),
+            "\nÁætlaður skilatími: ", str(order.get_estimated_return_time()),
+            "\nTegund bíls: ", order.get_car().get_name(),
+            "\nNafn leigjanda: ", order.get_customer().get_name(),
+        ))
+        options = [
+            {"description": "Sláðu inn núverandi kílómetrafjölda",
+                "value": self.calculate_costs}
+        ]
+        return Menu(
+            header=header, options=options, back_function=self.back,
+            stop_function=self.stop,
+        )
 
     def __make_order_menu(self, order, extra_costs):
         total = order.get_total_cost()
