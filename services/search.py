@@ -4,6 +4,9 @@ from services.validation import Validation
 from datetime import datetime, date
 from services.utils import Utils
 
+# This class contains a few different search funtions
+# for use by controllers and validation
+
 
 class Search(object):
     def search_cars(
@@ -23,8 +26,9 @@ class Search(object):
         cars = CarRepository().get_all()
         relevant_cars = list()
         for car in cars:
-            car_available = self.car_available(car, availability_lower_bound,
-                                               availability_upper_bound)
+            car_available = self.car_available(
+                car, availability_lower_bound, availability_upper_bound
+            )
             if is_automatic is not None:
                 if is_automatic != car.get_automatic_transmission():
                     continue
@@ -48,13 +52,6 @@ class Search(object):
                 continue
             relevant_cars.append(car)
         return relevant_cars
-
-    def __process_yes_no_answer(self, yes_no):
-        if yes_no:
-            yes_no = str(yes_no)[0].upper()
-            if yes_no in ["J", "Y"]:
-                return True
-            return False
 
     def car_available(self, car, lower_time_bound, upper_time_bound=None):
         if type(lower_time_bound) not in [datetime, date]:

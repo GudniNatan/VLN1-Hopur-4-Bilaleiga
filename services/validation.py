@@ -30,6 +30,8 @@ class Validation(object):
         admins = self.__admin_repo.get_all()
         salespeople = self.__salesperson_repo.get_all()
         staff = admins + salespeople
+        username = username.strip()
+        password = password.strip()
         for person in staff:
             if person.get_username() == username:
                 if person.get_password() == password:
@@ -42,7 +44,9 @@ class Validation(object):
             raise ValueError("Það er nauðsynlegt að fylla út öll gildin.")
         email = self.validate_email(email)
         phone = self.validate_phone_number(phone)
-        name = name.capitalize()
+        name = name.capitalize().strip()
+        username = username.strip()
+        password = password.strip()
         salesperson = Salesperson(username, password, name, email, phone)
         return salesperson
 
@@ -76,6 +80,7 @@ class Validation(object):
         date_format = "%m-%y"
         seperators = [" ", "/", ":"]
         definitely_date = None
+        maybe_date = maybe_date.strip()
         for seperator in seperators:
             maybe_date = maybe_date.replace(seperator, "-")
         try:
@@ -107,6 +112,7 @@ class Validation(object):
         return a_datetime
 
     def validate_datetime(self, datetime_str):
+        datetime_str = datetime_str.strip()
         try:
             a_datetime = datetime.fromisoformat(datetime_str)
         except ValueError:
@@ -162,7 +168,7 @@ class Validation(object):
             raise ValueError("Ekki gilt netfang")
         elif email.split("@")[1].count(".") == 0:
             raise ValueError("Ekki gilt netfang")
-        return email
+        return email.strip()
 
     def validate_ccn(self, ccn):
         ccn = ccn.strip().replace("-", "").replace(" ", "")
@@ -244,7 +250,7 @@ class Validation(object):
 
     def validate_category_in_repo(self, category_name):
         try:
-            category = PriceListRepository().get(category_name)
+            category = PriceListRepository().get(category_name.strip())
         except ValueError:
             categories = PriceListRepository().get_all()
             category_str_list = [
@@ -253,19 +259,18 @@ class Validation(object):
             category_str = ", ".join(category_str_list)
             error_msg = " ".join((
                 "'", category_name, "' er ekki gildur flokkur.",
-                "Þetta eru gildir flokkar:\n", *category_str_list, "\n"
+                "Þetta eru gildir flokkar:\n", category_str, "\n"
             ))
             raise ValueError(error_msg)
         return category
 
-    def validate_branch_in_repo(self, branch_name):
+    def validate_branch_in_repo(self, branch_name) -> Branch:
         try:
-            branch = BranchRepository().get(branch_name)
+            branch = BranchRepository().get(branch_name.strip())
         except ValueError:
             branches = BranchRepository().get_all()
-            if branch_name is None:
-                if branches:
-                    return branches[0]
+            if branch_name is None and branches:
+                return branches[0]
             branch_str_list = [branch.get_name() for branch in branches]
             branch_str = ", ".join(branch_str_list)
             error_msg = "".join((
@@ -275,7 +280,7 @@ class Validation(object):
             raise ValueError(error_msg)
         return branch
 
-    def get_next_order_number(self):
+    def get_next_order_number(self) -> int:
         orders = RentOrderRepository().get_all()
         if orders:
             last_order = max(orders, key=RentOrder.get_key)
@@ -287,9 +292,10 @@ class Validation(object):
     def validate_order(
             self, car, customer, pickup_date, pickup_time, est_return_date,
             est_return_time, pickup_branch_name, return_branch_name,
-            include_extra_insurance,
-            ):
-        order_number = self.get_next_order_number()
+            include_extra_insurance, order_number=None
+            ) -> RentOrder:
+        if order_number is None:
+            order_number = self.get_next_order_number()
         try:
             if type(car) != Car:
                 car = CarRepository().get(car)
@@ -336,9 +342,10 @@ class Validation(object):
             extra_insurance, base_cost
         )
 
-    def assemble_order(self, car, customer, date_range,
-                       pickup_branch, return_branch,
-                       include_extra_insurance):
+    def assemble_order(
+            self, car, customer, date_range, pickup_branch, return_branch,
+            include_extra_insurance
+            ) -> RentOrder:
         from_date, to_date = date_range
         day_count = abs((from_date - to_date).days)
         base_cost = car.get_category()["price"] * day_count        

@@ -1,5 +1,8 @@
 from abc import ABC, abstractmethod
 
+# This is the model base class. It is mostly just an abstract
+# class to define what a model class needs to have.
+
 
 class Model(ABC):
     @abstractmethod
@@ -15,5 +18,9 @@ class Model(ABC):
         pass
 
     @abstractmethod
-    def get_key(self):
+    def get_key(self):  # Each model has a key
+        return None
+
+    @abstractmethod
+    def get_name(self):  # Each model has a human-readable name
         return None

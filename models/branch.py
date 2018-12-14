@@ -1,5 +1,4 @@
 from models.model import Model
-import typing
 
 
 class Branch(Model):

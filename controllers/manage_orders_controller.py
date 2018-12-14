@@ -1,8 +1,8 @@
+from collections import OrderedDict
 from controllers.controller import Controller
 from repositories.rent_order_repository import RentOrderRepository
 from ui.menu import Menu
 from models.admin import Admin
-from collections import OrderedDict
 
 
 class ManageOrdersController(Controller):
@@ -93,11 +93,13 @@ class ManageOrdersController(Controller):
         old_order = self.__selected_order
         old_key = old_order.get_key()
         try:
-            order = self._validation.validate_order(*values)
+            order = self._validation.validate_order(
+                *values, order_number=old_key
+            )
         except ValueError as error:
             menu.set_errors((error,))
             return
-        self.__car_repo.update(order, old_key)
+        self.__order_repo.update(order, old_key)
         # Move to feedback screen
         update_report_menu = self._ui.get_edit_report_menu(
             order, self.__controller_header, self.restart
