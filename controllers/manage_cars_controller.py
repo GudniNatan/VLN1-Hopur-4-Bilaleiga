@@ -37,10 +37,13 @@ class ManageCarsController(Controller):
     def select_car(self, car, menu):
         car_menu = self._ui.get_model_object_options_menu(
             car, car.get_license_plate_number(), self.__controller_header,
-            self.go_to_edit, self.go_to_delete
+            self.go_to_edit, self.go_to_delete, self.see_order_history
         )
         self.__selected_car = car
         self._menu_stack.append(car_menu)
+
+    def see_order_history(self, values, menu):
+        pass
 
     def go_to_edit(self, values, menu):
         car = self.__selected_car

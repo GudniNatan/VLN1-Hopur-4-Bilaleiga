@@ -12,7 +12,7 @@ class ManageSalespeopleController(Controller):
 
     # Operations
     def go_to_search(self, values, menu):
-        results = self.__search_salespeople(*values)
+        results = self._search.search_salespeople(*values)
         search_menu = self._ui.get_search_result_menu(
             results, self.__controller_header, self.select_person
             )

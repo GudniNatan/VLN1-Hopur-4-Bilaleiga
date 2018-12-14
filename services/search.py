@@ -1,6 +1,7 @@
 from repositories.car_repository import CarRepository
 from repositories.customer_repository import CustomerRepository
 from repositories.rent_order_repository import RentOrderRepository
+from repositories.salesperson_repository import SalespersonRepository
 from services.validation import Validation
 from datetime import datetime, date
 from services.utils import Utils
@@ -104,3 +105,21 @@ class Search(object):
             elif person.get_personal_id().upper().count(personal_id) == 0:
                 customers.pop(i)
         return customers
+
+    def search_salespeople(self, username="", name="", email="", phone=""):
+        salespeople = SalespersonRepository().get_all()
+        username = username.strip()
+        name = name.strip()
+        email = email.strip()
+        phone = phone.strip()
+        for i in range(len(salespeople) - 1, -1, -1):
+            person = salespeople[i]
+            if username and username != person.get_username():
+                salespeople.pop(i)
+            elif name and name != person.get_name():
+                salespeople.pop(i)
+            elif email and email != person.get_email():
+                salespeople.pop(i)
+            elif phone and phone != person.get_phone():
+                salespeople.pop(i)
+        return salespeople

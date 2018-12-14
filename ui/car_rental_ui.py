@@ -30,7 +30,8 @@ class CarRentalUI(object):
 
     def get_model_object_options_menu(self, model_object, object_name,
                                       header_message, edit_callback,
-                                      delete_callback):
+                                      delete_callback,
+                                      order_history_callback=None):
         header = "{} -> Leit -> Val".format(header_message)
         header += "\nÞú valdir: {}".format(object_name)
         for key, value in model_object.csv_repr().items():
@@ -46,6 +47,11 @@ class CarRentalUI(object):
             {"description": edit_text, "value": edit_callback},
             {"description": delete_text, "value": delete_callback},
         ]
+        if order_history_callback is not None:
+            options.append(
+                {"description": "Skoða pöntunarsögu",
+                    "value": order_history_callback}
+            )
         return Menu(header=header, options=options, back_function=self.__back,
                     stop_function=self.__stop)
 
