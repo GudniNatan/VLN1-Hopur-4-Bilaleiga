@@ -10,6 +10,7 @@ class RentOrder(Model):
     KM_ALLOWANCE_PER_DAY = 100
     EXTRA_INSURANCE = 4000
     ADDON_PRICE = 450
+    DAILY_LATE_FEE = 20000
 
     def __init__(
             self, order_number: int, car: Car, customer: Customer,
