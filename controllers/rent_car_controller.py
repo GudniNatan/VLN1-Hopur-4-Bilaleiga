@@ -239,7 +239,7 @@ class RentCarController(Controller):
             "\nAukahlutir á bíl: ", addon_str,
             "\n\nGrunnverð: ", str(order.get_base_cost()), " kr.",
             "\nAukatrygging: ", str(extra_insurance_price), " kr.",
-            "\nVerð á aukahlutum: ", str(order.get_addon_price()),
+            "\nVerð á aukahlutum: ", str(order.get_addon_price()), " kr."
             "\nHEILDARVERÐ: ", str(order.get_total_cost()), " kr.",
         ))
         header = "".join((
