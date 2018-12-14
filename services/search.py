@@ -20,6 +20,7 @@ class Search(object):
         process_yes_no_answer = Utils().process_yes_no_answer
         is_automatic = process_yes_no_answer(is_automatic)
         hide_available = process_yes_no_answer(hide_available)
+        license_plate = license_plate.strip().replace("-", "").upper()
         if type(hide_unavailable) != bool:
             hide_unavailable = process_yes_no_answer(hide_unavailable)
         if not (availability_lower_bound and availability_upper_bound):
@@ -42,9 +43,14 @@ class Search(object):
                     continue
             if seat_count and seat_count != str(car.get_seat_count()):
                 continue
-            if car.get_license_plate_number().count(license_plate) == 0:
+            car_license_plate = car.get_key().replace("-", "").upper()
+            if car_license_plate.count(license_plate) == 0:
                 continue
-            if category:
+            if type(category) == str:
+                car_category = car.get_category()["category"].upper()
+                if car_category.count(category.upper().strip()) == 0:
+                    continue
+            elif category:
                 if category != car.get_category():
                     continue
             if in_branch:
