@@ -126,12 +126,12 @@ class Search(object):
         phone = phone.strip()
         for i in range(len(salespeople) - 1, -1, -1):
             person = salespeople[i]
-            if username and username != person.get_username():
+            if username and username not in person.get_username():
                 salespeople.pop(i)
-            elif name and name != person.get_name():
+            elif name and name not in person.get_name():
                 salespeople.pop(i)
-            elif email and email != person.get_email():
+            elif email and email not in person.get_email():
                 salespeople.pop(i)
-            elif phone and phone != person.get_phone():
+            elif phone and phone not in person.get_phone():
                 salespeople.pop(i)
         return salespeople
