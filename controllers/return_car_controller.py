@@ -5,6 +5,8 @@ from repositories.customer_repository import CustomerRepository
 from ui.menu import Menu
 from models.rent_order import RentOrder
 from services.search import Search
+from repositories.car_repository import CarRepository
+from repositories.branch_repository import BranchRepository
 
 
 class ReturnCarController(Controller):
@@ -50,6 +52,11 @@ class ReturnCarController(Controller):
     def close_order(self, values, menu):
         self.__selected_order.set_return_time(datetime.now())
         self.__rent_order_repo.update(self.__selected_order)
+        car = self.__selected_order.get_car()
+        branch_name = self.__selected_order.get_return_branch_name()
+        branch = BranchRepository().get(branch_name)
+        car.set_current_branch(branch)
+        CarRepository().update(car)
         self._menu_stack.append(self.__make_close_order_success_menu())
 
     def __make_main_menu(self):
@@ -68,6 +75,8 @@ class ReturnCarController(Controller):
             header=header, options=options, back_function=self.back,
             stop_function=self.stop, can_submit=False, inputs=inputs
         )
+
+    def 
 
     def __make_order_menu(self, order, extra_costs):
         total = order.get_total_cost()
