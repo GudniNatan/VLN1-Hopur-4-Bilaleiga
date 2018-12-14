@@ -1,4 +1,5 @@
 from repositories.car_repository import CarRepository
+from repositories.customer_repository import CustomerRepository
 from repositories.rent_order_repository import RentOrderRepository
 from services.validation import Validation
 from datetime import datetime, date
@@ -67,12 +68,6 @@ class Search(object):
                     return False
         return True
 
-    def __order_active(self, order):
-        if order.get_pickup_time() <= datetime.now():
-            if order.get_return_time() is None:
-                return True
-        return False
-
     def search_rent_orders(self, number="", customer="",
                            car="", active: bool = None):
         rent_orders = RentOrderRepository().get_all()
@@ -88,7 +83,24 @@ class Search(object):
                 continue
             if order.get_customer().get_key().count(customer) == 0:
                 continue
-            if (not self.__order_active(order)) == active:
+            if (not Utils().order_active(order)) == active:
                 continue
             matching_orders.append(order)
         return matching_orders
+
+    def search_customers(self, driver_license_id="",
+                         personal_id="", name=""):
+        customers = CustomerRepository().get_all()
+        driver_id = driver_license_id.strip().upper()
+        personal_id = personal_id.strip().upper()
+        name = name.strip()
+        personal_id = personal_id.strip()
+        for i in range(len(customers) - 1, -1, -1):
+            person = customers[i]
+            if person.get_driver_license_id().upper().count(driver_id) == 0:
+                customers.pop(i)
+            elif person.get_name().upper().count(name.upper()) == 0:
+                customers.pop(i)
+            elif person.get_personal_id().upper().count(personal_id) == 0:
+                customers.pop(i)
+        return customers

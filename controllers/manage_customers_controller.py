@@ -18,7 +18,7 @@ class ManageCustomersController(Controller):
 
     # Operations
     def go_to_search(self, values, menu):
-        results = self.__search_customers(*values)
+        results = self._search.search_customers(*values)
         search_menu = self._ui.get_search_result_menu(
             results, self.__controller_header, self.select_customer
         )
@@ -125,19 +125,3 @@ class ManageCustomersController(Controller):
                     options=options, footer=footer, can_submit=False,
                     back_function=self.back, stop_function=self.stop)
         return menu
-
-    # Other
-    def __search_customers(self, driver_license_id="", personal_id="", name=""):
-        customers = self.__customer_repo.get_all()
-        driver_license_id = driver_license_id.strip()
-        name = name.strip()
-        personal_id = personal_id.strip()
-        for i in range(len(customers) - 1, -1, -1):
-            person = customers[i]
-            if driver_license_id and driver_license_id != person.get_driver_license_id():
-                customers.pop(i)
-            elif name and name != person.get_name():
-                customers.pop(i)
-            elif personal_id and personal_id != person.get_email():
-                customers.pop(i)
-        return customers

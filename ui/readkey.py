@@ -33,7 +33,8 @@ def readkey() -> int:
 
 
 def readkey_unix():
-    import termios, fcntl
+    import termios
+    import fcntl
     fd = sys.stdin.fileno()
     oldterm = termios.tcgetattr(fd)
     newattr = termios.tcgetattr(fd)
