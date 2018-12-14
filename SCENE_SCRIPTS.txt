@@ -1,0 +1,71 @@
+bóka leigubíl
+14/01/2019
+13:00
+19/01/2019
+16:00
+staðfesta
+
+Standard
+
+sækja frá reykjavik
+skila til reykjavik
+
+fléttir áfram tvisvar sinnum og velur toyota yaris
+
+fær eingar tryggingar
+
+þarf að skrá sig eins og nýr viðskiptavinur:
+332037279
+1010065710
+bjoggibjog@ru.is
+Björgvin 
+Björgvinsson
+10/10/2006
+5812345
+Björgvin
+Björgvinsson
+342592547741085
+09/21
+staðfestir
+
+skrá inn
+borga núna
+
+hætta
+------END OF SCENE 6------
+
+------BEGIN SCENE 7------
+*bjöggi er skráður inn sem starfsmaður í byrjun*
+*skráðu inn með USERNAME -schmuck- og PASSWORD -12345-*
+*ýtir á skrá viðskiptavin*
+0420942045
+0509843612
+voldyboy@aol.com
+Tom
+Riddle
+05/09/1984
+7814524077
+Tom
+Riddle
+5208036705191784
+05/21
+*Staðfesta*
+----END OF SCENE 7-----
+
+----BEGIN SCENE 8-----
+*Skráður inn eins og kerfisstjórnandi*
+*ýtir á starfsmannaskrá*
+*ýtir á 'Bæta við starfsmanni'*
+Bjöggi
+kaffi
+Björgvin Björgvinsson
+bjöggib@gmail.com
+5812345
+*staðfesta*
+*Aftur í starfsmannaskrá*
+----END OF SCENE 8----
+
+----BEGIN SCENE 9----
+*Skráður inn eins og sig sjálfur*
+*Skila bíl*
+482913059
