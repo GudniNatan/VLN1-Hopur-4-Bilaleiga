@@ -36,12 +36,12 @@ class Validation(object):
             if person.get_username() == username:
                 if person.get_password() == password:
                     return person
-        raise ValueError("Rangt notendanafn eða lykilorð")
+        raise ValueError("Rangt notendanafn eða lykilorð\n")
 
     def validate_salesperson(self, username, password,
                              name, email, phone):
         if not (username and password and name and email and phone):
-            raise ValueError("Það er nauðsynlegt að fylla út öll gildin.")
+            raise ValueError("Það er nauðsynlegt að fylla út öll gildin.\n")
         email = self.validate_email(email)
         phone = self.validate_phone_number(phone)
         name = name.capitalize().strip()
@@ -54,7 +54,7 @@ class Validation(object):
         try:
             definitely_int = int(maybe_int)
         except ValueError:
-            raise ValueError("{} þarf að vera tala".format(name))
+            raise ValueError("{} þarf að vera tala\n".format(name))
         return definitely_int
 
     def validate_date(self, maybe_date, name=''):
@@ -71,12 +71,12 @@ class Validation(object):
             except ValueError:
                 continue
         error_str = "{} þarf að vera dagsetning á forminu ÁÁÁÁ-MM-DD. "
-        error_str += "'{}' er ekki gilt."
+        error_str += "'{}' er ekki gilt.\n"
         raise ValueError(error_str.format(name, maybe_date))
 
     def validate_ccn_exp_date(self, maybe_date, name=""):
         error_str = "{} þarf að vera dagsetning á forminu MM-ÁÁ. "
-        error_str += "'{}' er ekki gilt."
+        error_str += "'{}' er ekki gilt.\n"
         date_format = "%m-%y"
         seperators = [" ", "/", ":"]
         definitely_date = None
@@ -89,7 +89,7 @@ class Validation(object):
                 return definitely_date.date()
             else:
                 error_str = "{} er útrunnin. "
-                error_str += "'{}' er ekki gilt."
+                error_str += "'{}' er ekki gilt.\n"
                 raise ValueError()
         except ValueError:
             raise ValueError(error_str.format(name, maybe_date))
@@ -101,7 +101,7 @@ class Validation(object):
         try:
             definitely_time = time.fromisoformat(maybe_time)
         except ValueError:
-            error_str = "{}: '{}' er ekki gildur tími".format(name, maybe_time)
+            error_str = "{}: '{}' er ekki gildur tími\n".format(name, maybe_time)
             raise ValueError(error_str)
         return definitely_time
 
@@ -120,14 +120,14 @@ class Validation(object):
                 a_datetime = datetime.strptime(datetime_str, "%d/%m/%Y")
             except ValueError:
                 raise ValueError(
-                    "Dagsetning þarf að vera á forminu ÁÁÁÁ-MM-DD"
+                    "Dagsetning þarf að vera á forminu ÁÁÁÁ-MM-DD\n"
                 )
 
     def validate_str(self, some_str, name=""):
         some_str = some_str.strip()
         if not some_str:
             raise ValueError(
-                "Þarf að fylla út: {}.".format(name)
+                "Þarf að fylla út: {}.\n".format(name)
             )
         return some_str
 
@@ -142,7 +142,7 @@ class Validation(object):
         try:
             valid_float = float(some_float)
         except ValueError:
-            error_str = "{} þarf að vera rauntala. '{}' er ekki rauntala."
+            error_str = "{} þarf að vera rauntala. '{}' er ekki rauntala.\n"
             error_str_format = error_str.format(name, some_float)
             raise ValueError(error_str_format)
         return valid_float
@@ -152,7 +152,7 @@ class Validation(object):
         phone_number = phone_number.replace("-", "")
         phone_number = phone_number.replace(" ", "")
         if len(phone_number) < 7:
-            raise ValueError("Ekki gilt símanúmer")
+            raise ValueError("Ekki gilt símanúmer.\n")
         return phone_number
 
     def validate_personal_id(self, personal_id_number):
@@ -160,14 +160,14 @@ class Validation(object):
         personal_id_number = personal_id_number.replace("-", "")
         personal_id_number = personal_id_number.replace(" ", "")
         if not (9 <= len(personal_id_number) <= 10):
-            raise ValueError("Ekki gild Kennitala/SSN")
+            raise ValueError("Ekki gild Kennitala/SSN.\n")
         return personal_id_number
 
     def validate_email(self, email):
         if email.count('@') != 1:
-            raise ValueError("Ekki gilt netfang")
+            raise ValueError("Ekki gilt netfang.\n")
         elif email.split("@")[1].count(".") == 0:
-            raise ValueError("Ekki gilt netfang")
+            raise ValueError("Ekki gilt netfang.\n")
         return email.strip()
 
     def validate_ccn(self, ccn):
@@ -183,7 +183,7 @@ class Validation(object):
                 return ccn
         except ValueError:  # Raised if an int conversion fails
             pass
-        raise ValueError("Ekki gilt kreditkortanúmer")
+        raise ValueError("Ekki gilt kreditkortanúmer.\n")
 
     def validate_car(
             self, license_plate_number: str, model: str,
@@ -275,7 +275,7 @@ class Validation(object):
             branch_str = ", ".join(branch_str_list)
             error_msg = "".join((
                 "'", str(branch_name), "' er ekki gilt útibú.",
-                "Þetta eru gild útibú:\n", branch_str
+                "Þetta eru gild útibú:\n", branch_str, "\n"
             ))
             raise ValueError(error_msg)
         return branch
@@ -302,7 +302,7 @@ class Validation(object):
         except ValueError:
             error_msg = "".join((
                 "Fann ekki þetta bílnúmer: '", car, "'",
-                "\n Það er hægt að bæta við bílum í Bílaskránni."
+                "\n Það er hægt að bæta við bílum í Bílaskránni.\n"
             ))
             raise ValueError(error_msg)
         try:
@@ -311,7 +311,7 @@ class Validation(object):
             error_msg = "".join((
                 "Viðskiptavinurinn fannst ekki ",
                 "Nauðsynlegt er að viðskiptavinurnn sé skráður ",
-                "áður en hann pantar bíl. "
+                "áður en hann pantar bíl.\n"
             ))
             raise ValueError(error_msg)
         pickup_datetime = self.validate_datetime_by_parts(
@@ -365,20 +365,20 @@ class Validation(object):
         )
         range_delta = to_date - from_date
         if range_delta < timedelta(days=1):
-            raise ValueError("Leigutímabil verður að vera minnst 24 klst.")
+            raise ValueError("Leigutímabil verður að vera minnst 24 klst.\n")
         if from_date < datetime.now():
-            raise ValueError("Leigutímabilið má ekki vera í fortíðinni")
+            raise ValueError("Leigutímabilið má ekki vera í fortíðinni\n")
         return (from_date, to_date)
 
     def validate_kilometer_driven(self, km_count, car):
         try:
             new_km_count = self.validate_int(km_count)
         except ValueError:
-            raise ValueError("Kílómetrafjöldi þarf að vera tala")
+            raise ValueError("Kílómetrafjöldi þarf að vera tala.\n")
         old_km_count = car.get_kilometer_count()
         if old_km_count > new_km_count:
             raise ValueError(
                 "".join(["Nýji kílómetrafjöldinn þarf að vera meiri en gamli",
-                        ", gamli er {:d}".format(old_km_count)])
+                        ", gamli er {:d}\n".format(old_km_count)])
             )
         return new_km_count
