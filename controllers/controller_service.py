@@ -15,10 +15,11 @@ class CarRentalService(object):
 
     def run(self):
         controller_stack = self.__controller_stack
+        # This loop hands control between the controllers
         while controller_stack:
-            # the top-of-stack controller rules all
+            # peeks at top of cotroller stack
             controller = controller_stack[-1]
-            controller.main()
+            controller.hand_control()
 
     def add(self, controller):
         if isinstance(controller, Controller):

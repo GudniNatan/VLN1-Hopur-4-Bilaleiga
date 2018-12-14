@@ -1,8 +1,7 @@
 from ui.menu import Menu
 from datetime import datetime
-# This class takes care of making generic menus
+# This class holds costructor functions for menus
 # It uses data from the controller it is attatched to
-# Which it gets on its own
 # To make these generic menus
 # Examples of a generic menu include:
 #   Search results, edit model object, delete model object,

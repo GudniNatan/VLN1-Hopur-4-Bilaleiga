@@ -3,6 +3,12 @@ from ui.input_line import InputLine
 from ui.option import MenuOption
 from ui.readkey import readkey
 
+# This is the menu class.
+# It creates menus based on the constructor input.
+# Calling get_input() on the menu activates it.
+# Then it will read input from the user and print to the screen.
+# it returns the users input, both from options and input_lines
+
 BACK = "B"
 QUIT = "Q"
 SUBMIT = "S"
@@ -36,12 +42,12 @@ class Menu(object):
         self.__back_function = back_function
         self.__submit_function = submit_function
         self.__quit_string = FULL_QUIT if full_quit else NORMAL_QUIT
-        self.process_inputs(inputs)
-        self.process_options(options)
-        self.process_pages()
-        self.move_cursor()
+        self.__process_inputs(inputs)
+        self.__process_options(options)
+        self.__process_pages()
+        self.__move_cursor()
 
-    def process_inputs(self, inputs):
+    def __process_inputs(self, inputs):
         for an_input in reversed(inputs):
             prompt = an_input["prompt"]
             default_text = an_input.get("value", "")
@@ -49,7 +55,7 @@ class Menu(object):
             input_line = InputLine(prompt, default_text, input_type)
             self.__inputs.append(input_line)
 
-    def process_options(self, options):
+    def __process_options(self, options):
         counter = 1
         for primitive_option in options:
             description = primitive_option["description"]
@@ -61,7 +67,7 @@ class Menu(object):
                 counter += 1
         self.__options.reverse()
 
-    def get_foot_options(self):
+    def __get_foot_options(self):
         quit_str = self.__quit_string
         quit_option = MenuOption(self.__stop_function, quit_str, QUIT)
         back_option = MenuOption(self.__back_function, "Til baka", BACK)
@@ -73,21 +79,22 @@ class Menu(object):
             foot_options.insert(0, submit_option)
         return foot_options
 
-    def process_pages(self):
-        foot_options = self.get_foot_options()
+    def __process_pages(self):
+        foot_options = self.__get_foot_options()
         last_page_option = MenuOption(LAST_PAGE, "Fletta til baka")
         next_page_option = MenuOption(NEXT_PAGE, "Fletta áfram")
         seperator = list()
         if self.__inputs and self.__options:
             seperator.append("")
         lines = self.__options + seperator + self.__inputs
-        self.add_page(lines, last_page_option, next_page_option, foot_options)
+        self.__add_page(lines, last_page_option, next_page_option, 
+                        foot_options)
         while lines:
-            self.add_page(lines, last_page_option,
-                          next_page_option, foot_options)
+            self.__add_page(lines, last_page_option,
+                            next_page_option, foot_options)
 
-    def add_page(self, lines, last_page_option,
-                 next_page_option, foot_options):
+    def __add_page(self, lines, last_page_option,
+                   next_page_option, foot_options):
         page = list()
         for i in range(self.__max_options_per_page):
             try:
@@ -104,7 +111,7 @@ class Menu(object):
             page.append(option)
         self.__pages.append(page)
 
-    def display(self):
+    def __display(self):
         display_string = "{}\n\n".format(self.__header)
         if self.__errors:
             display_string += "Villa:\n"
@@ -113,7 +120,7 @@ class Menu(object):
         display_string += self.__page_string()
         display_string += self.__page_number_string()
         display_string += "\n" + self.__footer
-        self.clear_screen()
+        self.__clear_screen()
         print(display_string.strip())
 
     def __page_string(self):
@@ -142,31 +149,26 @@ class Menu(object):
         self.__select_input_by_cursor()
         self.__selection = None
         while self.__selection is None:
-            self.display()
+            self.__display()
             key = readkey()
-            self.process_input(key)
+            self.__process_input(key)
         # return the selection and any input lines values
-        values = self.get_input_values()
+        values = self.__get_input_values()
         if not values:
             values = self.__selection.get_description()
         return self.__selection.get_value(), values
 
-    def get_cursor_selection(self):
-        page = self.__current_page_number
-        cursor_pos = self.__cursor_position
-        selection = self.__pages[page][cursor_pos]
-
-    def get_input_values(self):
+    def __get_input_values(self):
         values = list()
         for input_line in reversed(self.__inputs):
             values.append(input_line.get_input())
         return values
 
-    def process_input(self, key):
+    def __process_input(self, key):
         if key == 10080:  # arrow down
-            self.move_cursor(1)
+            self.__move_cursor(1)
         elif key == 10072:  # arrow up
-            self.move_cursor(-1)
+            self.__move_cursor(-1)
         elif key == 10075 and self.__selected_input is None:
             # arrow left
             self.__previous_page()
@@ -180,23 +182,23 @@ class Menu(object):
                         self.__back_function, ""
                     )
             else:
-                self.move_cursor()
+                self.__move_cursor()
         elif key == 9:  # tab
-            self.move_cursor(1)
+            self.__move_cursor(1)
             self.__select_input_by_cursor()
         elif key == 13:  # return
-            self.handle_return()
+            self.__handle_return()
         elif self.__selected_input is not None:
             self.__selected_input.keypress(chr(key))
         else:
             self.__handle_hotkey(key)
 
-    def handle_return(self):
+    def __handle_return(self):
         page = self.__pages[self.__current_page_number]
         cursor_input = page[self.__cursor_position]
         if type(cursor_input) == InputLine:
             if cursor_input == self.__selected_input:
-                self.move_cursor(1)
+                self.__move_cursor(1)
             self.__select_input_by_cursor()
         else:
             selection = cursor_input.get_value()
@@ -233,7 +235,7 @@ class Menu(object):
         if page_number != self.__current_page_number:
             self.__current_page_number = page_number
             self.__cursor_position = 0
-            self.move_cursor()
+            self.__move_cursor()
 
     def __select_input_by_cursor(self):
         page = self.__pages[self.__current_page_number]
@@ -242,7 +244,7 @@ class Menu(object):
             self.__selected_input = cursor_input
             cursor_input.set_active(True)
 
-    def move_cursor(self, distance=0):
+    def __move_cursor(self, distance=0):
         direction = distance >= 0    # True if down, False if up
         distance = abs(distance)
         cursor = self.__cursor_position
@@ -263,7 +265,7 @@ class Menu(object):
     def set_errors(self, errors: list):
         self.__errors = errors
 
-    def clear_screen(self):
+    def __clear_screen(self):
         if os.name == 'nt':
             os.system('cls')
         else:

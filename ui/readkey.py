@@ -6,8 +6,7 @@ import sys
 # We need to keep compatability with macos as one of our
 # team members has a macbook, and we dont know what our
 # beloved instructor has.
-# This file is somewhat ugly, but the readkey_unix
-# function is from:
+# The readkey_unix function is from:
 # https://docs.python.org/2/faq/library.html#how-do-i-get-a-single-keypress-at-a-time
 
 # Translate key codes in unix to windows
@@ -22,7 +21,7 @@ KEYMAP = {
 }
 
 
-def readkey():
+def readkey() -> int:
     if os.name == 'nt':
         from msvcrt import getwch
         key = ord(getwch())

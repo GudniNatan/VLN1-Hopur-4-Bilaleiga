@@ -7,6 +7,8 @@ class Utils(object):
                 return False
 
     def count_days_in_range(self, datetime_1, datetime_2):
+        # This function counts the days in a range, and
+        # acts as a ceiling function for partial days
         return abs((datetime_1 - datetime_2).days)
 
     def calculate_base_cost(self, car, pickup_datetime, return_datetime):

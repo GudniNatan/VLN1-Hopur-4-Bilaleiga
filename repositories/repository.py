@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 import csv
-import typing
 
 
 class Repository(ABC):
@@ -56,7 +55,7 @@ class Repository(ABC):
     def get(self, key):
         '''Return the object with the given key. Raises ValueError
         if an object with the given key is not found.'''
-        file = self.read_file()
+        file = self.__read_file()
         for line in file:
             if str(line[self._PRIMARY_KEY]).lower() == str(key).lower():
                 return self.dict_to_model_object(line)
@@ -65,14 +64,14 @@ class Repository(ABC):
         ))
 
     def get_all(self):
-        file = self.read_file()
+        file = self.__read_file()
         model_objects = list()
         for line in file:
             read_object = self.dict_to_model_object(line)
             model_objects.append(read_object)
         return model_objects
 
-    def read_file(self):
+    def __read_file(self):
         file = list()
         with open(self._FILENAME, encoding="utf8") as file_pointer:
             csv_dict_reader = csv.DictReader(file_pointer, delimiter=";")
