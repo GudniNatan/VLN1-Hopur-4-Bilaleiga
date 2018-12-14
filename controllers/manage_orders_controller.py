@@ -7,12 +7,15 @@ from models.admin import Admin
 
 class ManageOrdersController(Controller):
     def __init__(self, service, shortcut_to_register=False,
-                 priority_controller=False):
+                 priority_controller=False, order=None):
         super().__init__(service, priority_controller)
         self.__controller_header = "Pantanaskrá"
         self.__order_repo = RentOrderRepository()
         self.__selected_order = None
-        self._menu_stack.append(self.__make_main_menu())
+        if order is None:
+            self._menu_stack.append(self.__make_main_menu())
+        else:
+            self.select_order(order)
 
     # Operations
     def go_to_search(self, values, menu):
@@ -22,9 +25,9 @@ class ManageOrdersController(Controller):
         )
         self._menu_stack.append(search_menu)
 
-    def select_order(self, order, menu):
+    def select_order(self, order, menu=None):
         order_menu = self._ui.get_model_object_options_menu(
-            order, order.get_key(), self.__controller_header,
+            order, order.get_name(), self.__controller_header,
             self.go_to_edit, self.go_to_delete
         )
         self.__selected_order = order

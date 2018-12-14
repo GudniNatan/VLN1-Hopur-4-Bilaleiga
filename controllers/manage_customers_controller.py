@@ -1,5 +1,6 @@
 from controllers.controller import Controller
 from repositories.customer_repository import CustomerRepository
+from controllers.manage_orders_controller import ManageOrdersController
 from ui.menu import Menu
 
 
@@ -41,7 +42,18 @@ class ManageCustomersController(Controller):
         self._menu_stack.append(customer_menu)
 
     def see_order_history(self, values, menu):
-        pass
+        orders = self._search.search_rent_orders(
+            customer=self.__selected_customer.get_key()
+        )
+        menu = self._ui.get_order_history_menu(
+            self.__controller_header, orders, self.__selected_customer,
+            self.go_to_order_controller_order_info
+        )
+        self._menu_stack.append(menu)
+
+    def go_to_order_controller_order_info(self, order, menu):
+        order_controller = ManageOrdersController(self._service, order=order)
+        self._service.add(order_controller)
 
     def go_to_edit(self, values, menu):
         customer = self.__selected_customer

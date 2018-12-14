@@ -1,5 +1,6 @@
 from controllers.controller import Controller
 from repositories.car_repository import CarRepository
+from controllers.manage_orders_controller import ManageOrdersController
 from ui.menu import Menu
 from models.admin import Admin
 from services.search import Search
