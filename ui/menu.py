@@ -87,7 +87,7 @@ class Menu(object):
         if self.__inputs and self.__options:
             seperator.append("")
         lines = self.__options + seperator + self.__inputs
-        self.__add_page(lines, last_page_option, next_page_option, 
+        self.__add_page(lines, last_page_option, next_page_option,
                         foot_options)
         while lines:
             self.__add_page(lines, last_page_option,

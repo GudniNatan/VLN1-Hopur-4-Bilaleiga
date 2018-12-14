@@ -101,7 +101,9 @@ class Validation(object):
         try:
             definitely_time = time.fromisoformat(maybe_time)
         except ValueError:
-            error_str = "{}: '{}' er ekki gildur tími\n".format(name, maybe_time)
+            error_str = "{}: '{}' er ekki gildur tími\n".format(
+                name, maybe_time
+            )
             raise ValueError(error_str)
         return definitely_time
 

@@ -84,7 +84,7 @@ class CarRentalUI(object):
                         "value": restart_callback}]
         else:
             options = [
-                {"description": "Halda áfram í leiguferli", 
+                {"description": "Halda áfram í leiguferli",
                     "value": restart_callback}
                 ]
         report_menu = Menu(

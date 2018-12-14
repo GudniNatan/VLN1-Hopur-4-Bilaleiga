@@ -30,7 +30,6 @@ class Staff(Model):
         )
 
     # Get
-    
     def get_username(self):
         return self.__username
 

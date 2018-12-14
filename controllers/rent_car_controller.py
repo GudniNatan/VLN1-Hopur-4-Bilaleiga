@@ -166,7 +166,7 @@ class RentCarController(Controller):
 
     def __make_branch_option_menu(self, to=False):
         header_list = [
-            self.__controller_header, 
+            self.__controller_header,
             " -> Leigutímabil -> Veldu bílaflokk",
             " -> Sótt í útibúi"
         ]

@@ -111,6 +111,6 @@ class Car(Model):
 
     def set_current_branch(self, current_branch):
         self.__current_branch = current_branch
-    
+
     def set_kilometer_count(self, kilometer_count):
         self.__kilometer_count = kilometer_count
