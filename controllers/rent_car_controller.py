@@ -83,7 +83,7 @@ class RentCarController(Controller):
         except ValueError:
             error_msg = "".join((
                 "Enginn viðskiptavinur með þetta ökuskírteinisnúmer ",
-                "fannst. Ertu örugglega skráð/ur?"
+                "fannst. Ertu örugglega skráð/ur?\n"
             ))
             menu.set_errors((error_msg,))
             return
