@@ -43,7 +43,14 @@ class ManageCarsController(Controller):
         self._menu_stack.append(car_menu)
 
     def see_order_history(self, values, menu):
-        pass
+        order_history = self.__search_rent_orders(
+            car=self.__selected_car.get_key()
+        )
+        history_menu = self.ui.get_order_history_menu(
+            self.__controller_header, order_history, self.__selected_car
+            self.go_to_order_controller_order_info
+        )
+        history_menu = self._menu_stack.append(history_menu())
 
     def go_to_edit(self, values, menu):
         car = self.__selected_car
