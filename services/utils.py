@@ -1,3 +1,6 @@
+from datetime import datetime
+
+
 class Utils(object):
     def process_yes_no_answer(self, yes_no):
             if yes_no:
@@ -18,3 +21,9 @@ class Utils(object):
 
     def calculate_extra_cost(self, order):
         return []
+
+    def order_active(self, order):
+        if order.get_pickup_time() <= datetime.now():
+            if order.get_return_time() is None:
+                return True
+        return False
