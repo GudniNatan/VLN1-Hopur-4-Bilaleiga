@@ -78,3 +78,17 @@ bjoggicool@gmail.is
 *Skráður inn eins og sig sjálfur*
 *Skila bíl*
 482913059
+*Sjá opnar pantarnir*
+*velur fyrsta*
+47800
+*borga nuna og loka pöntun*
+*hætta*
+----END SCENE 9-----
+
+----BEGIN SCENE 10----
+*er skráður inn í kerfið*
+*pantanaskrá*
+*sjá allar pantarnir*
+----END SCENE 10----
+
+----BEGIN SCENE 11----
