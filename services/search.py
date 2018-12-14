@@ -21,7 +21,7 @@ class Search(object):
         is_automatic = process_yes_no_answer(is_automatic)
         hide_available = process_yes_no_answer(hide_available)
         license_plate = license_plate.strip().replace("-", "").upper()
-        license_plate = license_plate.strip().replace(" ", "").upper()
+        license_plate = license_plate.replace(" ", "")
         if type(hide_unavailable) != bool:
             hide_unavailable = process_yes_no_answer(hide_unavailable)
         if not (availability_lower_bound and availability_upper_bound):
@@ -78,6 +78,8 @@ class Search(object):
 
     def search_rent_orders(self, number="", customer="",
                            car="", active: bool = None):
+        car = car.strip().replace("-", "").upper()
+        car = car.replace(" ", "")
         rent_orders = RentOrderRepository().get_all()
         matching_orders = list()
         for order in rent_orders:
