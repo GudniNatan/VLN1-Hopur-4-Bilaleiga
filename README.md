@@ -14,6 +14,13 @@ Keyrið *main.py* í **Python 3.70**
 ## Notkun
 Hægt er að nota örvatakkana eða úthlutaða takka á lyklaborði til þess að komast um í kerfinu. Músin virkar ekki.\
 *Esc.* og *Enter* takkar notaðir til þess að fara úr/staðfesta innslátt.
+Notendur til að skrá sig inn með:
+
+Admin notandanafn: egill
+Lykilorð: 12345
+
+starfsmanna notandanafn: stfegill
+lykilorð: 98765
 
 **Upphafsskjár:**\
 ![alt text](https://i.imgur.com/PodgMuY.png "Upphafsskjár")
