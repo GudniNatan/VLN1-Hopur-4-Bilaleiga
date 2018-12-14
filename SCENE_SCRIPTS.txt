@@ -69,3 +69,11 @@ bjöggib@gmail.com
 *Skráður inn eins og sig sjálfur*
 *Skila bíl*
 482913059
+*Sjá opnar pantarnir*
+*velur fyrsta*
+47800
+*borga nuna og loka pöntun*
+*hætta*
+----END SCENE 9-----
+
+----BEGIN SCENE 10----
