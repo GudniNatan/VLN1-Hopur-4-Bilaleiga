@@ -74,7 +74,7 @@ class RentOrder(Model):
         return_str = str(self.__return_time)
         if self.__return_time is None:
             return_str = "Ekki skilað"
-        order_string = "Pöntun #{},\n\tViðskiptavinur: {},\n\tBíll: {},"
+        order_string = "Pöntun #{}, Viðskiptavinur: {},\n\tBíll: {},"
         order_string += "\n\tUpphafstími: {}, \n\tSkilatími: {}"
         return order_string.format(
             str(self.__order_number), self.get_customer().get_name(),
