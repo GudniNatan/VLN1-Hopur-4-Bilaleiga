@@ -76,8 +76,6 @@ class ReturnCarController(Controller):
             stop_function=self.stop, can_submit=False, inputs=inputs
         )
 
-    def 
-
     def __make_order_menu(self, order, extra_costs):
         total = order.get_total_cost()
         extra_insurance_price = total - order.get_base_cost()
