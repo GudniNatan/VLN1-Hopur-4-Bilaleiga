@@ -9,7 +9,7 @@ Allar skrárnar tengdar forritinu munu verða geymdar hér.
 Í þessu forriti er starfsmönnum Bílaleigu Björgvins m.a. gert kleift að bóka bíla, skrá nýja viðskiptavini og allt það helsta sem við kemur útleigu og umsjón bílaleigubíla. Viðskiptavinir geta einnig bókað bíl í gegnum kerfið sjálfir, sé þess óskað.
 
 ## Uppsetning
-Keyrið *main.py* í **Python 3.70**
+Keyrið *main.py* í **Python 3.7**
 
 ## Notkun
 Hægt er að nota örvatakkana eða úthlutaða takka á lyklaborði til þess að komast um í kerfinu. Músin virkar ekki.\
