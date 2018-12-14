@@ -80,6 +80,7 @@ class Search(object):
                            car="", active: bool = None):
         car = car.strip().replace("-", "").upper()
         car = car.replace(" ", "")
+        customer = customer.strip().upper()
         rent_orders = RentOrderRepository().get_all()
         matching_orders = list()
         for order in rent_orders:
@@ -89,7 +90,9 @@ class Search(object):
                 continue
             if order.get_car().get_key().count(car) == 0:
                 continue
-            if customer and customer != str(order.get_customer().get_key()):
+            if customer and customer not in str(
+                order.get_customer().get_key().upper()
+            ):
                 continue
             if order.get_customer().get_key().count(customer) == 0:
                 continue
