@@ -22,7 +22,10 @@ class CarRepository(Repository):
         drivetrain = car_dict["Drif"]
         automatic_transmission = bool(car_dict['Sjálfskiptur'])
         seat_count = int(car_dict['Fjöldi sæta'])
-        extra_properties = set(car_dict['Aðrir eiginleikar'].split(","))
+        extra_properties = car_dict['Aðrir eiginleikar'].split(",")
+        for i, prop in enumerate(extra_properties):
+            extra_properties[i] = prop.strip()
+        extra_properties = set(extra_properties)
         kilometer_count = int(car_dict['Kílómetrafjöldi'])
         current_branch = BranchRepository().get(car_dict['Núverandi útibú'])
         return Car(

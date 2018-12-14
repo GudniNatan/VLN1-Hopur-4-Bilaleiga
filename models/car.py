@@ -87,6 +87,12 @@ class Car(Model):
     def get_name(self):
         return self.get_model()
 
+    def get_extra_properties(self):
+        return self.__extra_properties
+
+    def get_kilometer_count(self):
+        return self.__kilometer_count
+
     # Set
     def set_license_plate_number(self, license_plate_number):
         self.__license_plate_number = license_plate_number
@@ -102,3 +108,9 @@ class Car(Model):
 
     def set_category(self, category):
         self.__category = category
+
+    def set_current_branch(self, current_branch):
+        self.__current_branch = current_branch
+    
+    def set_kilometer_count(self, kilometer_count):
+        self.__kilometer_count = kilometer_count

@@ -17,7 +17,7 @@ class HelpMenuController(Controller):
         dashline = "-" * 120 + "\n"
         header = "".join((
             "Velkominn í bókunarkerfi Bílaleigu Björgvins. ",
-            "Kerfið er ætluð starfsmönnum fyrirtækisins og ",
+            "Kerfið er ætlað starfsmönnum fyrirtækisins og ",
             "fólki sem vill bóka bíla \nrafrænt.\n",
             dashline,
             "Starfsmenn skulu skrá sig inná kerfið ",
@@ -27,7 +27,7 @@ class HelpMenuController(Controller):
             "og því virka ekki músasmellir á neitt.\n",
             "Allt er birt í textaformi og þeir valmöguleikar sem eru í ",
             "boði eru merktir með tölum.\n",
-            "Hægt er að velja úr möguleikunum með því að færa örina „>” ",
+            "Hægt er að velja úr möguleikunum með því að færa [→] örina ",
             "upp og niður og smella á enter til að velja.\n",
             "Einnig er hægt að velja hluti beint með því að slá inn ",
             "viðeigandi tölustaf eða bókstaf.\n",
@@ -39,7 +39,7 @@ class HelpMenuController(Controller):
             "Styttingar:\n",
             "0: Eyðir (þegar það er í boði)\n",
             "B: Fer alltaf til baka um eitt skref\n",
-            "F: Hættir því sem er verið að gera og fer á forsíðu\n",
+            "Q: Hættir því sem er verið að gera og fer á forsíðu\n",
             "Esc: Fer úr innsláttarreit\n",
             dashline,
             "Allur réttur áskilinn af Glaumbæjargenginu, 2018\n",

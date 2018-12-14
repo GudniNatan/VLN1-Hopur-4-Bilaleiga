@@ -4,6 +4,9 @@ from repositories.salesperson_repository import SalespersonRepository
 from repositories.admin_repository import AdminRepository
 from services.validation import Validation
 from services.search import Search
+from services.utils import Utils
+
+# This is the controller base class
 
 
 class Controller(ABC):
@@ -15,16 +18,21 @@ class Controller(ABC):
         self._active = False
         self._validation = Validation()
         self._search = Search()
+        self._utils = Utils()
 
-    def main(self):
+    def hand_control(self):
         self._active = True
         menu_stack = self._menu_stack
+        # The controllers main loop holds the menu stack, and
+        # executes the functions the menus give it
         while menu_stack and self._active:
             menu = menu_stack[-1]
             a_function, values = menu.get_input()
             a_function(values, menu)
         if not menu_stack:
-            self._service.pop()
+            # Go back to previous controller if there are
+            # no more menus on the stack
+            self.controller_back()
 
     def get_pop_limit(self):
         return self._priority_controller

@@ -1,6 +1,6 @@
+from collections import OrderedDict
 from models.model import Model
 from datetime import date
-from collections import OrderedDict
 
 
 class Customer(Model):
@@ -12,11 +12,11 @@ class Customer(Model):
             ):
         self.__driver_license_id = driver_license_id
         self.__personal_id = personal_id
+        self.__email = email
         self.__first_name = first_name
         self.__last_name = last_name
         self.__birthdate = birthdate
         self.__phone_number = phone_number
-        self.__email = email
         self.__cc_holder_first_name = cc_holder_first_name
         self.__cc_holder_last_name = cc_holder_last_name
         self.__ccn = ccn
@@ -24,21 +24,23 @@ class Customer(Model):
 
     def csv_repr(self):
         customer_dict = self.get_dict()
+        exp_date_str = self.__cc_exp_date.strftime("%m/%y")
         customer_dict['Fæðingar dagssetning'] = self.__birthdate.isoformat()
-        customer_dict['Gildistími korts'] = self.__cc_exp_date.isoformat()
+        customer_dict['Gildistími korts'] = exp_date_str
         return customer_dict
 
     def get_dict(self):
-        return {
-            "Ökuskírteinisnúmer": self.__driver_license_id,
-            "Kennitala": self.__personal_id, "Netfang": self.__email,
-            "Fornafn": self.__first_name, "Eftirnafn": self.__last_name,
-            "Fæðingar dagssetning": self.__birthdate,
-            "Símanúmer": self.__phone_number,
-            "Fornafn kortahafa": self.__cc_holder_first_name,
-            "Eftirnafn kortahafa": self.__cc_holder_last_name,
-            "Kortanúmer": self.__ccn, "Gildistími korts": self.__cc_exp_date
-            }
+        return OrderedDict([
+            ("Ökuskírteinisnúmer", self.__driver_license_id),
+            ("Kennitala", self.__personal_id), ("Netfang", self.__email),
+            ("Fornafn", self.__first_name), ("Eftirnafn", self.__last_name),
+            ("Fæðingar dagssetning", self.__birthdate),
+            ("Símanúmer", self.__phone_number),
+            ("Fornafn kortahafa", self.__cc_holder_first_name),
+            ("Eftirnafn kortahafa", self.__cc_holder_last_name),
+            ("Kortanúmer", self.__ccn),
+            ("Gildistími korts", self.__cc_exp_date)
+        ])
 
     def __eq__(self, other):
         if isinstance(other, Customer):

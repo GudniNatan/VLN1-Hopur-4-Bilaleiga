@@ -1,8 +1,12 @@
 from repositories.car_repository import CarRepository
+from repositories.customer_repository import CustomerRepository
 from repositories.rent_order_repository import RentOrderRepository
 from services.validation import Validation
 from datetime import datetime, date
 from services.utils import Utils
+
+# This class contains a few different search funtions
+# for use by controllers and validation
 
 
 class Search(object):
@@ -23,8 +27,9 @@ class Search(object):
         cars = CarRepository().get_all()
         relevant_cars = list()
         for car in cars:
-            car_available = self.car_available(car, availability_lower_bound,
-                                               availability_upper_bound)
+            car_available = self.car_available(
+                car, availability_lower_bound, availability_upper_bound
+            )
             if is_automatic is not None:
                 if is_automatic != car.get_automatic_transmission():
                     continue
@@ -49,13 +54,6 @@ class Search(object):
             relevant_cars.append(car)
         return relevant_cars
 
-    def __process_yes_no_answer(self, yes_no):
-        if yes_no:
-            yes_no = str(yes_no)[0].upper()
-            if yes_no in ["J", "Y"]:
-                return True
-            return False
-
     def car_available(self, car, lower_time_bound, upper_time_bound=None):
         if type(lower_time_bound) not in [datetime, date]:
             lower_time_bound = Validation().validate_datetime(lower_time_bound)
@@ -69,12 +67,6 @@ class Search(object):
                 if order.get_estimated_return_time() >= lower_time_bound:
                     return False
         return True
-
-    def __order_active(self, order):
-        if order.get_pickup_time() <= datetime.now():
-            if order.get_return_time() is None:
-                return True
-        return False
 
     def search_rent_orders(self, number="", customer="",
                            car="", active: bool = None):
@@ -91,7 +83,24 @@ class Search(object):
                 continue
             if order.get_customer().get_key().count(customer) == 0:
                 continue
-            if (not self.__order_active(order)) == active:
+            if (not Utils().order_active(order)) == active:
                 continue
             matching_orders.append(order)
         return matching_orders
+
+    def search_customers(self, driver_license_id="",
+                         personal_id="", name=""):
+        customers = CustomerRepository().get_all()
+        driver_id = driver_license_id.strip().upper()
+        personal_id = personal_id.strip().upper()
+        name = name.strip()
+        personal_id = personal_id.strip()
+        for i in range(len(customers) - 1, -1, -1):
+            person = customers[i]
+            if person.get_driver_license_id().upper().count(driver_id) == 0:
+                customers.pop(i)
+            elif person.get_name().upper().count(name.upper()) == 0:
+                customers.pop(i)
+            elif person.get_personal_id().upper().count(personal_id) == 0:
+                customers.pop(i)
+        return customers

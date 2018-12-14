@@ -9,6 +9,7 @@ from controllers.manage_cars_controller import ManageCarsController
 from controllers.manage_orders_controller import ManageOrdersController
 from controllers.price_list_controller import PriceListController
 from controllers.rent_car_controller import RentCarController
+from controllers.return_car_controller import ReturnCarController
 
 
 class MainMenuController(Controller):
@@ -60,6 +61,10 @@ class MainMenuController(Controller):
         rent_car_controller = RentCarController(self._service)
         self._service.add(rent_car_controller)
 
+    def go_to_return_car_controller(self, values, menu):
+        return_car_controller = ReturnCarController(self._service)
+        self._service.add(return_car_controller)
+
     def handle_login(self, values, menu):
         try:
             user = self._validation.validate_login(*values)
@@ -100,7 +105,8 @@ class MainMenuController(Controller):
         staff_options = [
             {"description": "Leigja bíl",
                 "value": self.go_to_rent_car_controller},
-            {"description": "Skila bíl"},
+            {"description": "Skila bíl",
+                "value": self.go_to_return_car_controller},
             {"description": "Verðskrá",
                 "value": self.go_to_price_list_controller},
             {"description": "Skrá viðskiptavin",

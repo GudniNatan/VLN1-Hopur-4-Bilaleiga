@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from models.model import Model
 from models.customer import Customer
 from models.car import Car
@@ -16,7 +17,7 @@ class RentOrder(Model):
             pickup_branch_name: str, return_branch_name: str,
             include_extra_insurance: bool, base_cost: int,
             remaining_debt: int = -1, kilometers_driven: int = 0,
-            return_time: datetime = None,
+            return_time: datetime = None, addon_price=0
             ):
         self.__order_number = order_number
         self.__car = car
@@ -31,9 +32,11 @@ class RentOrder(Model):
         self.__base_cost = base_cost
         self.__insurance_total = int(base_cost * self.INSURANCE_PERCENT)
         self.__extra_insurance_total = 0
+        self.__addon_price = addon_price
         if include_extra_insurance:
             self.__extra_insurance_total += self.EXTRA_INSURANCE
         self.__total_cost = base_cost + self.__extra_insurance_total
+        self.__total_cost += addon_price
         if remaining_debt == -1:
             self.__remaining_debt = self.__total_cost
 
@@ -51,28 +54,31 @@ class RentOrder(Model):
         return rent_order_dict
 
     def get_dict(self):
-        return {
-            "Bókunar númer": self.__order_number,
-            "Bíll": self.__car,
-            "Ökuskírteinisnúmer Viðskiptavinar": self.__customer,
-            "Sóttur þann": self.__pickup_time,
-            "Áætlaður skilatími": self.__estimated_return_time,
-            "Sóttur hjá": self.__pickup_branch_name,
-            "Skilaður hjá": self.__return_branch_name,
-            "Auka trygging": self.__extra_insurance_total != 0,
-            "Grunnkostnaður": self.__base_cost,
-            "Eftirstaða borgunar": self.__remaining_debt,
-            "Keyrðir kílómetrar": self.__kilometers_driven,
-            "Raunverulegur skilatími": self.__return_time,
-        }
+        return OrderedDict([
+            ("Bókunar númer", self.__order_number),
+            ("Bíll", self.__car),
+            ("Ökuskírteinisnúmer Viðskiptavinar", self.__customer),
+            ("Sóttur þann", self.__pickup_time),
+            ("Áætlaður skilatími", self.__estimated_return_time),
+            ("Sóttur hjá", self.__pickup_branch_name),
+            ("Skilaður hjá", self.__return_branch_name),
+            ("Auka trygging", self.__extra_insurance_total != 0),
+            ("Grunnkostnaður", self.__base_cost),
+            ("Eftirstaða borgunar", self.__remaining_debt),
+            ("Keyrðir kílómetrar", self.__kilometers_driven),
+            ("Raunverulegur skilatími", self.__return_time),
+        ])
 
     def __str__(self):
-        order_string = "Pöntun #{},\n\tViðskiptavinur: {},\n\tÖkuskírteini {},"
-        order_string += "\n\tBíltegund {},\n\tBílnúmer {},\n\tKostnaður {}"
+        pickup_str = str(self.__pickup_time)
+        return_str = str(self.__return_time)
+        if self.__return_time is None:
+            return_str = "Ekki skilað"
+        order_string = "Pöntun #{},\n\tViðskiptavinur: {},\n\tBíll: {},"
+        order_string += "\n\tUpphafstími: {}, \n\tSkilatími: {}"
         return order_string.format(
             str(self.__order_number), self.get_customer().get_name(),
-            self.__customer.get_driver_license_id(), self.__car.get_model(),
-            self.__car.get_license_plate_number(), str(self.__total_cost)
+            self.__car.get_name(), pickup_str, return_str
         )
 
     def __eq__(self, other):
@@ -140,6 +146,9 @@ class RentOrder(Model):
 
     def get_base_cost(self):
         return self.__base_cost
+
+    def get_addon_price(self):
+        return self.__addon_price
 
     # Sets
     def set_order_number(self, order_number):

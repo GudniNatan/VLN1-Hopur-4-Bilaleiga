@@ -1,8 +1,7 @@
 from ui.menu import Menu
 from datetime import datetime
-# This class takes care of making generic menus
+# This class holds costructor functions for menus
 # It uses data from the controller it is attatched to
-# Which it gets on its own
 # To make these generic menus
 # Examples of a generic menu include:
 #   Search results, edit model object, delete model object,
@@ -152,3 +151,15 @@ class CarRentalUI(object):
             stop_function=self.__stop, submit_function=submit_callback
         )
         return edit_menu
+
+    def get_order_history(self, header_str, orders, callback):
+        options = list()
+        for order in orders:
+            options.append(
+                {"description": order.get_name(), "value": callback}
+            )
+        order_history_menu = Menu(
+            header=header_str, back_function=self.__back,
+            stop_function=self.__stop, options=options
+        )
+        return order_history_menu
