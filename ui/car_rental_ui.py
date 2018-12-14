@@ -158,11 +158,13 @@ class CarRentalUI(object):
         )
         return edit_menu
 
-    def get_order_history(self, header_str, orders, callback):
+    def get_order_history(self, header_str, orders, model_object, callback):
         options = list()
+        header = "{} -> Pöntunarsaga\nPöntunarsaga {}"
+        header = header.format(header_str, model_object.get_name())
         for order in orders:
             options.append(
-                {"description": order.get_name(), "value": callback}
+                {"description": order, "value": callback}
             )
         order_history_menu = Menu(
             header=header_str, back_function=self.__back,
