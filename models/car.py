@@ -102,3 +102,6 @@ class Car(Model):
 
     def set_category(self, category):
         self.__category = category
+
+    def set_current_branch(self, current_branch):
+        self.__current_branch = current_branch
