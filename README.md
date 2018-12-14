@@ -17,9 +17,11 @@ Hægt er að nota örvatakkana eða úthlutaða takka á lyklaborði til þess a
 Notendur til að skrá sig inn með:
 
 Admin notandanafn: egill
+
 Lykilorð: 12345
 
 starfsmanna notandanafn: stfegill
+
 lykilorð: 98765
 
 **Upphafsskjár:**\
