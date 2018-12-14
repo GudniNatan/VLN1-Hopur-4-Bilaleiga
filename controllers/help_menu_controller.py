@@ -27,7 +27,7 @@ class HelpMenuController(Controller):
             "og því virka ekki músasmellir á neitt.\n",
             "Allt er birt í textaformi og þeir valmöguleikar sem eru í ",
             "boði eru merktir með tölum.\n",
-            "Hægt er að velja úr möguleikunum með því að færa örina „>” ",
+            "Hægt er að velja úr möguleikunum með því að færa [→] örina ",
             "upp og niður og smella á enter til að velja.\n",
             "Einnig er hægt að velja hluti beint með því að slá inn ",
             "viðeigandi tölustaf eða bókstaf.\n",

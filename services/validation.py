@@ -348,11 +348,12 @@ class Validation(object):
             ) -> RentOrder:
         from_date, to_date = date_range
         day_count = abs((from_date - to_date).days)
-        base_cost = car.get_category()["price"] * day_count        
+        base_cost = car.get_category()["price"] * day_count
+        addon_cost = self.__utils.calculate_addon_cost(car)
         return RentOrder(
             self.get_next_order_number(), car, customer, date_range[0],
             date_range[1], pickup_branch.get_name(), return_branch.get_name(),
-            include_extra_insurance, base_cost
+            include_extra_insurance, base_cost, addon_price=addon_cost
         )
 
     def validate_rent_range(self, from_date, to_date):

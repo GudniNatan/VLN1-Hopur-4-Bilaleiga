@@ -17,7 +17,7 @@ class RentOrder(Model):
             pickup_branch_name: str, return_branch_name: str,
             include_extra_insurance: bool, base_cost: int,
             remaining_debt: int = -1, kilometers_driven: int = 0,
-            return_time: datetime = None,
+            return_time: datetime = None, addon_price=0
             ):
         self.__order_number = order_number
         self.__car = car
@@ -32,9 +32,11 @@ class RentOrder(Model):
         self.__base_cost = base_cost
         self.__insurance_total = int(base_cost * self.INSURANCE_PERCENT)
         self.__extra_insurance_total = 0
+        self.__addon_price = addon_price
         if include_extra_insurance:
             self.__extra_insurance_total += self.EXTRA_INSURANCE
         self.__total_cost = base_cost + self.__extra_insurance_total
+        self.__total_cost += addon_price
         if remaining_debt == -1:
             self.__remaining_debt = self.__total_cost
 
@@ -144,6 +146,9 @@ class RentOrder(Model):
 
     def get_base_cost(self):
         return self.__base_cost
+
+    def get_addon_price(self):
+        return self.__addon_price
 
     # Sets
     def set_order_number(self, order_number):

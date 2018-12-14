@@ -1,39 +1,39 @@
 Bílnúmer;Gerð;Flokkur;Fjöldi hjóla;Drif;Sjálfskiptur;Fjöldi sæta;Aðrir eiginleikar;Kílómetrafjöldi;Núverandi útibú
-AJ-123;My car model;Standard;4;4x4;True;4;Heated seats, A/C;100;BB Reykjavík
-TR-990;Nissan Leaf 2017;Standard;4;2 Wheel Drive;True;4;Heated seats, A/C;20000;BB Reykjavík
-XF-N97;Mercedes Benz V Klasse 2017;Minivan;4;4x4;True;8;Bluetooth, GPS, A/C, ABS;50200;BB Reykjavík
+AJ-123;My car model;Standard;4;4x4;True;4;A/C, Heated seats;100;BB Reykjavík
+TR-990;Nissan Leaf 2017;Standard;4;2 Wheel Drive;True;4;A/C, Heated seats;20000;BB Reykjavík
+XF-N97;Mercedes Benz V Klasse 2017;Minivan;4;4x4;False;8;A/C, Bluetooth, ABS, GPS;50200;BB Reykjavík
 SC-A35;Toyota Land Cruiser 150 Series 2018;SUV;4;4x4;True;5;A/C, ABS;63000;BB Reykjavík
-XU-Z15;Volvo V90 Cross Country D4 AWD Pro 2018;Crossover;4;4x4;False;6;Bluetooth, A/C, ABS;27100;BB Reykjavík
+XU-Z15;Volvo V90 Cross Country D4 AWD Pro 2018;Crossover;4;4x4;True;6;A/C, Bluetooth, ABS;27100;BB Reykjavík
 JT-A73;BMW 530E MTech 2018;Standard;4;FWD;True;5;A/C, ABS;45900;BB Reykjavík
-PZ-A54;Mercedes Benz E350 Plugin Hybrid 2017;Standard;4;FWD;True;5;Bluetooth, A/C, Bakkmyndavél, ABS;14200;BB Reykjavík
+PZ-A54;Mercedes Benz E350 Plugin Hybrid 2017;Standard;4;FWD;True;5;A/C, Bluetooth, ABS, Bakkmyndavél;14200;BB Reykjavík
 NQ-W65;Mercedes Benz SL55 AMG 2005;Sport;4;FWD;True;2;A/C, ABS;58700;BB Reykjavík
-IZ-W25;Chrysler Pacifica Platinum Plugin Hybrid 2017;Minivan;4;4x4;True;8;Bluetooth, A/C, ABS;78900;BB Reykjavík
-UD-E26;Kia Stinger 2017;Standard;4;RWD;True;5;Bluetooth, A/C, Bakkmyndavél;32800;BB Reykjavík
+IZ-W25;Chrysler Pacifica Platinum Plugin Hybrid 2017;Minivan;4;4x4;True;8;A/C, Bluetooth, ABS;78900;BB Reykjavík
+UD-E26;Kia Stinger 2017;Standard;4;RWD;True;5;A/C, Bluetooth, Bakkmyndavél;32800;BB Reykjavík
 NR-D43;Volvo S60 2016;Standard;4;FWD;True;5;A/C, ABS;42700;BB Reykjavík
-QU-Q59;Volkswagen Golf R 2017;Standard;4;FWD;True;5;Bluetooth, Bakkmyndavél, ABS;33200;BB Reykjavík
-RM-V83;Jaguar XF Prestige 2017;Standard;4;4x4;True;5;GPS, A/C, ABS;46400;BB Reykjavík
-TQ-E32;Toyota Proace Verso Active Plus 2017;Minivan;4;4x4;True;8;Bluetooth, A/C, ABS;41000;BB Reykjavík
+QU-Q59;Volkswagen Golf R 2017;Standard;4;FWD;True;5;ABS, Bluetooth, Bakkmyndavél;33200;BB Reykjavík
+RM-V83;Jaguar XF Prestige 2017;Standard;4;4x4;True;5;A/C, GPS, ABS;46400;BB Reykjavík
+TQ-E32;Toyota Proace Verso Active Plus 2017;Minivan;4;4x4;True;8;A/C, Bluetooth, ABS;41000;BB Reykjavík
 HG-Z99;Ford CNG Technik Focus RS 2016;Standard;4;FWD;True;5;A/C, ABS;65900;BB Reykjavík
-PO-P38;Honda Civic R 2018;Standard;4;FWD;True;5;Bluetooth, A/C, Bakkmyndavél, ABS;22000;BB Reykjavík
+PO-P38;Honda Civic R 2018;Standard;4;FWD;True;5;A/C, Bluetooth, ABS, Bakkmyndavél;22000;BB Reykjavík
 RD-O76;Volkswagen Golf GTI 2016;Standard;4;FWD;True;5;Bluetooth, Bakkmyndavél;39800;BB Reykjavík
-JD-N56;Toyota Yaris GRMN 2018;Standard;4;FWD;True;5;Bluetooth, A/C, Bakkmyndavél;21000;BB Reykjavík
+JD-N56;Toyota Yaris GRMN 2018;Standard;4;FWD;True;5;A/C, Bluetooth, Bakkmyndavél;21000;BB Reykjavík
 OX-L36;Ford Galaxy 2016;Standard;4;4x4;True;5;A/C, ABS;56000;BB Reykjavík
-GG-S35;Volvo S60 2017;Standard;4;FWD;True;5;Bluetooth, A/C, ABS;67000;BB Reykjavík
+GG-S35;Volvo S60 2017;Standard;4;FWD;True;5;A/C, Bluetooth, ABS;67000;BB Reykjavík
 TT-C24;Mitsubishi Outlander 2015;Standard;4;FWD;True;5;A/C, ABS;72000;BB Reykjavík
 KB-D24;Chevrolet Suburban 2017;SUV;4;4x4;True;5;A/C, ABS;54000;BB Reykjavík
-YJ-I39;Land Rover Discovery 2018;SUV;4;4x4;True;5;Bluetooth, A/C, Bakkmyndavél, ABS;34000;BB Reykjavík
-OO-L75;MBW X5 XDrive50E 2016;Crossover;4;4x4;True;5;Bluetooth, A/C, ABS;43900;BB Reykjavík
-HM-A88;Lexus RX 450H F Sport 2017;Crossover;4;4x4;True;5;Bluetooth, A/C, ABS;54800;BB Reykjavík
-DO-I46;Porche Cayenne S E-Hybrid 2016;Crossover;4;4x4;True;5;Bluetooth, A/C, Bakkmyndavél;52800;BB Reykjavík
-RA-Q99;Lexus GS 450H F-Sport Hybrid 2017;Standard;4;FWD;True;5;Bluetooth, A/C, ABS;32000;BB Reykjavík
+YJ-I39;Land Rover Discovery 2018;SUV;4;4x4;True;5;A/C, Bluetooth, ABS, Bakkmyndavél;34000;BB Reykjavík
+OO-L75;MBW X5 XDrive50E 2016;Crossover;4;4x4;True;5;A/C, Bluetooth, ABS;43900;BB Reykjavík
+HM-A88;Lexus RX 450H F Sport 2017;Crossover;4;4x4;True;5;A/C, Bluetooth, ABS;54800;BB Reykjavík
+DO-I46;Porche Cayenne S E-Hybrid 2016;Crossover;4;4x4;True;5;A/C, Bluetooth, Bakkmyndavél;52800;BB Reykjavík
+RA-Q99;Lexus GS 450H F-Sport Hybrid 2017;Standard;4;FWD;True;5;A/C, Bluetooth, ABS;32000;BB Reykjavík
 JT-A37;BMW 530E MTech 2018;Standard;4;FWD;True;5;Bluetooth, Bakkmyndavél;17200;BB Reykjavík
 AJ-G53;Aston Martin DB9 2010;Sport;4;FWD;True;4;A/C, ABS;69500;BB Reykjavík
 RK-V53;Land Rover Range Rover Vouge 2017;SUV;4;4x4;True;5;A/C, Bakkmyndavél, ABS;72300;BB Reykjavík
-UJ-S19;Porche 911 Carrera 2015;Sport;4;FWD;True;2;Bluetooth, A/C;49900;BB Reykjavík
-AL-O84;Ford Mustang GT Stage 3 2016;Sport;4;FWD;True;2;Bluetooth, A/C;54700;BB Reykjavík
-BB-W78;Chevrolet Suburban LT Premier 2017;Crossover;4;4x4;True;5;Bluetooth, A/C, ABS;53900;BB Reykjavík
-WW-A96;Land Rover Range Rover Sport HSE Dynamic SDV6 2017;Crossover;4;4x4;True;5;Bluetooth, A/C, Bakkmyndavél, ABS;43600;BB Reykjavík
+UJ-S19;Porche 911 Carrera 2015;Sport;4;FWD;True;2;A/C, Bluetooth;49900;BB Reykjavík
+AL-O84;Ford Mustang GT Stage 3 2016;Sport;4;FWD;True;2;A/C, Bluetooth;54700;BB Reykjavík
+BB-W78;Chevrolet Suburban LT Premier 2017;Crossover;4;4x4;True;5;A/C, Bluetooth, ABS;53900;BB Reykjavík
+WW-A96;Land Rover Range Rover Sport HSE Dynamic SDV6 2017;Crossover;4;4x4;True;5;A/C, Bluetooth, ABS, Bakkmyndavél;43600;BB Reykjavík
 MQ-M59;Toyota Land Cruiser 200 VX 2016;SUV;4;4x4;True;5;A/C, ABS;75900;BB Reykjavík
 SM-B76;Toyota Land Cruiser 150 GX 2016;SUV;4;4x4;True;5;A/C, ABS;62900;BB Reykjavík
-FF-Z82;Tesla Model S P85D 2015;Standard;4;FWD;True;5;Bluetooth, A/C, Bakkmyndavél;54300;BB Reykjavík
-PU-H79;Audi RS5 Quattro Supercharged 2012;Standard;4;FWD;True;5;Bluetooth, A/C, ABS;92500;BB Reykjavík
+FF-Z82;Tesla Model S P85D 2015;Standard;4;FWD;True;5;A/C, Bluetooth, Bakkmyndavél;54300;BB Reykjavík
+PU-H79;Audi RS5 Quattro Supercharged 2012;Standard;4;FWD;True;5;A/C, Bluetooth, ABS;92500;BB Reykjavík

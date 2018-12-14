@@ -129,23 +129,3 @@ class ManageSalespeopleController(Controller):
                                     stop_function=self.stop,
                                     submit_function=self.create_person)
         return new_salesperson_menu
-
-    # Other
-    # These should definitely be moved somewhere else
-    def __search_salespeople(self, username="", name="", email="", phone=""):
-        salespeople = SalespersonRepository().get_all()
-        username = username.strip()
-        name = name.strip()
-        email = email.strip()
-        phone = phone.strip()
-        for i in range(len(salespeople) - 1, -1, -1):
-            person = salespeople[i]
-            if username and username != person.get_username():
-                salespeople.pop(i)
-            elif name and name != person.get_name():
-                salespeople.pop(i)
-            elif email and email != person.get_email():
-                salespeople.pop(i)
-            elif phone and phone != person.get_phone():
-                salespeople.pop(i)
-        return salespeople

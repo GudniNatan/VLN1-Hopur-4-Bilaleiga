@@ -105,7 +105,7 @@ class RentCarController(Controller):
         try:
             order = self._validation.assemble_order(
                 car, customer, date_range, pickup_branch, return_branch,
-                self.__include_insurance, 
+                self.__include_insurance,
             )
             self.__order = order
         except ValueError as error_msg:
@@ -227,14 +227,19 @@ class RentCarController(Controller):
 
     def __make_order_report_menu(self, order):
         extra_insurance_price = order.get_total_cost() - order.get_base_cost()
+        extra_insurance_price -= order.get_addon_price()
+        car = order.get_car()
+        addon_str = ", ".join(car.get_extra_properties())
         order_str = "".join((
             "Pöntun númer: ", str(order.get_order_number()),
             "\nUpphafstími leigu: ", str(order.get_pickup_time()),
             "\nÁætlaður skilatími: ", str(order.get_estimated_return_time()),
-            "\nTegund bíls: ", order.get_car().get_name(),
+            "\nTegund bíls: ", car.get_name(),
             "\nNafn leigjanda: ", order.get_customer().get_name(),
+            "\nAukahlutir á bíl: ", addon_str,
             "\n\nGrunnverð: ", str(order.get_base_cost()), " kr.",
             "\nAukatrygging: ", str(extra_insurance_price), " kr.",
+            "\nVerð á aukahlutum: ", str(order.get_addon_price()),
             "\nHEILDARVERÐ: ", str(order.get_total_cost()), " kr.",
         ))
         header = "".join((

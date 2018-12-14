@@ -151,3 +151,15 @@ class CarRentalUI(object):
             stop_function=self.__stop, submit_function=submit_callback
         )
         return edit_menu
+
+    def get_order_history(self, header_str, orders, callback):
+        options = list()
+        for order in orders:
+            options.append(
+                {"description": order.get_name(), "value": callback}
+            )
+        order_history_menu = Menu(
+            header=header_str, back_function=self.__back,
+            stop_function=self.__stop, options=options
+        )
+        return order_history_menu

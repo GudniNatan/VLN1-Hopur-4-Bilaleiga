@@ -1,4 +1,5 @@
 from datetime import datetime
+from models.rent_order import RentOrder
 
 
 class Utils(object):
@@ -18,6 +19,11 @@ class Utils(object):
         days = self.count_days_in_range(pickup_datetime, return_datetime)
         day_cost = car.get_category()["price"]
         return days * day_cost
+
+    def calculate_addon_cost(self, car):
+        addon_price = RentOrder.ADDON_PRICE
+        addon_count = len(car.get_extra_properties())
+        return addon_price * addon_count
 
     def calculate_extra_cost(self, order):
         return []
