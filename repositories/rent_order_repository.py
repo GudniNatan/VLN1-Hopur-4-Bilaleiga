@@ -3,6 +3,7 @@ from repositories.repository import Repository
 from repositories.car_repository import CarRepository
 from repositories.customer_repository import CustomerRepository
 from models.rent_order import RentOrder
+from models.empty_model import EmptyModel
 
 
 class RentOrderRepository(Repository):
@@ -19,8 +20,14 @@ class RentOrderRepository(Repository):
     def dict_to_model_object(self, rent_order_dict):
         driver_license = rent_order_dict["Ökuskírteinisnúmer Viðskiptavinar"]
         order_number = int(rent_order_dict["Bókunar númer"])
-        car = CarRepository().get(rent_order_dict["Bíll"])
-        customer = CustomerRepository().get(driver_license)
+        try:
+            car = CarRepository().get(rent_order_dict["Bíll"])
+        except ValueError:
+            car = EmptyModel(rent_order_dict["Bíll"])
+        try:
+            customer = CustomerRepository().get(driver_license)
+        except ValueError:
+            customer = EmptyModel(driver_license)
         pickup_time = datetime.fromisoformat(rent_order_dict["Sóttur þann"])
         est_return_str = rent_order_dict["Áætlaður skilatími"]
         estimated_return_time = datetime.fromisoformat(est_return_str)

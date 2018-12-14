@@ -44,7 +44,7 @@ class RentOrder(Model):
         rent_order_dict = self.get_dict()
         return_time_str = self.__estimated_return_time.isoformat()
         lpn = self.__customer.get_key()
-        rent_order_dict["Bíll"] = self.__car.get_license_plate_number()
+        rent_order_dict["Bíll"] = self.__car.get_key()
         rent_order_dict["Ökuskírteinisnúmer Viðskiptavinar"] = lpn
         rent_order_dict["Sóttur þann"] = self.__pickup_time.isoformat()
         rent_order_dict["Áætlaður skilatími"] = return_time_str
@@ -118,9 +118,6 @@ class RentOrder(Model):
     def get_extra_insurance_total(self):
         return self.__extra_insurance_total
 
-    def get_kilometer_allowance_per_day(self):
-        return self.__kilometer_allowance_per_day
-
     def get_total_cost(self):
         return self.__total_cost
 
@@ -138,7 +135,7 @@ class RentOrder(Model):
 
     def get_name(self):
         return "".join((
-            "[", str(self.get_pickup_time().date()), "]",
+            "[", str(self.get_pickup_time().date()), "] ",
             self.get_customer().get_name(),
             ": ",
             self.get_car().get_name()
@@ -177,9 +174,6 @@ class RentOrder(Model):
 
     def set_extra_insurance_total(self, extra_insurance_total):
         self.__extra_insurance_total = extra_insurance_total
-
-    def set_kilometer_allowance_per_day(self, kilometer_allowance_per_day):
-        self.__kilometer_allowance_per_day = kilometer_allowance_per_day
 
     def set_total_cost(self, total_cost):
         self.__total_cost = total_cost
