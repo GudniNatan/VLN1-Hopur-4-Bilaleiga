@@ -115,9 +115,12 @@ class ReturnCarController(Controller):
         extra_insurance_price = total - order.get_base_cost()
         already_payed_amount = total - order.get_remaining_debt()
         extra_cost_total = sum([cost["amount"] for cost in extra_costs])
-        extra_cost_str = "\n\t".join(
-            (cost["name"] + ": " + str(cost["amount"]) for cost in extra_costs)
-        )
+        cost_str_list = list()
+        for cost in extra_costs:
+            cost_str_list.append(
+                cost["name"] + ": " + str(cost["amount"]) + " kr."
+            )
+        extra_cost_str = "\n\t".join(cost_str_list)
         if not extra_cost_str:
             extra_cost_str = "Enginn"
         remaining = order.get_remaining_debt() + extra_cost_total
@@ -135,10 +138,16 @@ class ReturnCarController(Controller):
             "\n\nÁður greitt: ", str(already_payed_amount), " kr."
             "\nEftirstöður ", str(remaining), " kr."
         ))
-        options = [
-            {"description": "Borga núna og loka pöntun",
-                "value": self.close_order}
-        ]
+        if remaining != 0:
+            options = [
+                {"description": "Borga núna og loka pöntun",
+                    "value": self.close_order}
+            ]
+        else:
+            options = [
+                {"description": "Skila bíl og loka pöntun",
+                    "value": self.close_order}
+            ]
         return Menu(
             header=header, options=options, back_function=self.back,
             stop_function=self.stop,
