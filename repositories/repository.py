@@ -1,6 +1,11 @@
 from abc import ABC, abstractmethod
 import csv
 
+# This is the repository base class.
+# Repos can do a whole bunch of different things, but the only
+# thing any inheriting repos need to implement is a function
+# that translates a dictionary to its model object type.
+
 
 class Repository(ABC):
     _FILENAME = ""
@@ -10,7 +15,7 @@ class Repository(ABC):
 
     def add(self, model_object: _TYPE):
         '''Adds the model object to the csv file'''
-        for item in self.get_all():
+        for item in self.get_all():  # Update the repo if model already exists
             if item == model_object:
                 self.update(model_object)
                 return
@@ -91,4 +96,6 @@ class Repository(ABC):
 
     @abstractmethod
     def dict_to_model_object(self, a_dict):
+        '''Translates the read csv dictionary to a model object of a specified
+        type.'''
         return self._TYPE(**a_dict)

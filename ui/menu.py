@@ -121,7 +121,7 @@ class Menu(object):
         display_string += self.__page_number_string()
         display_string += "\n" + self.__footer
         self.__clear_screen()
-        print(display_string.strip())
+        print(display_string.strip())  # Print the entire menu
 
     def __page_string(self):
         cursor_filler = " " * (len(self.__CURSOR) + 1)

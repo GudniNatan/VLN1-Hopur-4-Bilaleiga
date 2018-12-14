@@ -96,7 +96,7 @@ class ReturnCarController(Controller):
         car = order.get_car()
         header = "".join((
             self.__controller_header, " -> Leit -> Valin pöntun",
-            "Pöntun númer: ", str(order.get_order_number()),
+            "\nPöntun númer: ", str(order.get_order_number()),
             "\nUpphafstími leigu: ", str(order.get_pickup_time()),
             "\nÁætlaður skilatími: ", str(order.get_estimated_return_time()),
             "\nTegund bíls: ", order.get_car().get_name(),
@@ -136,8 +136,8 @@ class ReturnCarController(Controller):
             "\nNafn leigjanda: ", order.get_customer().get_name(),
             "\n\nGrunnverð: ", str(order.get_base_cost()), " kr.",
             "\nAukatrygging: ", str(extra_insurance_price), " kr.",
-            "\nVerð á aukahlutum: ", str(order.get_addon_price()),
-            "\nViðbættur kostnaður: ", extra_cost_str, " kr.",
+            "\nVerð á aukahlutum: ", str(order.get_addon_price()), " kr.",
+            "\nViðbættur kostnaður: ", extra_cost_str,
             "\nHeildarkostnaður: ", str(total), " kr.",
             "\n\nÁður greitt: ", str(already_payed_amount), " kr."
             "\nEftirstöður ", str(remaining), " kr."

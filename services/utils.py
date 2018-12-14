@@ -26,7 +26,14 @@ class Utils(object):
         return addon_price * addon_count
 
     def calculate_extra_cost(self, order):
+        # Calculate extra costs for an order based on kilometers driven
+        # and if the car is returned late.
         extra_cost_list = list()
+        self.calculate_overdrive_fee(order, extra_cost_list)
+        self.calculate_late_fee(order, extra_cost_list)
+        return extra_cost_list
+
+    def calculate_overdrive_fee(self, order, extra_cost_list):
         km = order.get_kilometers_driven()
         day_count = self.count_days_in_range(
             order.get_pickup_time(),
@@ -40,6 +47,8 @@ class Utils(object):
             extra_cost_list.append(
                 {"name": cost_str, "amount": km_overflow * 300}
             )
+
+    def calculate_late_fee(self, order, extra_cost_list):
         if order.get_estimated_return_time() < datetime.now():
             day_count = self.count_days_in_range(
                 order.get_estimated_return_time(),
@@ -48,11 +57,9 @@ class Utils(object):
             cost_str = "Sein skil, dagsekt {} ({} dagar)".format(
                 order.DAILY_LATE_FEE, day_count
             )
-            cost_str += "({} umfram leyfðan fjölda)".format(km_overflow)
             extra_cost_list.append(
                 {"name": cost_str, "amount": day_count * order.DAILY_LATE_FEE}
             )
-        return extra_cost_list
 
     def order_active(self, order):
         if order.get_pickup_time() <= datetime.now():

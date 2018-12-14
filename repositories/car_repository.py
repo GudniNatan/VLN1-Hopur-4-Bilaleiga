@@ -15,6 +15,7 @@ class CarRepository(Repository):
     ]
 
     def dict_to_model_object(self, car_dict):
+        '''Translates the read csv dictionary to a car object.'''
         license_plate_number = car_dict['Bílnúmer']
         model = car_dict['Gerð']
         category = PriceListRepository().get(car_dict["Flokkur"])
