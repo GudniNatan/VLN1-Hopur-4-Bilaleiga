@@ -35,11 +35,24 @@ class Utils(object):
         km_allowance = order.KM_ALLOWANCE_PER_DAY * day_count
         km_overflow = km - km_allowance
         if km_overflow > 0:
+            cost_str = "Ekið of marga kílómetra "
+            cost_str += "({} umfram leyfðan fjölda)".format(km_overflow)
             extra_cost_list.append(
-                {"name": "Ekið of marga kílómetra ({} umfram leyfðan fjölda)",
-                    "price": km_overflow * 300}
+                {"name": cost_str, "price": km_overflow * 300}
             )
-        return []
+        if order.get_estimated_return_time() < datetime.now():
+            day_count = self.count_days_in_range(
+                order.get_estimated_return_time(),
+                datetime.now()
+            )
+            cost_str = "Sein skil, dagsekt {} ({} dagar)".format(
+                order.DAILY_LATE_FEE, day_count
+            )
+            cost_str += "({} umfram leyfðan fjölda)".format(km_overflow)
+            extra_cost_list.append(
+                {"name": cost_str, "price": day_count * order.DAILY_LATE_FEE}
+            )
+        return extra_cost_list
 
     def order_active(self, order):
         if order.get_pickup_time() <= datetime.now():
