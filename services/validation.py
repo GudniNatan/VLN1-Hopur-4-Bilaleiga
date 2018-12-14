@@ -50,7 +50,7 @@ class Validation(object):
         salesperson = Salesperson(username, password, name, email, phone)
         return salesperson
 
-    def validate_int(self, maybe_int, name):
+    def validate_int(self, maybe_int, name=""):
         try:
             definitely_int = int(maybe_int)
         except ValueError:
@@ -105,7 +105,7 @@ class Validation(object):
             raise ValueError(error_str)
         return definitely_time
 
-    def validate_datetime_by_parts(self, date_str, time_str, name):
+    def validate_datetime_by_parts(self, date_str, time_str, name=""):
         a_date = self.validate_date(date_str, name + "dagsetning")
         a_time = self.validate_time(time_str, name + "tími")
         a_datetime = datetime.combine(a_date, a_time)
@@ -123,7 +123,7 @@ class Validation(object):
                     "Dagsetning þarf að vera á forminu ÁÁÁÁ-MM-DD"
                 )
 
-    def validate_str(self, some_str, name):
+    def validate_str(self, some_str, name=""):
         some_str = some_str.strip()
         if not some_str:
             raise ValueError(
