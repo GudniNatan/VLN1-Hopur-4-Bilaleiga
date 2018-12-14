@@ -50,26 +50,29 @@ class ReturnCarController(Controller):
         self._menu_stack.append(self.__make_ask_km(order))
 
     def calculate_costs(self, values, menu):
+        self.__selected_car = self.__selected_order.get_car()
         try:
-            new_km_count = self._validation.validate_int(values[0])
-        except ValueError:
-            menu.set_errors(["Kílómetrafjöldi þarf að vera tala"])
+            new_km_count = self._validation.validate_kilometer_driven(
+                values[0], self.__selected_car
+            )
+        except ValueError as error_msg:
+            menu.set_errors([error_msg])
             return
-        self.__selected_car = self.__selected_order.get_car
-        old_km_count = self.__selected_car.get_kilometer_count
-        self.__selected_car.set_kilometers_driven(new_km_count)
+        old_km_count = self.__selected_car.get_kilometer_count()
+        self.__selected_car.set_kilometer_count(new_km_count)
         driven_km = new_km_count - old_km_count
         self.__selected_order.set_kilometers_driven(driven_km)
         extra_costs = self._utils.calculate_extra_cost(self.__selected_order)
-        self._menu_stack.append(self.__make_order_menu(order, extra_costs))
+        self._menu_stack.append(self.__make_order_menu(self.__selected_order,
+                                                       extra_costs))
 
     def close_order(self, values, menu):
         self.__selected_order.set_return_time(datetime.now())
         self.__rent_order_repo.update(self.__selected_order)
         branch_name = self.__selected_order.get_return_branch_name()
         branch = BranchRepository().get(branch_name)
-        self.selected_car.set_current_branch(branch)
-        CarRepository().update(car)
+        self.__selected_car.set_current_branch(branch)
+        CarRepository().update(self.__selected_car)
         self._menu_stack.append(self.__make_close_order_success_menu())
 
     def __make_main_menu(self):
@@ -97,14 +100,14 @@ class ReturnCarController(Controller):
             "\nÁætlaður skilatími: ", str(order.get_estimated_return_time()),
             "\nTegund bíls: ", order.get_car().get_name(),
             "\nNafn leigjanda: ", order.get_customer().get_name(),
+            "\n\nNúverandi kílómetrafjöldi á bílnum"
         ))
-        options = [
-            {"description": "Sláðu inn núverandi kílómetrafjölda",
-                "value": self.calculate_costs}
+        inputs = [
+            {"prompt": "Sláðu inn nýjan kílómetrafjölda"}
         ]
         return Menu(
-            header=header, options=options, back_function=self.back,
-            stop_function=self.stop,
+            header=header, inputs=inputs, back_function=self.back,
+            stop_function=self.stop, submit_function=self.calculate_costs
         )
 
     def __make_order_menu(self, order, extra_costs):

@@ -368,3 +368,16 @@ class Validation(object):
         if from_date < datetime.now():
             raise ValueError("Leigutímabilið má ekki vera í fortíðinni")
         return (from_date, to_date)
+
+    def validate_kilometer_driven(self, km_count, car):
+        try:
+            new_km_count = self.validate_int(km_count)
+        except ValueError:
+            raise ValueError("Kílómetrafjöldi þarf að vera tala")
+        old_km_count = car.get_kilometer_count()
+        if old_km_count > new_km_count:
+            raise ValueError(
+                "".join(["Nýji kílómetrafjöldinn þarf að vera meiri en gamli",
+                        ", gamli er {:d}".format(old_km_count)])
+            )
+        return new_km_count
