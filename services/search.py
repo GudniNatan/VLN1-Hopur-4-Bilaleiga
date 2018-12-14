@@ -21,6 +21,7 @@ class Search(object):
         is_automatic = process_yes_no_answer(is_automatic)
         hide_available = process_yes_no_answer(hide_available)
         license_plate = license_plate.strip().replace("-", "").upper()
+        license_plate = license_plate.strip().replace(" ", "").upper()
         if type(hide_unavailable) != bool:
             hide_unavailable = process_yes_no_answer(hide_unavailable)
         if not (availability_lower_bound and availability_upper_bound):
