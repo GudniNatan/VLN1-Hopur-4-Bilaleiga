@@ -1,0 +1,94 @@
+------BEGIN SCENE 6------
+bóka leigubíl
+15/12/2018
+17:00
+16/12/2018
+13:00
+staðfesta
+
+breytir skilatímanum því vill kom upp
+
+17:00
+
+Minivan
+
+sækja frá reykjavik
+skila til ísafjarðar
+
+fléttir áfram einu sinni og velur volkswagen golf
+
+fær tryggingar
+
+reynir að skrá sig inn:
+332037279
+
+þarf að skrá sig eins og nýr viðskiptavinur:
+332037279
+1010065710
+bjoggicool@gmail.is
+Björgvin 
+Björgvinsson
+10/10/2006
+5812345
+Áslaug
+Guðmundsdóttir
+342592547741081
+09/21
+staðfestir
+
+kort mömmu hanns virkar ekki, notar sitt:
+Björgvin
+Björgvinsson
+172836293001631
+11/23
+
+skrá inn
+borga í lok leigu
+
+hætta
+------END OF SCENE 6------
+
+------BEGIN SCENE 7------
+*bjöggi er skráður inn sem starfsmaður í byrjun*
+*skráðu inn með USERNAME -schmuck- og PASSWORD -12345-*
+*ýtir á flétta upp viðskiptavin*
+fær nafnið abigail Botts
+slær inn Abigayl Botts
+*fær einga niðurstöðu*
+*fléttir upp alla viðskiptavini*
+velur hana
+
+*Staðfesta*
+----END OF SCENE 7-----
+
+----BEGIN SCENE 8-----
+*Skráður inn eins og kerfisstjórnandi*
+*ýtir á starfsmannaskrá*
+*ýtir á 'Bæta við starfsmanni'*
+Bjöggi
+kaffi
+Björgvin Björgvinsson
+bjoggicool@gmail.is
+5812345
+*staðfesta*
+*Aftur í starfsmannaskrá*
+----END OF SCENE 8----
+
+----BEGIN SCENE 9----
+*Skráður inn eins og sig sjálfur*
+*Skila bíl*
+482913059
+*Sjá opnar pantarnir*
+*velur fyrsta*
+47800
+*borga nuna og loka pöntun*
+*hætta*
+----END SCENE 9-----
+
+----BEGIN SCENE 10----
+*er skráður inn í kerfið*
+*pantanaskrá*
+*sjá allar pantarnir*
+----END SCENE 10----
+
+----BEGIN SCENE 11----
