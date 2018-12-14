@@ -93,6 +93,7 @@ class ReturnCarController(Controller):
         )
 
     def __make_ask_km(self, order):
+        car = order.get_car()
         header = "".join((
             self.__controller_header, " -> Leit -> Valin pöntun",
             "Pöntun númer: ", str(order.get_order_number()),
@@ -100,7 +101,8 @@ class ReturnCarController(Controller):
             "\nÁætlaður skilatími: ", str(order.get_estimated_return_time()),
             "\nTegund bíls: ", order.get_car().get_name(),
             "\nNafn leigjanda: ", order.get_customer().get_name(),
-            "\n\nNúverandi kílómetrafjöldi á bílnum"
+            "\n\nNúverandi kílómetrafjöldi á bílnum: ",
+            str(car.get_kilometer_count())
         ))
         inputs = [
             {"prompt": "Sláðu inn nýjan kílómetrafjölda"}
@@ -114,6 +116,7 @@ class ReturnCarController(Controller):
         total = order.get_total_cost()
         extra_insurance_price = total - order.get_base_cost()
         already_payed_amount = total - order.get_remaining_debt()
+        already_payed_amount += order.get_addon_price()
         extra_cost_total = sum([cost["amount"] for cost in extra_costs])
         cost_str_list = list()
         for cost in extra_costs:
@@ -126,14 +129,15 @@ class ReturnCarController(Controller):
         remaining = order.get_remaining_debt() + extra_cost_total
         header = "".join((
             self.__controller_header, " -> Leit -> Valin pöntun",
-            "Pöntun númer: ", str(order.get_order_number()),
+            "\nPöntun númer: ", str(order.get_order_number()),
             "\nUpphafstími leigu: ", str(order.get_pickup_time()),
             "\nÁætlaður skilatími: ", str(order.get_estimated_return_time()),
             "\nTegund bíls: ", order.get_car().get_name(),
             "\nNafn leigjanda: ", order.get_customer().get_name(),
             "\n\nGrunnverð: ", str(order.get_base_cost()), " kr.",
             "\nAukatrygging: ", str(extra_insurance_price), " kr.",
-            "\nViðbættur kostnaður: ", extra_cost_str,
+            "\nVerð á aukahlutum: ", str(order.get_addon_price()),
+            "\nViðbættur kostnaður: ", extra_cost_str, " kr.",
             "\nHeildarkostnaður: ", str(total), " kr.",
             "\n\nÁður greitt: ", str(already_payed_amount), " kr."
             "\nEftirstöður ", str(remaining), " kr."

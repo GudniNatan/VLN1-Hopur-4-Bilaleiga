@@ -38,7 +38,7 @@ class Utils(object):
             cost_str = "Ekið of marga kílómetra "
             cost_str += "({} umfram leyfðan fjölda)".format(km_overflow)
             extra_cost_list.append(
-                {"name": cost_str, "price": km_overflow * 300}
+                {"name": cost_str, "amount": km_overflow * 300}
             )
         if order.get_estimated_return_time() < datetime.now():
             day_count = self.count_days_in_range(
@@ -50,7 +50,7 @@ class Utils(object):
             )
             cost_str += "({} umfram leyfðan fjölda)".format(km_overflow)
             extra_cost_list.append(
-                {"name": cost_str, "price": day_count * order.DAILY_LATE_FEE}
+                {"name": cost_str, "amount": day_count * order.DAILY_LATE_FEE}
             )
         return extra_cost_list
 

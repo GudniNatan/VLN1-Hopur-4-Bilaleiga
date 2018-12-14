@@ -146,7 +146,8 @@ class RentOrder(Model):
         return self.__base_cost
 
     def get_addon_price(self):
-        return self.__addon_price
+        addon_count = len(self.__car.get_extra_properties())
+        return self.ADDON_PRICE * addon_count
 
     # Sets
     def set_order_number(self, order_number):
