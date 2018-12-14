@@ -26,6 +26,19 @@ class Utils(object):
         return addon_price * addon_count
 
     def calculate_extra_cost(self, order):
+        extra_cost_list = list()
+        km = order.get_kilometers_driven()
+        day_count = self.count_days_in_range(
+            order.get_pickup_time(),
+            order.get_estimated_return_time()
+        )
+        km_allowance = order.KM_ALLOWANCE_PER_DAY * day_count
+        km_overflow = km - km_allowance
+        if km_overflow > 0:
+            extra_cost_list.append(
+                {"name": "Ekið of marga kílómetra ({} umfram leyfðan fjölda)",
+                    "price": km_overflow * 300}
+            )
         return []
 
     def order_active(self, order):

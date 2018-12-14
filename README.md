@@ -16,10 +16,10 @@ Hægt er að nota örvatakkana eða úthlutaða takka á lyklaborði til þess a
 *Esc.* og *Enter* takkar notaðir til þess að fara úr/staðfesta innslátt.
 Notendur til að skrá sig inn með:
 
-Admin notandanafn: egill
+Admin notandanafn: egill  
 Lykilorð: 12345
 
-starfsmanna notandanafn: stfegill
+starfsmanna notandanafn: stfegill  
 lykilorð: 98765
 
 **Upphafsskjár:**\

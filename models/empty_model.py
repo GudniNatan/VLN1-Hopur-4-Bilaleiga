@@ -1,29 +1,18 @@
-from abc import ABC, abstractmethod
-
-# This is the model base class. It is mostly just an abstract
-# class to define what a model class needs to have.
-
-
-class Model(ABC):
+class EmptyModel():
     def __init__(self, name):
         self.__name = name
 
-    @abstractmethod
     def csv_repr(self) -> dict:
         return dict()
 
-    @abstractmethod
     def get_dict(self) -> dict:
         return self.csv_repr()
 
-    @abstractmethod
     def __eq__(self, other):
-        pass
+        return False
 
-    @abstractmethod
     def get_key(self):  # Each model has a key
         return ""
 
-    @abstractmethod
     def get_name(self):  # Each model has a human-readable name
         return ""
