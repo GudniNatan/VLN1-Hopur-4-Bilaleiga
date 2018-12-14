@@ -1,5 +1,5 @@
 Bókunar númer;Bíll;Ökuskírteinisnúmer Viðskiptavinar;Sóttur þann;Áætlaður skilatími;Sóttur hjá;Skilaður hjá;Auka trygging;Grunnkostnaður;Eftirstaða borgunar;Keyrðir kílómetrar;Raunverulegur skilatími
-2;AJ-123;55lstfbs;2019-01-01T12:00:00;2019-01-05T19:00:00;BB Reykjavík;BB Reykjavík;False;70000;70000;0;
+2;AJ-123;55lstfbs;2019-01-01T12:00:00;2019-01-05T19:00:00;BB Reykjavík;BB Reykjavík;True;70000;70000;0;
 4;RM-V83;482913059;2020-04-27T17:45:00;2020-05-17T14:00:00;BB Reykjavík;BB Akureyri;True;280000;284000;0;
 5;RA-Q99;3838119004ik;2019-07-23T08:00:00;2019-10-09T19:00:00;BB Keflavík;BB Ísafjörður;True;1106000;1106000;0;
 6;AL-O84;923184390kdik;2020-08-16T14:00:00;2020-12-02T09:00:00;BB Reykjavík;BB Keflavík;True;1836000;1836000;0;
@@ -9,3 +9,4 @@ Bókunar númer;Bíll;Ökuskírteinisnúmer Viðskiptavinar;Sóttur þann;Áætl
 10;XF-N97;58839200k4d9;2019-03-08T07:00:00;2019-05-15T17:00:00;BB Reykjavík;BB Egilsstaðir;True;1449000;1453000;0;
 11;TR-990;839271229;2019-09-26T15:00:00;2019-10-15T16:00:00;BB Reykjavík;BB Reykjavík;True;280000;280000;0;
 12;TR-990;55lstfbs;2019-01-01T00:00:00;2019-01-02T00:00:00;BB Reykjavík;BB Reykjavík;True;14000;0;0;
+13;JT-A73;037197939;2018-12-14T12:50:00;2018-12-15T15:00:00;BB Reykjavík;BB Akureyri;True;28000;0;4100;2018-12-14T13:53:48.614318
