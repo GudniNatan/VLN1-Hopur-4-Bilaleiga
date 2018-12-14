@@ -122,7 +122,7 @@ class ManageOrdersController(Controller):
         header = self.__controller_header
         header += "\n\nLeita að pöntun"
         inputs = [{"prompt": "Pöntunarnúmer:"},
-                  {"prompt": "Kennitala viðskiptarvinar:"},
+                  {"prompt": "Ökuskírtenisnúmer viðskiptarvinar:"},
                   {"prompt": "Bílnúmer:"},
                   {"prompt": "Fela óvirkar pantanir (J/N):"}]
         search = self.go_to_search
