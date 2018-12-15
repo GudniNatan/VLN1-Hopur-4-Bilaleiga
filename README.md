@@ -5,6 +5,8 @@
 
 Allar skrárnar tengdar forritinu munu verða geymdar hér.
 
+Kynningarmyndband á kerfinu er hægt að finna hér: https://youtu.be/cXMX_-PkQLI
+
 ## Bílaleigan: Bílaleiga Björgvins
 Í þessu forriti er starfsmönnum Bílaleigu Björgvins m.a. gert kleift að bóka bíla, skrá nýja viðskiptavini og allt það helsta sem við kemur útleigu og umsjón bílaleigubíla. Viðskiptavinir geta einnig bókað bíl í gegnum kerfið sjálfir, sé þess óskað.
 
