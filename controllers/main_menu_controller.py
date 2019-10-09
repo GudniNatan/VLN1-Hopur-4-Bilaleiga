@@ -119,7 +119,7 @@ class MainMenuController(Controller):
                 "value": self.go_to_car_controller},
             {"hotkey": 'X', "description": "Skrá út", "value": self.log_out}
         ]
-        if type(user) == Admin:
+        if isinstance(user, Admin):
             staff_op = {"description": "Starfsmannaskrá",
                         "value": self.go_to_salespeople_controller}
             staff_options.insert(-1, staff_op)

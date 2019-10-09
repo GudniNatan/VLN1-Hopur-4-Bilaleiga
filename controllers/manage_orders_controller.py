@@ -41,7 +41,7 @@ class ManageOrdersController(Controller):
         if order.get_extra_insurance_total != 0:
             extra_insurance_str = "N"
         fields = OrderedDict([
-            ("Bílnúmer",  order.get_car().get_key()),
+            ("Bílnúmer", order.get_car().get_key()),
             ("Ökuskírteinisnúmer", order.get_customer().get_key()),
             ("Sótt (dagssetning)", order.get_pickup_time().date()),
             ("Sótt (klukkan)", order.get_pickup_time().time()),

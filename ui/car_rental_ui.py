@@ -38,7 +38,7 @@ class CarRentalUI(object):
             try:
                 datetime.fromisoformat(value)
                 value = value.replace("T", " ")
-            except:
+            except BaseException:
                 pass
             header += "\n\t{}: {}".format(key, value)
         edit_text = "Breyta: {}".format(object_name)
@@ -86,7 +86,7 @@ class CarRentalUI(object):
             options = [
                 {"description": "Halda áfram í leiguferli",
                     "value": restart_callback}
-                ]
+            ]
         report_menu = Menu(
             header=message, options=options, back_function=self.__back,
             stop_function=self.__stop, can_go_back=can_go_back
@@ -160,7 +160,7 @@ class CarRentalUI(object):
 
     def get_order_history_menu(
             self, header_str, orders, model_object, callback
-            ):
+    ):
         options = list()
         header = "{} -> Leit -> Val -> Pöntunarsaga\nPöntunarsaga {}"
         header = header.format(header_str, model_object.get_name())

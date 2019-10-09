@@ -196,7 +196,7 @@ class Menu(object):
     def __handle_return(self):
         page = self.__pages[self.__current_page_number]
         cursor_input = page[self.__cursor_position]
-        if type(cursor_input) == InputLine:
+        if isinstance(cursor_input, InputLine):
             if cursor_input == self.__selected_input:
                 self.__move_cursor(1)
             self.__select_input_by_cursor()
@@ -219,7 +219,7 @@ class Menu(object):
             return
         page = self.__pages[self.__current_page_number]
         for item in page:
-            if type(item) == MenuOption:
+            if isinstance(item, MenuOption):
                 if item.get_hotkey().upper() == hotkey.upper():
                     self.__selection = item
                     break
@@ -240,7 +240,7 @@ class Menu(object):
     def __select_input_by_cursor(self):
         page = self.__pages[self.__current_page_number]
         cursor_input = page[self.__cursor_position]
-        if type(cursor_input) == InputLine:
+        if isinstance(cursor_input, InputLine):
             self.__selected_input = cursor_input
             cursor_input.set_active(True)
 

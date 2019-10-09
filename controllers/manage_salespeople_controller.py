@@ -15,7 +15,7 @@ class ManageSalespeopleController(Controller):
         results = self._search.search_salespeople(*values)
         search_menu = self._ui.get_search_result_menu(
             results, self.__controller_header, self.select_person
-            )
+        )
         self._menu_stack.append(search_menu)
 
     def go_to_search_all(self, values, menu):

@@ -86,7 +86,7 @@ class ReturnCarController(Controller):
             {"prompt": "Ökuskírteinisnúmer viðskiptavinar:"}
         ]
         options = [{"description": "Sjá opnar pantanir",
-                   "value": self.search}]
+                    "value": self.search}]
         return Menu(
             header=header, options=options, back_function=self.back,
             stop_function=self.stop, can_submit=False, inputs=inputs

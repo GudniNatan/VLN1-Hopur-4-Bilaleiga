@@ -43,7 +43,7 @@ def readkey_unix():
     oldflags = fcntl.fcntl(fd, fcntl.F_GETFL)
     fcntl.fcntl(fd, fcntl.F_SETFL, oldflags | os.O_NONBLOCK)
     try:
-        while 1:
+        while True:
             try:
                 c = ord(sys.stdin.read(1))
                 if c == 27:
@@ -56,6 +56,7 @@ def readkey_unix():
         termios.tcsetattr(fd, termios.TCSAFLUSH, oldterm)
         fcntl.fcntl(fd, fcntl.F_SETFL, oldflags)
     return KEYMAP.get(c, c)
+
 
 if __name__ == "__main__":  # demo
     key = readkey()

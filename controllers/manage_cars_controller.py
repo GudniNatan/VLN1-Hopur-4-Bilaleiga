@@ -131,7 +131,7 @@ class ManageCarsController(Controller):
             {"description": "Leita", "value": search},
             {"description": "Sjá alla bíla", "value": search_all},
         ]
-        if type(self._service.get_current_user()) == Admin:
+        if isinstance(self._service.get_current_user(), Admin):
             add_car_option = {"description": "Bæta við bíl", "value": create}
             options.append(add_car_option)
         footer = "Sláðu inn þær upplýsingar sem þú vilt leita eftir. "

@@ -19,7 +19,7 @@ class RentOrder(Model):
             include_extra_insurance: bool, base_cost: int,
             remaining_debt: int = -1, kilometers_driven: int = 0,
             return_time: datetime = None, addon_price=0
-            ):
+    ):
         self.__order_number = order_number
         self.__car = car
         self.__customer = customer
@@ -83,7 +83,7 @@ class RentOrder(Model):
         )
 
     def __eq__(self, other):
-        if type(other) == type(self):
+        if isinstance(other, type(self)):
             return self.get_order_number() == other.get_order_number()
         else:
             return self.get_order_number() == str(other)

@@ -193,7 +193,7 @@ class Validation(object):
             automatic_transmission: str, seat_count: int,
             extra_properties: set, kilometer_count: int,
             current_branch=None,
-            ):
+    ):
 
         valid_license_plate = self.validate_str(
             license_plate_number, "Bílnúmer"
@@ -224,7 +224,7 @@ class Validation(object):
             first_name: str, last_name: str, birthdate: str, phone_number: str,
             cc_holder_first_name: str, cc_holder_last_name: str,
             ccn: str, cc_exp_date: str
-            ):
+    ):
         driver_license_id = self.validate_str(
             driver_license_id, "Ökuskírteinisnúmer"
         )
@@ -295,11 +295,11 @@ class Validation(object):
             self, car, customer, pickup_date, pickup_time, est_return_date,
             est_return_time, pickup_branch_name, return_branch_name,
             include_extra_insurance, order_number=None
-            ) -> RentOrder:
+    ) -> RentOrder:
         if order_number is None:
             order_number = self.get_next_order_number()
         try:
-            if type(car) != Car:
+            if not isinstance(car, Car):
                 car = CarRepository().get(car)
         except ValueError:
             error_msg = "".join((
@@ -347,7 +347,7 @@ class Validation(object):
     def assemble_order(
             self, car, customer, date_range, pickup_branch, return_branch,
             include_extra_insurance
-            ) -> RentOrder:
+    ) -> RentOrder:
         from_date, to_date = date_range
         day_count = abs((from_date - to_date).days)
         base_cost = car.get_category()["price"] * day_count
@@ -360,10 +360,10 @@ class Validation(object):
 
     def validate_rent_range(self, from_date, to_date):
         from_date = self.validate_datetime_by_parts(
-                from_date[0], from_date[1], "Upphafs"
+            from_date[0], from_date[1], "Upphafs"
         )
         to_date = self.validate_datetime_by_parts(
-                to_date[0], to_date[1], "Skila"
+            to_date[0], to_date[1], "Skila"
         )
         range_delta = to_date - from_date
         if range_delta < timedelta(days=1):
@@ -381,6 +381,6 @@ class Validation(object):
         if old_km_count > new_km_count:
             raise ValueError(
                 "".join(["Nýji kílómetrafjöldinn þarf að vera meiri en gamli",
-                        ", gamli er {:d}\n".format(old_km_count)])
+                         ", gamli er {:d}\n".format(old_km_count)])
             )
         return new_km_count

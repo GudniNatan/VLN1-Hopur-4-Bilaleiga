@@ -9,7 +9,7 @@ class Customer(Model):
             first_name: str, last_name: str, birthdate: date,
             phone_number: str, cc_holder_first_name: str,
             cc_holder_last_name: str, ccn: str, cc_exp_date: date,
-            ):
+    ):
         self.__driver_license_id = driver_license_id
         self.__personal_id = personal_id
         self.__email = email

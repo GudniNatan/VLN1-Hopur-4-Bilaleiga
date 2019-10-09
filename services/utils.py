@@ -4,11 +4,11 @@ from models.rent_order import RentOrder
 
 class Utils(object):
     def process_yes_no_answer(self, yes_no):
-            if yes_no:
-                yes_no = str(yes_no)[0].upper()
-                if yes_no in ["J", "Y", "True", "true"]:
-                    return True
-                return False
+        if yes_no:
+            yes_no = str(yes_no)[0].upper()
+            if yes_no in ["J", "Y", "True", "true"]:
+                return True
+            return False
 
     def count_days_in_range(self, datetime_1, datetime_2):
         # This function counts the days in a range, and

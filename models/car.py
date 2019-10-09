@@ -10,7 +10,7 @@ class Car(Model):
             automatic_transmission: bool, seat_count: int,
             extra_properties: set, kilometer_count: int,
             current_branch: Branch,
-            ):
+    ):
         self.__license_plate_number = license_plate_number
         self.__model = model
         self.__category = category

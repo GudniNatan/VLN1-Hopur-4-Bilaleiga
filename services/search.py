@@ -16,13 +16,13 @@ class Search(object):
             is_automatic="", hide_available="", hide_unavailable="",
             availability_lower_bound=None, availability_upper_bound=None,
             in_branch=None
-            ):
+    ):
         process_yes_no_answer = Utils().process_yes_no_answer
         is_automatic = process_yes_no_answer(is_automatic)
         hide_available = process_yes_no_answer(hide_available)
         license_plate = license_plate.strip().replace("-", "").upper()
         license_plate = license_plate.replace(" ", "")
-        if type(hide_unavailable) != bool:
+        if not isinstance(hide_unavailable, bool):
             hide_unavailable = process_yes_no_answer(hide_unavailable)
         if not (availability_lower_bound and availability_upper_bound):
             availability_lower_bound = datetime.now()
@@ -47,7 +47,7 @@ class Search(object):
             car_license_plate = car.get_key().replace("-", "").upper()
             if car_license_plate.count(license_plate) == 0:
                 continue
-            if type(category) == str:
+            if isinstance(category, str):
                 car_category = car.get_category()["category"].upper()
                 if car_category.count(category.upper().strip()) == 0:
                     continue

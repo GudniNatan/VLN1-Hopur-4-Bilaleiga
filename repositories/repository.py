@@ -14,7 +14,7 @@ class Repository(ABC):
     _CSV_ROW_NAMES = list()
 
     def add(self, model_object: _TYPE):
-        '''Adds the model object to the csv file'''
+        """Add the model object to the csv file."""
         for item in self.get_all():  # Update the repo if model already exists
             if item == model_object:
                 self.update(model_object)
@@ -27,7 +27,7 @@ class Repository(ABC):
             csv_dict_writer.writerow(representation)
 
     def write(self, model_object_list: list):
-        ''' Writes the csv file with the given object list'''
+        """Write the csv file with the given object list."""
         with open(self._FILENAME, "w", newline='', encoding="utf8") as fl_ptr:
             csv_dict_writer = csv.DictWriter(
                 fl_ptr, fieldnames=self._CSV_ROW_NAMES, delimiter=";"
@@ -37,8 +37,10 @@ class Repository(ABC):
             csv_dict_writer.writerows(reps)
 
     def update(self, model_object: _TYPE, key=None):
-        '''Update the csv files representation of model_object. Raises
-        ValueError if the object to update is not found.'''
+        """Update the csv files representation of model_object.
+
+        Raises ValueError if the object to update is not found.
+        """
         model_object_list = self.get_all()
         if key is None:
             index = model_object_list.index(model_object)
@@ -51,15 +53,19 @@ class Repository(ABC):
         self.write(model_object_list)
 
     def remove(self, model_object: _TYPE):
-        '''Remove the model_object from the csv file. Raises
-        ValueError if the object to remove is not found.'''
+        """Remove the model_object from the csv file.
+
+        Raises ValueError if the object to remove is not found.
+        """
         model_object_list = self.get_all()
         model_object_list.remove(model_object)
         self.write(model_object_list)
 
     def get(self, key):
-        '''Return the object with the given key. Raises ValueError
-        if an object with the given key is not found.'''
+        """Return the object with the given key.
+
+        Raises ValueError if an object with the given key is not found.
+        """
         file = self.__read_file()
         for line in file:
             if str(line[self._PRIMARY_KEY]).lower() == str(key).lower():
@@ -84,9 +90,10 @@ class Repository(ABC):
         return file
 
     def remove_by_key(self, key):
-        '''Remove the line in the csv file where the primary key value is
-        equal to key. Will raise ValueError if the object to remove is not
-        found.'''
+        """Remove line in the file where the primary key value is equal to key.
+
+        Will raise ValueError if the object to remove is not found.
+        """
         model_object = self.get(key)
         self.remove(model_object)
         pass
@@ -96,6 +103,5 @@ class Repository(ABC):
 
     @abstractmethod
     def dict_to_model_object(self, a_dict):
-        '''Translates the read csv dictionary to a model object of a specified
-        type.'''
+        """Translate a dict to this model."""
         return self._TYPE(**a_dict)
